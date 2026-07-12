@@ -1,0 +1,2444 @@
+@import '../../../../vendor/filament/filament/resources/css/theme.css';
+
+@source '../../../../app/Filament/**/*';
+@source '../../../../resources/views/filament/**/*';
+@source '../../../../vendor/jeffgreco13/filament-breezy/resources/**/*';
+@source '../../../../vendor/awcodes/overlook/resources/**/*.blade.php';
+
+/*
+|--------------------------------------------------------------------------
+| NGUNJUK POS - Final Luxury Glass Dashboard Theme
+|--------------------------------------------------------------------------
+| Final fix:
+| - Dashboard background luxury glass
+| - Widget tidak double background
+| - Sidebar floating compact
+| - Search sidebar dihapus
+| - Dropdown admin center di dalam sidebar
+| - Light / dark mode lebih terbaca
+| - Kotak putih Top Product Performance dihilangkan
+|--------------------------------------------------------------------------
+*/
+
+:root {
+    --ngunjuk-bg-1: #edf7f4;
+    --ngunjuk-bg-2: #f7fbff;
+    --ngunjuk-bg-3: #e9f3ef;
+
+    --ngunjuk-primary: #0f766e;
+    --ngunjuk-primary-2: #0d9488;
+    --ngunjuk-primary-3: #14b8a6;
+
+    --ngunjuk-dark: #0f172a;
+    --ngunjuk-muted: #64748b;
+
+    --ngunjuk-shadow: 0 28px 80px rgba(15, 23, 42, 0.12);
+    --ngunjuk-shadow-soft: 0 16px 42px rgba(15, 23, 42, 0.08);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Main Background
+|--------------------------------------------------------------------------
+*/
+
+.fi-body {
+    min-height: 100vh !important;
+    color: var(--ngunjuk-dark) !important;
+    background:
+        radial-gradient(circle at 18% 12%, rgba(20, 184, 166, 0.36), transparent 28%),
+        radial-gradient(circle at 86% 14%, rgba(125, 211, 252, 0.24), transparent 30%),
+        radial-gradient(circle at 80% 78%, rgba(16, 185, 129, 0.18), transparent 34%),
+        radial-gradient(circle at 22% 86%, rgba(255, 255, 255, 0.82), transparent 26%),
+        linear-gradient(135deg, var(--ngunjuk-bg-1) 0%, var(--ngunjuk-bg-2) 48%, var(--ngunjuk-bg-3) 100%) !important;
+    overflow-x: hidden !important;
+}
+
+.fi-body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.24;
+    background-image:
+        linear-gradient(rgba(15, 118, 110, 0.10) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(15, 118, 110, 0.10) 1px, transparent 1px);
+    background-size: 42px 42px;
+    mask-image: radial-gradient(circle at center, black, transparent 76%);
+}
+
+.fi-body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+        linear-gradient(115deg, transparent 0 18%, rgba(255,255,255,0.42) 18.2% 18.7%, transparent 19% 100%),
+        linear-gradient(128deg, transparent 0 58%, rgba(255,255,255,0.28) 58.2% 58.8%, transparent 59% 100%),
+        radial-gradient(circle at 48% 4%, rgba(255,255,255,0.58), transparent 22%);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Main Content
+|--------------------------------------------------------------------------
+*/
+
+.fi-main-ctn {
+    position: relative !important;
+    z-index: 1 !important;
+    background: transparent !important;
+}
+
+.fi-main {
+    position: relative !important;
+    z-index: 2 !important;
+    padding-top: 2rem !important;
+    padding-bottom: 3rem !important;
+    background: transparent !important;
+}
+
+.fi-page {
+    background: transparent !important;
+}
+
+.fi-header-heading {
+    color: #101827 !important;
+    font-weight: 950 !important;
+    letter-spacing: -0.055em !important;
+}
+
+.fi-header-subheading {
+    color: rgba(71, 85, 105, 0.82) !important;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Filament Section / Card Glass
+|--------------------------------------------------------------------------
+*/
+
+.fi-section,
+.fi-ta-ctn,
+.fi-card {
+    border-radius: 1.75rem !important;
+    background:
+        linear-gradient(145deg, rgba(255,255,255,0.76), rgba(255,255,255,0.46)) !important;
+    border: 1px solid rgba(255, 255, 255, 0.72) !important;
+    box-shadow:
+        0 22px 58px rgba(15, 23, 42, 0.09),
+        inset 0 1px 0 rgba(255,255,255,0.88) !important;
+    backdrop-filter: blur(26px) saturate(150%) !important;
+    -webkit-backdrop-filter: blur(26px) saturate(150%) !important;
+    transition:
+        transform 220ms ease,
+        box-shadow 220ms ease,
+        border-color 220ms ease !important;
+}
+
+.fi-section:hover,
+.fi-ta-ctn:hover,
+.fi-card:hover {
+    transform: translateY(-3px) !important;
+    border-color: rgba(255, 255, 255, 0.92) !important;
+    box-shadow:
+        0 30px 76px rgba(15, 23, 42, 0.13),
+        inset 0 1px 0 rgba(255,255,255,0.94) !important;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Fix Double Background Widget Wrapper
+|--------------------------------------------------------------------------
+*/
+
+.fi-wi-widget {
+    background: transparent !important;
+    box-shadow: none !important;
+    border: 0 !important;
+}
+
+.fi-wi-widget > div {
+    background: transparent !important;
+    box-shadow: none !important;
+    border: 0 !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    transform: none !important;
+}
+
+.fi-wi-widget:hover,
+.fi-wi-widget > div:hover {
+    transform: none !important;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Dashboard Hero
+|--------------------------------------------------------------------------
+*/
+
+/*
+|--------------------------------------------------------------------------
+| Dashboard Cards
+|--------------------------------------------------------------------------
+*/
+
+/*
+|--------------------------------------------------------------------------
+| Widget Bawah Section Glass
+|--------------------------------------------------------------------------
+*/
+
+/*
+|--------------------------------------------------------------------------
+| Inner Chart Panels
+|--------------------------------------------------------------------------
+*/
+
+.heatmap-insight-box {
+    background:
+        linear-gradient(145deg, rgba(255,255,255,0.66), rgba(255,255,255,0.38)) !important;
+    border: 1px solid rgba(255,255,255,0.68) !important;
+    box-shadow:
+        0 14px 34px rgba(15, 23, 42, 0.06),
+        inset 0 1px 0 rgba(255,255,255,0.82) !important;
+    backdrop-filter: blur(18px) saturate(150%) !important;
+    -webkit-backdrop-filter: blur(18px) saturate(150%) !important;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Remove Inner White Box - Top Product Performance
+|--------------------------------------------------------------------------
+*/
+
+/*
+|--------------------------------------------------------------------------
+| Donut Chart Fix
+|--------------------------------------------------------------------------
+*/
+
+/*
+|--------------------------------------------------------------------------
+| Widget Titles and Chips
+|--------------------------------------------------------------------------
+*/
+
+/*
+|--------------------------------------------------------------------------
+| Form / Button
+|--------------------------------------------------------------------------
+*/
+
+.fi-input-wrp,
+.fi-select-input,
+.fi-text-input,
+.fi-search-input {
+    border-radius: 999px !important;
+    background: rgba(255, 255, 255, 0.70) !important;
+    border: 1px solid rgba(255, 255, 255, 0.78) !important;
+    box-shadow:
+        0 10px 24px rgba(15, 23, 42, 0.05),
+        inset 0 1px 0 rgba(255,255,255,0.85) !important;
+    backdrop-filter: blur(14px) !important;
+}
+
+.fi-btn {
+    border-radius: 999px !important;
+    font-weight: 850 !important;
+}
+
+.fi-btn-color-primary {
+    color: #ffffff !important;
+    background: linear-gradient(135deg, #0f766e, #14b8a6) !important;
+    box-shadow: 0 16px 36px rgba(15, 118, 110, 0.20) !important;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Floating Compact Sidebar
+|--------------------------------------------------------------------------
+*/
+
+@media (min-width: 1024px) {
+    .fi-sidebar {
+        position: fixed !important;
+        top: 1rem !important;
+        bottom: 1rem !important;
+        left: 0.9rem !important;
+
+        width: 13.2rem !important;
+        height: calc(100vh - 2rem) !important;
+
+        border-radius: 1.65rem !important;
+        overflow: visible !important;
+
+        background:
+            radial-gradient(circle at 38% 8%, rgba(255,255,255,0.68), transparent 28%),
+            radial-gradient(circle at 90% 82%, rgba(20,184,166,0.14), transparent 36%),
+            linear-gradient(145deg, rgba(255,255,255,0.62), rgba(255,255,255,0.34)) !important;
+
+        border: 1px solid rgba(255,255,255,0.76) !important;
+
+        box-shadow:
+            0 24px 64px rgba(15, 23, 42, 0.12),
+            inset 0 1px 0 rgba(255,255,255,0.9) !important;
+
+        backdrop-filter: blur(30px) saturate(160%) !important;
+        -webkit-backdrop-filter: blur(30px) saturate(160%) !important;
+    }
+
+    .fi-sidebar::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        border-radius: inherit;
+        overflow: hidden;
+        background:
+            linear-gradient(
+                115deg,
+                transparent 0 46%,
+                rgba(255,255,255,0.34) 46.2% 47%,
+                transparent 47.4% 100%
+            );
+    }
+
+    .fi-sidebar > * {
+        position: relative !important;
+        z-index: 1 !important;
+    }
+
+    .fi-main-ctn {
+        margin-left: 14.9rem !important;
+    }
+
+    .fi-main {
+        padding-left: 1.2rem !important;
+        padding-right: 1.2rem !important;
+    }
+
+    .fi-topbar {
+        left: 14.9rem !important;
+    }
+
+    .fi-sidebar-header {
+        min-height: 4.15rem !important;
+        padding: 0.85rem 0.85rem 0.35rem !important;
+        background: transparent !important;
+        border-bottom: 0 !important;
+    }
+
+    .fi-sidebar-header .fi-logo,
+    .fi-sidebar-header a {
+        color: #0f172a !important;
+        font-size: 1.12rem !important;
+        font-weight: 950 !important;
+        letter-spacing: -0.04em !important;
+    }
+
+    .fi-sidebar-nav {
+        padding: 0.3rem 0.65rem 0.65rem !important;
+        gap: 0.25rem !important;
+    }
+
+    .fi-sidebar-nav-groups {
+        gap: 0.25rem !important;
+    }
+
+    .fi-sidebar-group {
+        margin-top: 0.15rem !important;
+        margin-bottom: 0.1rem !important;
+        padding: 0 !important;
+    }
+
+    .fi-sidebar-group-button {
+        min-height: 1.85rem !important;
+        padding-top: 0.15rem !important;
+        padding-bottom: 0.15rem !important;
+        margin-top: 0.18rem !important;
+        margin-bottom: 0.16rem !important;
+    }
+
+    .fi-sidebar-group-label {
+        margin-top: 0.22rem !important;
+        margin-bottom: 0.18rem !important;
+        padding: 0 0.2rem !important;
+        color: rgba(71, 85, 105, 0.76) !important;
+        font-size: 0.68rem !important;
+        font-weight: 950 !important;
+        line-height: 1.1 !important;
+        letter-spacing: 0.03em !important;
+    }
+
+    .fi-sidebar-item {
+        margin-top: 0 !important;
+        margin-bottom: 0.08rem !important;
+    }
+
+    .fi-sidebar-item a {
+        min-height: 2.18rem !important;
+        padding: 0.3rem 0.6rem !important;
+        border-radius: 0.95rem !important;
+        color: rgba(15, 23, 42, 0.72) !important;
+        font-size: 0.8rem !important;
+        font-weight: 760 !important;
+        line-height: 1.15 !important;
+        transition:
+            transform 180ms ease,
+            background 180ms ease,
+            box-shadow 180ms ease,
+            color 180ms ease !important;
+    }
+
+    .fi-sidebar-item-label {
+        line-height: 1.15 !important;
+    }
+
+    .fi-sidebar-item svg {
+        width: 1rem !important;
+        height: 1rem !important;
+    }
+
+    .fi-sidebar-item a:hover {
+        transform: translateX(3px) !important;
+        color: #0f766e !important;
+        background: rgba(255,255,255,0.62) !important;
+        box-shadow:
+            0 12px 28px rgba(15, 23, 42, 0.07),
+            inset 0 1px 0 rgba(255,255,255,0.82) !important;
+    }
+
+    .fi-sidebar-item-active a,
+    .fi-sidebar-item.fi-active a {
+        color: #d93b0b !important;
+        background: rgba(255,255,255,0.88) !important;
+        box-shadow:
+            0 18px 42px rgba(15, 23, 42, 0.10),
+            inset 0 1px 0 rgba(255,255,255,0.95) !important;
+    }
+
+    .fi-sidebar-item-active svg,
+    .fi-sidebar-item.fi-active svg,
+    .fi-sidebar-item a:hover svg {
+        color: #0f766e !important;
+    }
+}
+
+/*
+|--------------------------------------------------------------------------
+| Hide Sidebar Search
+|--------------------------------------------------------------------------
+*/
+
+@media (min-width: 1024px) {
+    .fi-sidebar .fi-global-search,
+    .fi-sidebar .fi-global-search-field,
+    .fi-sidebar [data-global-search],
+    .fi-sidebar form[role="search"],
+    .fi-sidebar .fi-input-wrp:has(input[type="search"]),
+    .fi-sidebar .fi-input-wrp:has(input[placeholder*="Search"]),
+    .fi-sidebar .fi-input-wrp:has(input[placeholder*="search"]) {
+        display: none !important;
+    }
+}
+
+/*
+|--------------------------------------------------------------------------
+| Sidebar Footer / User Dropdown Center
+|--------------------------------------------------------------------------
+*/
+
+@media (min-width: 1024px) {
+    .fi-sidebar-footer {
+        position: relative !important;
+        z-index: 100 !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        padding: 0.55rem 0.65rem 0.8rem !important;
+        overflow: visible !important;
+    }
+
+    .fi-sidebar-footer .fi-dropdown {
+        position: relative !important;
+        width: 100% !important;
+        display: flex !important;
+        justify-content: center !important;
+    }
+
+    .fi-sidebar .fi-user-menu {
+        position: relative !important;
+        z-index: 120 !important;
+        width: calc(100% - 0.4rem) !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        min-height: 2.8rem !important;
+        border-radius: 1.1rem !important;
+        background: rgba(255,255,255,0.58) !important;
+        border: 1px solid rgba(255,255,255,0.76) !important;
+        box-shadow:
+            0 16px 38px rgba(15, 23, 42, 0.08),
+            inset 0 1px 0 rgba(255,255,255,0.88) !important;
+        backdrop-filter: blur(18px) saturate(150%) !important;
+        -webkit-backdrop-filter: blur(18px) saturate(150%) !important;
+    }
+
+    .fi-sidebar .fi-dropdown-panel,
+    .fi-sidebar [role="menu"] {
+        position: absolute !important;
+        left: 50% !important;
+        right: auto !important;
+        top: auto !important;
+        bottom: calc(100% + 0.7rem) !important;
+        transform: translateX(-50%) !important;
+
+        width: calc(100% - 1.2rem) !important;
+        min-width: calc(100% - 1.2rem) !important;
+        max-width: calc(100% - 1.2rem) !important;
+
+        border-radius: 1rem !important;
+        overflow: hidden !important;
+        z-index: 9999 !important;
+
+        background:
+            linear-gradient(145deg, rgba(255,255,255,0.96), rgba(248,250,252,0.92)) !important;
+        border: 1px solid rgba(255,255,255,0.82) !important;
+        box-shadow:
+            0 24px 56px rgba(15, 23, 42, 0.18),
+            inset 0 1px 0 rgba(255,255,255,0.92) !important;
+        backdrop-filter: blur(22px) saturate(150%) !important;
+        -webkit-backdrop-filter: blur(22px) saturate(150%) !important;
+    }
+
+    .fi-dropdown-list {
+        padding: 0.45rem !important;
+    }
+
+    .fi-dropdown-list-item {
+        min-height: 2.2rem !important;
+        border-radius: 0.75rem !important;
+        color: #334155 !important;
+        font-size: 0.82rem !important;
+        font-weight: 760 !important;
+    }
+
+    .fi-dropdown-list-item:hover {
+        background: rgba(15, 118, 110, 0.08) !important;
+        color: #0f766e !important;
+    }
+
+    .fi-dropdown-list-item-icon {
+        color: #94a3b8 !important;
+    }
+
+    .fi-dropdown-list-item:hover .fi-dropdown-list-item-icon {
+        color: #0f766e !important;
+    }
+
+    .fi-theme-switcher {
+        width: 100% !important;
+        padding: 0.35rem !important;
+        border-radius: 0.8rem !important;
+        background: rgba(241,245,249,0.92) !important;
+        border: 1px solid rgba(226,232,240,0.92) !important;
+    }
+
+    .fi-theme-switcher-btn {
+        border-radius: 0.65rem !important;
+        color: #94a3b8 !important;
+        transition: 0.18s ease !important;
+    }
+
+    .fi-theme-switcher-btn:hover {
+        color: #0f766e !important;
+        background: rgba(255,255,255,0.86) !important;
+    }
+
+    .fi-theme-switcher-btn[aria-pressed="true"],
+    .fi-theme-switcher-btn.fi-active {
+        color: #0f766e !important;
+        background: #ffffff !important;
+        box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08) !important;
+    }
+}
+
+/*
+|--------------------------------------------------------------------------
+| Dark Mode Base
+|--------------------------------------------------------------------------
+*/
+
+.dark {
+    --dark-text-main: #ecfeff;
+    --dark-text-soft: rgba(226, 232, 240, 0.82);
+    --dark-text-muted: rgba(203, 213, 225, 0.72);
+    --dark-border-soft: rgba(148, 163, 184, 0.30);
+}
+
+.dark .fi-body {
+    color: #e5f7f5 !important;
+    background:
+        radial-gradient(circle at 18% 12%, rgba(20, 184, 166, 0.22), transparent 28%),
+        radial-gradient(circle at 86% 14%, rgba(14, 116, 144, 0.24), transparent 30%),
+        radial-gradient(circle at 80% 78%, rgba(6, 78, 59, 0.32), transparent 34%),
+        linear-gradient(135deg, #061a1a 0%, #0f172a 48%, #082f2d 100%) !important;
+}
+
+.dark .fi-body::before {
+    opacity: 0.16 !important;
+    background-image:
+        linear-gradient(rgba(45, 212, 191, 0.12) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(45, 212, 191, 0.12) 1px, transparent 1px) !important;
+}
+
+.dark .fi-body::after {
+    background:
+        linear-gradient(115deg, transparent 0 18%, rgba(255,255,255,0.09) 18.2% 18.7%, transparent 19% 100%),
+        linear-gradient(128deg, transparent 0 58%, rgba(255,255,255,0.07) 58.2% 58.8%, transparent 59% 100%),
+        radial-gradient(circle at 48% 4%, rgba(20,184,166,0.12), transparent 22%) !important;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Dark Sidebar
+|--------------------------------------------------------------------------
+*/
+
+@media (min-width: 1024px) {
+    .dark .fi-sidebar {
+        background:
+            radial-gradient(circle at 38% 8%, rgba(255,255,255,0.11), transparent 28%),
+            radial-gradient(circle at 90% 82%, rgba(20,184,166,0.18), transparent 36%),
+            linear-gradient(145deg, rgba(15,23,42,0.74), rgba(6,78,59,0.42)) !important;
+        border: 1px solid rgba(148, 163, 184, 0.22) !important;
+        box-shadow:
+            0 24px 64px rgba(0, 0, 0, 0.36),
+            inset 0 1px 0 rgba(255,255,255,0.12) !important;
+    }
+
+    .dark .fi-sidebar-header .fi-logo,
+    .dark .fi-sidebar-header a {
+        color: #ecfeff !important;
+    }
+
+    .dark .fi-sidebar-group-label {
+        color: rgba(203, 213, 225, 0.78) !important;
+    }
+
+    .dark .fi-sidebar-item a {
+        color: rgba(226, 232, 240, 0.76) !important;
+    }
+
+    .dark .fi-sidebar-item a:hover {
+        color: #5eead4 !important;
+        background: rgba(15, 23, 42, 0.52) !important;
+    }
+
+    .dark .fi-sidebar-item-active a,
+    .dark .fi-sidebar-item.fi-active a {
+        color: #5eead4 !important;
+        background: rgba(15, 23, 42, 0.72) !important;
+        box-shadow:
+            0 18px 42px rgba(0, 0, 0, 0.28),
+            inset 0 1px 0 rgba(255,255,255,0.12) !important;
+    }
+
+    .dark .fi-sidebar .fi-user-menu {
+        background: rgba(15,23,42,0.68) !important;
+        border: 1px solid rgba(148, 163, 184, 0.22) !important;
+        color: #e5f7f5 !important;
+    }
+
+    .dark .fi-sidebar .fi-dropdown-panel,
+    .dark .fi-sidebar [role="menu"] {
+        background:
+            linear-gradient(145deg, rgba(15,23,42,0.96), rgba(2,44,34,0.92)) !important;
+        border: 1px solid rgba(148, 163, 184, 0.24) !important;
+        box-shadow:
+            0 24px 56px rgba(0, 0, 0, 0.42),
+            inset 0 1px 0 rgba(255,255,255,0.10) !important;
+    }
+
+    .dark .fi-dropdown-list-item,
+    .dark .fi-dropdown-list-item-label {
+        color: #e2e8f0 !important;
+    }
+
+    .dark .fi-dropdown-list-item:hover,
+    .dark .fi-dropdown-list-item:hover .fi-dropdown-list-item-label {
+        background: rgba(20,184,166,0.14) !important;
+        color: #5eead4 !important;
+    }
+
+    .dark .fi-theme-switcher {
+        background: rgba(2, 6, 23, 0.72) !important;
+        border: 1px solid rgba(148, 163, 184, 0.22) !important;
+    }
+
+    .dark .fi-theme-switcher-btn {
+        color: #94a3b8 !important;
+    }
+
+    .dark .fi-theme-switcher-btn:hover {
+        color: #5eead4 !important;
+        background: rgba(15,23,42,0.86) !important;
+    }
+
+    .dark .fi-theme-switcher-btn[aria-pressed="true"],
+    .dark .fi-theme-switcher-btn.fi-active {
+        color: #5eead4 !important;
+        background: rgba(15,23,42,0.96) !important;
+    }
+}
+
+/*
+|--------------------------------------------------------------------------
+| Dark Dashboard Cards
+|--------------------------------------------------------------------------
+*/
+
+.dark .fi-header-heading {
+    color: var(--dark-text-main) !important;
+}
+
+.dark .fi-section,
+.dark .fi-ta-ctn,
+.dark .fi-card {
+    background:
+        linear-gradient(145deg, rgba(15,23,42,0.76), rgba(6,78,59,0.36)) !important;
+    border: 1px solid rgba(148, 163, 184, 0.22) !important;
+    box-shadow:
+        0 24px 70px rgba(0, 0, 0, 0.32),
+        inset 0 1px 0 rgba(255,255,255,0.10) !important;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Dark Metric
+|--------------------------------------------------------------------------
+*/
+
+/*
+|--------------------------------------------------------------------------
+| Dark Top Product Performance
+|--------------------------------------------------------------------------
+*/
+
+/*
+|--------------------------------------------------------------------------
+| Dark Sales Trend
+|--------------------------------------------------------------------------
+*/
+
+.dark .revenue-wide-chart-svg line {
+    stroke: rgba(203, 213, 225, 0.24) !important;
+}
+
+.dark .revenue-data-label {
+    fill: #ecfeff !important;
+}
+
+.dark .revenue-wide-axis span {
+    color: var(--dark-text-soft) !important;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Dark Category
+|--------------------------------------------------------------------------
+*/
+
+/*
+|--------------------------------------------------------------------------
+| Dark Heatmap
+|--------------------------------------------------------------------------
+*/
+
+.dark .heatmap-insight-box {
+    background: rgba(15,23,42,0.72) !important;
+    border-color: var(--dark-border-soft) !important;
+}
+
+.dark .heatmap-insight-label {
+    color: #cbd5e1 !important;
+    font-weight: 950 !important;
+}
+
+.dark .heatmap-insight-value {
+    color: #f8fafc !important;
+    font-weight: 950 !important;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Dark Recent Sales
+|--------------------------------------------------------------------------
+*/
+
+/*
+|--------------------------------------------------------------------------
+| Dark Product Quadrant
+|--------------------------------------------------------------------------
+*/
+
+.dark .product-bubble-label {
+    color: #0f172a !important;
+    background: rgba(236, 254, 255, 0.92) !important;
+    border-color: rgba(236, 254, 255, 0.75) !important;
+    font-weight: 950 !important;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Dark Chips / Empty State
+|--------------------------------------------------------------------------
+*/
+
+.dark .empty-state {
+    color: #e2e8f0 !important;
+    background: rgba(15, 23, 42, 0.78) !important;
+    border-color: rgba(148, 163, 184, 0.36) !important;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Scrollbar
+|--------------------------------------------------------------------------
+*/
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(15, 118, 110, 0.45) transparent;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(15, 118, 110, 0.32);
+    border-radius: 999px;
+    border: 3px solid transparent;
+    background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(15, 118, 110, 0.52);
+    border: 3px solid transparent;
+    background-clip: content-box;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Responsive
+|--------------------------------------------------------------------------
+*/
+
+@media (max-width: 1500px) {
+}
+
+@media (max-width: 1024px) {
+    .fi-main {
+        padding-inline: 1rem !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .fi-section,
+    .fi-ta-ctn,
+    .fi-card {
+        border-radius: 1.25rem !important;
+    }
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Dashboard Top Alignment Strong Fix
+|--------------------------------------------------------------------------
+| Menaikkan dashboard agar sejajar dengan bagian atas sidebar floating.
+|--------------------------------------------------------------------------
+*/
+
+@media (min-width: 1024px) {
+    .fi-main {
+        padding-top: 0 !important;
+        margin-top: 0 !important;
+    }
+
+    .fi-page {
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+    }
+
+    .fi-page > section,
+    .fi-page > div {
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+    }
+
+    .fi-wi-widgets {
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+    }
+}
+
+/*
+|--------------------------------------------------------------------------
+| Dashboard Top Alignment Balanced Fix
+|--------------------------------------------------------------------------
+| Posisi dashboard dibuat naik sedikit, tapi tidak sampai menempel atas.
+|--------------------------------------------------------------------------
+*/
+
+@media (min-width: 1024px) {
+    .fi-main {
+        padding-top: 0.85rem !important;
+        margin-top: 0 !important;
+    }
+
+    .fi-page {
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+    }
+
+    .fi-page > section,
+    .fi-page > div {
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+    }
+
+    .fi-wi-widgets {
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+    }
+}
+
+/*
+|--------------------------------------------------------------------------
+| Hide Only Page Title Text, Keep Action Buttons
+|--------------------------------------------------------------------------
+| Menghilangkan breadcrumb, title, dan deskripsi halaman,
+| tapi tombol seperti + New Kategori / + Product tetap muncul.
+|--------------------------------------------------------------------------
+*/
+
+.fi-header {
+    margin-bottom: 1.25rem !important;
+}
+
+.fi-header .fi-breadcrumbs,
+.fi-header-heading,
+.fi-header-subheading {
+    display: none !important;
+}
+
+/* Pastikan tombol action kanan tetap tampil */
+.fi-header-actions,
+.fi-header .fi-ac {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* Kalau header cuma berisi tombol, posisikan tombol tetap ke kanan */
+.fi-header {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+}
+
+/* Khusus dashboard, header tetap boleh hilang penuh karena dashboard sudah punya hero sendiri */
+
+/*
+|--------------------------------------------------------------------------
+| Hide Filament Resource Page Header
+|--------------------------------------------------------------------------
+| Menghapus bagian atas seperti breadcrumb, title Kategori,
+| deskripsi halaman, dan tombol area header.
+|--------------------------------------------------------------------------
+*/
+
+.fi-header {
+    display: none !important;
+}
+
+.fi-main {
+    padding-top: 1rem !important;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Breezy Profile Page - Final Compact Luxury
+|--------------------------------------------------------------------------
+| Versi final:
+| - ukuran card lebih compact
+| - jarak antar section lebih lega
+| - konten tidak terlalu melebar ke samping
+| - tetap menyatu dengan style dashboard admin
+|--------------------------------------------------------------------------
+*/
+
+.fi-page:has(.ng-profile-card) {
+    width: 100% !important;
+}
+
+.fi-page:has(.ng-profile-card) .fi-header {
+    display: none !important;
+}
+
+.fi-page:has(.ng-profile-card) .fi-main {
+    padding-top: 0.85rem !important;
+    padding-bottom: 2rem !important;
+}
+
+.fi-page:has(.ng-profile-card) .fi-page-content {
+    display: grid !important;
+    gap: 1.35rem !important;
+    max-width: 1180px !important;
+    margin-inline: auto !important;
+    width: 100% !important;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Card utama profile
+|--------------------------------------------------------------------------
+*/
+
+.ng-profile-card {
+    position: relative;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: minmax(250px, 285px) minmax(0, 1fr);
+    align-items: stretch;
+    gap: 1.3rem;
+    min-height: auto !important;
+    border-radius: 1.7rem;
+    padding: 1.2rem;
+    background:
+        radial-gradient(circle at 94% 12%, rgba(20,184,166,0.11), transparent 28%),
+        radial-gradient(circle at 14% 90%, rgba(255,255,255,0.82), transparent 30%),
+        linear-gradient(145deg, rgba(255,255,255,0.78), rgba(255,255,255,0.52));
+    border: 1px solid rgba(255,255,255,0.84);
+    box-shadow:
+        0 22px 56px rgba(15, 23, 42, 0.08),
+        inset 0 1px 0 rgba(255,255,255,0.92);
+    backdrop-filter: blur(28px) saturate(155%);
+    -webkit-backdrop-filter: blur(28px) saturate(155%);
+}
+
+.ng-profile-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+        linear-gradient(
+            118deg,
+            transparent 0 22%,
+            rgba(255,255,255,0.28) 22.2% 22.8%,
+            transparent 23.2% 100%
+        );
+}
+
+.ng-profile-card > * {
+    position: relative;
+    z-index: 1;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Kolom kiri
+|--------------------------------------------------------------------------
+*/
+
+.ng-profile-side {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 100%;
+    padding: 0.25rem 0.35rem;
+}
+
+.ng-profile-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: fit-content;
+    padding: 0.48rem 0.72rem;
+    border-radius: 999px;
+    color: #0f766e;
+    background: rgba(255,255,255,0.72);
+    border: 1px solid rgba(255,255,255,0.88);
+    box-shadow: 0 10px 26px rgba(15, 23, 42, 0.06);
+    font-size: 0.68rem;
+    font-weight: 950;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.ng-profile-badge span {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 999px;
+    background: #0f766e;
+    box-shadow: 0 0 0 4px rgba(15, 118, 110, 0.14);
+}
+
+.ng-profile-title {
+    margin: 0.8rem 0 0;
+    color: #0f172a;
+    font-size: clamp(1.35rem, 1.8vw, 2rem);
+    line-height: 1.06;
+    font-weight: 950;
+    letter-spacing: -0.055em;
+}
+
+.ng-profile-desc {
+    margin: 0.65rem 0 0;
+    max-width: 290px;
+    color: rgba(71, 85, 105, 0.82);
+    font-size: 0.86rem;
+    line-height: 1.65;
+}
+
+.ng-profile-mini {
+    width: fit-content;
+    min-width: 180px;
+    border-radius: 1rem;
+    padding: 0.8rem 0.9rem;
+    background:
+        linear-gradient(145deg, rgba(255,255,255,0.72), rgba(255,255,255,0.42));
+    border: 1px solid rgba(255,255,255,0.82);
+    box-shadow:
+        0 14px 34px rgba(15, 23, 42, 0.06),
+        inset 0 1px 0 rgba(255,255,255,0.88);
+}
+
+.ng-profile-mini span {
+    display: block;
+    color: rgba(71, 85, 105, 0.78);
+    font-size: 0.7rem;
+    font-weight: 850;
+}
+
+.ng-profile-mini strong {
+    display: block;
+    margin-top: 0.25rem;
+    color: #0f766e;
+    font-size: 1.12rem;
+    line-height: 1.1;
+    font-weight: 950;
+}
+
+.ng-profile-mini small {
+    display: block;
+    margin-top: 0.2rem;
+    color: rgba(71, 85, 105, 0.70);
+    font-size: 0.69rem;
+    font-weight: 750;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Kolom kanan / form
+|--------------------------------------------------------------------------
+*/
+
+.ng-profile-form {
+    position: relative;
+    overflow: hidden;
+    border-radius: 1.3rem;
+    padding: 1.1rem 1.15rem;
+    background:
+        linear-gradient(145deg, rgba(255,255,255,0.84), rgba(255,255,255,0.60));
+    border: 1px solid rgba(255,255,255,0.88);
+    box-shadow:
+        0 16px 42px rgba(15, 23, 42, 0.06),
+        inset 0 1px 0 rgba(255,255,255,0.94);
+    backdrop-filter: blur(22px) saturate(155%);
+    -webkit-backdrop-filter: blur(22px) saturate(155%);
+}
+
+.ng-profile-form .fi-fo-field-wrp-label span,
+.ng-profile-form label {
+    color: #0f172a !important;
+    font-size: 0.78rem !important;
+    font-weight: 850 !important;
+}
+
+.ng-profile-form .space-y-5 > :not([hidden]) ~ :not([hidden]),
+.ng-profile-form .space-y-6 > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 0.9rem !important;
+}
+
+.ng-profile-form .fi-fo-field-wrp {
+    gap: 0.35rem !important;
+}
+
+.ng-profile-form .fi-input-wrp,
+.ng-profile-form input,
+.ng-profile-form textarea {
+    min-height: 2.65rem !important;
+    border-radius: 1rem !important;
+    background: rgba(255,255,255,0.90) !important;
+    border: 1px solid rgba(255,255,255,0.94) !important;
+    box-shadow:
+        0 10px 24px rgba(15, 23, 42, 0.04),
+        inset 0 1px 0 rgba(255,255,255,0.96) !important;
+}
+
+.ng-profile-form .fi-input-wrp:focus-within {
+    border-color: rgba(20,184,166,0.52) !important;
+    box-shadow:
+        0 0 0 4px rgba(20,184,166,0.10),
+        0 12px 26px rgba(15,23,42,0.06) !important;
+}
+
+.ng-profile-form .fi-input {
+    color: #0f172a !important;
+    font-weight: 700 !important;
+}
+
+.ng-profile-action {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 0.8rem;
+}
+
+.ng-profile-submit,
+.ng-profile-form .fi-btn-color-primary,
+.ng-profile-form .fi-btn-color-danger {
+    min-height: 2.45rem !important;
+    border-radius: 999px !important;
+    padding-inline: 1rem !important;
+    border: 0 !important;
+    color: #ffffff !important;
+    background: linear-gradient(135deg, #fb923c 0%, #f97316 45%, #ea580c 100%) !important;
+    box-shadow:
+        0 14px 30px rgba(234, 88, 12, 0.20),
+        inset 0 1px 0 rgba(255,255,255,0.30) !important;
+    font-size: 0.8rem !important;
+    font-weight: 950 !important;
+}
+
+.ng-profile-submit:hover,
+.ng-profile-form .fi-btn-color-primary:hover,
+.ng-profile-form .fi-btn-color-danger:hover {
+    transform: translateY(-1px) !important;
+    box-shadow:
+        0 18px 36px rgba(234, 88, 12, 0.28),
+        inset 0 1px 0 rgba(255,255,255,0.34) !important;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Avatar upload
+|--------------------------------------------------------------------------
+*/
+
+.ng-profile-form .fi-fo-file-upload {
+    max-width: 165px !important;
+}
+
+.ng-profile-form .fi-fo-file-upload img {
+    object-fit: cover !important;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Browser sessions
+|--------------------------------------------------------------------------
+*/
+
+.ng-profile-card-session .ng-profile-form {
+    min-height: 160px !important;
+}
+
+.ng-profile-card-session .ng-profile-form p {
+    font-size: 0.84rem !important;
+    line-height: 1.6 !important;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Bersihkan elemen bawaan yang tidak perlu
+|--------------------------------------------------------------------------
+*/
+
+.ng-profile-form .fi-section,
+.ng-profile-form .fi-card {
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Dark mode
+|--------------------------------------------------------------------------
+*/
+
+.dark .ng-profile-card {
+    background:
+        radial-gradient(circle at 94% 12%, rgba(20,184,166,0.18), transparent 28%),
+        linear-gradient(145deg, rgba(15,23,42,0.78), rgba(6,78,59,0.38));
+    border-color: rgba(148,163,184,0.24);
+    box-shadow:
+        0 24px 58px rgba(0, 0, 0, 0.34),
+        inset 0 1px 0 rgba(255,255,255,0.10);
+}
+
+.dark .ng-profile-badge {
+    color: #5eead4;
+    background: rgba(15,23,42,0.68);
+    border-color: rgba(148,163,184,0.22);
+}
+
+.dark .ng-profile-badge span {
+    background: #5eead4;
+    box-shadow: 0 0 0 4px rgba(94, 234, 212, 0.14);
+}
+
+.dark .ng-profile-title {
+    color: #ecfeff;
+}
+
+.dark .ng-profile-desc {
+    color: rgba(226,232,240,0.78);
+}
+
+.dark .ng-profile-mini {
+    background: rgba(15,23,42,0.68);
+    border-color: rgba(148,163,184,0.22);
+}
+
+.dark .ng-profile-mini span,
+.dark .ng-profile-mini small {
+    color: rgba(203,213,225,0.74);
+}
+
+.dark .ng-profile-mini strong {
+    color: #5eead4;
+}
+
+.dark .ng-profile-form {
+    background:
+        linear-gradient(145deg, rgba(15,23,42,0.78), rgba(6,78,59,0.30));
+    border-color: rgba(148,163,184,0.24);
+    box-shadow:
+        0 18px 44px rgba(0,0,0,0.30),
+        inset 0 1px 0 rgba(255,255,255,0.10);
+}
+
+.dark .ng-profile-form .fi-fo-field-wrp-label span,
+.dark .ng-profile-form label {
+    color: #ecfeff !important;
+}
+
+.dark .ng-profile-form .fi-input-wrp,
+.dark .ng-profile-form input,
+.dark .ng-profile-form textarea {
+    color: #ecfeff !important;
+    background: rgba(15,23,42,0.72) !important;
+    border-color: rgba(148,163,184,0.28) !important;
+}
+
+.dark .ng-profile-form .fi-input {
+    color: #ecfeff !important;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Responsive
+|--------------------------------------------------------------------------
+*/
+
+@media (max-width: 1100px) {
+    .fi-page:has(.ng-profile-card) .fi-page-content {
+        max-width: 100% !important;
+    }
+
+    .ng-profile-card {
+        grid-template-columns: 1fr !important;
+        gap: 1rem !important;
+    }
+
+    .ng-profile-desc {
+        max-width: 100% !important;
+    }
+
+    .ng-profile-mini {
+        width: 100% !important;
+        min-width: 0 !important;
+    }
+}
+
+@media (max-width: 700px) {
+    .ng-profile-card {
+        border-radius: 1.3rem !important;
+        padding: 1rem !important;
+    }
+
+    .ng-profile-form {
+        border-radius: 1.05rem !important;
+        padding: 0.95rem !important;
+    }
+
+    .ng-profile-title {
+        font-size: 1.45rem !important;
+    }
+
+    .ng-profile-form .fi-input-wrp,
+    .ng-profile-form input,
+    .ng-profile-form textarea {
+        min-height: 2.5rem !important;
+    }
+}
+
+/*
+|--------------------------------------------------------------------------
+| Breezy Profile Card Gap Fix
+|--------------------------------------------------------------------------
+| Memberi jarak antar kotak Profile, Password, dan Browser Sessions.
+|--------------------------------------------------------------------------
+*/
+
+.fi-page:has(.ng-profile-card) .fi-page-content {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1.75rem !important;
+    max-width: 1180px !important;
+    margin-inline: auto !important;
+    width: 100% !important;
+}
+
+/* Hilangkan margin/padding bawaan yang bikin card saling nempel */
+.fi-page:has(.ng-profile-card) .fi-page-content > * {
+    margin-top: 0 !important;
+}
+
+/* Tambahkan jarak khusus antar card */
+.ng-profile-card {
+    margin-bottom: 1.75rem !important;
+}
+
+/* Card terakhir tidak perlu margin bawah terlalu besar */
+.ng-profile-card:last-child {
+    margin-bottom: 0 !important;
+}
+
+/* Supaya card tidak terlalu tinggi dan tidak terlalu lebar */
+.fi-page:has(.ng-profile-card) {
+    max-width: 1180px !important;
+    margin-inline: auto !important;
+}
+
+/* Jarak dalam card tetap rapi */
+.ng-profile-card {
+    padding: 1.25rem !important;
+    gap: 1.35rem !important;
+}
+
+/* Kalau masih terasa terlalu mepet, bagian kanan form juga diberi ruang */
+.ng-profile-form {
+    padding: 1.25rem 1.35rem !important;
+}
+
+/* =========================================================
+   ADMIN BACKGROUND SAME AS POS
+   Menyamakan background admin dashboard dengan background POS
+   ========================================================= */
+
+.fi-body {
+    position: relative !important;
+    background: #fff3e6 url("/images/pos-orange-bg.png") center center / cover no-repeat fixed !important;
+}
+
+/* Overlay lembut seperti POS */
+.fi-body::before {
+    content: "" !important;
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: -2 !important;
+    pointer-events: none !important;
+    background:
+        radial-gradient(circle at 8% 8%, rgba(255, 255, 255, 0.36) 0 220px, transparent 226px),
+        radial-gradient(circle at 88% 18%, rgba(255, 156, 91, 0.18) 0 260px, transparent 268px),
+        radial-gradient(circle at 94% 92%, rgba(164, 82, 32, 0.16) 0 360px, transparent 368px),
+        linear-gradient(135deg, rgba(255, 244, 235, 0.1), rgba(255, 198, 139, 0.08)) !important;
+}
+
+/* Supaya background admin tidak ketutup warna bawaan Filament */
+.fi-main,
+.fi-main-ctn,
+.fi-page,
+.fi-page-content {
+    background: transparent !important;
+}
+
+/* Widget tetap glass seperti POS */
+.fi-section {
+    background: rgba(255, 255, 255, 0.22) !important;
+    border: 1px solid rgba(150, 86, 42, 0.2) !important;
+    box-shadow:
+        0 18px 46px rgba(125, 72, 31, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.26) !important;
+    -webkit-backdrop-filter: blur(10px) saturate(116%) !important;
+    backdrop-filter: blur(10px) saturate(116%) !important;
+}
+
+/* Sidebar dibuat ikut rasa POS */
+.fi-sidebar {
+    background: rgba(255, 255, 255, 0.22) !important;
+    border-right: 1px solid rgba(150, 86, 42, 0.2) !important;
+    box-shadow:
+        0 18px 46px rgba(125, 72, 31, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.26) !important;
+    -webkit-backdrop-filter: blur(10px) saturate(116%) !important;
+    backdrop-filter: blur(10px) saturate(116%) !important;
+}
+
+/* Topbar jika muncul */
+.fi-topbar {
+    background: rgba(255, 255, 255, 0.18) !important;
+    border-bottom: 1px solid rgba(150, 86, 42, 0.14) !important;
+    -webkit-backdrop-filter: blur(10px) saturate(116%) !important;
+    backdrop-filter: blur(10px) saturate(116%) !important;
+}
+
+/* Dark mode jangan dipaksa hitam dulu agar tetap sama dengan POS */
+.dark .fi-body {
+    background: #fff3e6 url("/images/pos-orange-bg.png") center center / cover no-repeat fixed !important;
+}
+
+.dark .fi-main,
+.dark .fi-main-ctn,
+.dark .fi-page,
+.dark .fi-page-content {
+    background: transparent !important;
+}
+
+/* ==========================================================
+   POWER BI COMPACT DASHBOARD - NGUNJUK POS
+   ========================================================== */
+
+.fi-main {
+    background:
+        radial-gradient(circle at top left, rgba(251, 146, 60, 0.16), transparent 32rem),
+        radial-gradient(circle at bottom right, rgba(15, 23, 42, 0.08), transparent 34rem),
+        linear-gradient(135deg, #fff7ed 0%, #f8fafc 45%, #ffffff 100%) !important;
+}
+
+.fi-page,
+.fi-wi-widgets {
+    gap: 0.75rem !important;
+}
+
+.fi-wi-widget {
+    margin: 0 !important;
+}
+
+.fi-section,
+.fi-wi-widget > section {
+    border-radius: 1.35rem !important;
+    border: 1px solid rgba(148, 163, 184, 0.22) !important;
+    background: rgba(255, 255, 255, 0.82) !important;
+    box-shadow:
+        0 18px 48px rgba(15, 23, 42, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.75) !important;
+    backdrop-filter: blur(18px) !important;
+    overflow: hidden !important;
+}
+
+.fi-section-content {
+    padding: 0.95rem !important;
+}
+
+.fi-header,
+.fi-page-header,
+.fi-breadcrumbs,
+.fi-header-heading,
+.fi-header-subheading {
+    display: none !important;
+}
+
+/* ===== Overview compact ===== */
+
+/* ===== Compact all dashboard chart cards ===== */
+
+.fi-wi-widget h2,
+.fi-wi-widget h3 {
+    font-size: 0.95rem !important;
+    font-weight: 900 !important;
+    letter-spacing: -0.025em !important;
+}
+
+.fi-wi-widget p {
+    font-size: 0.75rem !important;
+    line-height: 1.35 !important;
+}
+
+.fi-wi-widget svg {
+    max-height: 245px !important;
+}
+
+.fi-wi-widget table {
+    font-size: 0.76rem !important;
+}
+
+.fi-wi-widget .fi-ta-content {
+    max-height: 300px !important;
+    overflow: auto !important;
+}
+
+/* ===== Heatmap supaya tidak terlalu tinggi ===== */
+
+.sales-heatmap,
+[class*="heatmap"] {
+    max-height: 305px;
+}
+
+[class*="heatmap"] .cell,
+[class*="heatmap"] td,
+[class*="heatmap"] span {
+    border-radius: 0.45rem;
+}
+
+/* ===== Responsive ===== */
+
+@media (max-width: 1280px) {
+}
+
+@media (max-width: 768px) {
+}
+
+/* ==========================================================
+   FIX POWER BI DASHBOARD VISIBILITY
+   Tambahkan di PALING BAWAH theme.css
+   ========================================================== */
+
+/* Supaya card chart di bawah juga lebih terbaca */
+body .fi-main .fi-section,
+body .fi-main .fi-wi-widget > section {
+    background: rgba(255, 255, 255, 0.94) !important;
+    border: 1px solid rgba(148, 163, 184, 0.24) !important;
+    box-shadow: 0 18px 46px rgba(15, 23, 42, 0.08) !important;
+    opacity: 1 !important;
+}
+
+body .fi-main .fi-section *,
+body .fi-main .fi-wi-widget > section * {
+    opacity: 1 !important;
+}
+
+/* Judul chart lebih tegas */
+body .fi-main .fi-wi-widget h2,
+body .fi-main .fi-wi-widget h3,
+body .fi-main .fi-section-header-heading {
+    color: #0f172a !important;
+    font-weight: 900 !important;
+}
+
+body .fi-main .fi-wi-widget p,
+body .fi-main .fi-section-header-description {
+    color: #475569 !important;
+}
+
+/* ==========================================================
+   COMPACT POWER BI STYLE DASHBOARD
+   ========================================================== */
+
+.fi-page,
+.fi-wi-widgets {
+    gap: 12px !important;
+}
+
+.fi-wi-widget {
+    margin: 0 !important;
+}
+
+.fi-section,
+.fi-wi-widget > section {
+    border-radius: 20px !important;
+    overflow: hidden !important;
+}
+
+.fi-section-content {
+    padding: 12px !important;
+}
+
+/* Judul dan teks widget */
+.fi-wi-widget h2,
+.fi-wi-widget h3,
+.fi-section-header-heading {
+    font-size: 15px !important;
+    line-height: 1.2 !important;
+    font-weight: 900 !important;
+    margin-bottom: 2px !important;
+}
+
+.fi-wi-widget p,
+.fi-section-header-description {
+    font-size: 12px !important;
+    line-height: 1.35 !important;
+    margin-bottom: 0 !important;
+    color: #64748b !important;
+}
+
+/* Card body lebih rapat */
+.compact-card,
+.metric-card {
+    padding: 10px !important;
+    border-radius: 16px !important;
+}
+
+/* Header overview atas */
+
+/* KPI atas dibuat lebih kecil */
+
+/* Widget chart dibuat lebih pendek */
+
+/* Container chart */
+
+/* Summary box dalam widget diperkecil */
+.summary-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+    margin-bottom: 10px !important;
+}
+
+.summary-card {
+    min-height: 72px !important;
+    padding: 10px !important;
+    border-radius: 14px !important;
+}
+
+.summary-card .label {
+    font-size: 10px !important;
+    margin-bottom: 4px !important;
+}
+
+.summary-card .value {
+    font-size: 14px !important;
+    font-weight: 900 !important;
+}
+
+.summary-card .sub {
+    font-size: 11px !important;
+}
+
+/* Top Product biar tidak kepanjangan */
+
+/* Heatmap dibuat pendek */
+
+.heatmap-row {
+    gap: 6px !important;
+}
+
+.heatmap-cell {
+    height: 26px !important;
+    border-radius: 8px !important;
+    font-size: 10px !important;
+}
+
+/* Kurangi tinggi tabel/daftar */
+.fi-wi-widget table td,
+.fi-wi-widget table th {
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+    font-size: 12px !important;
+}
+
+/* Responsive */
+@media (max-width: 1280px) {
+}
+
+@media (max-width: 768px) {
+
+    .summary-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+/*
+|--------------------------------------------------------------------------
+| NGUNJUK GLOBAL NO-RAW CLEANER - NO LOADER VERSION
+|--------------------------------------------------------------------------
+| Catatan:
+| - Tidak memakai overlay.
+| - Tidak memakai spinner/loading screen.
+| - Hanya membersihkan wrapper/placeholder putih bawaan Filament.
+| - Style utama widget tetap dari Blade masing-masing.
+|--------------------------------------------------------------------------
+*/
+
+html,
+body,
+.fi-body {
+    overflow-x: hidden !important;
+}
+
+.fi-body,
+.fi-layout,
+.fi-main-ctn,
+.fi-main,
+.fi-page,
+.fi-page-content,
+main {
+    background-color: transparent !important;
+}
+
+.fi-main-ctn,
+.fi-main,
+.fi-page,
+.fi-page-content {
+    position: relative !important;
+}
+
+/* Wrapper widget bawaan Filament dibuat transparan supaya tidak muncul card putih mentah */
+.fi-wi,
+.fi-wi-widget,
+.fi-wi-widget-content,
+.fi-wi-widgets,
+.fi-wi-widgets > * {
+    background: transparent !important;
+    background-color: transparent !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+}
+
+/* Placeholder kosong benar-benar dihilangkan */
+.fi-wi:empty,
+.fi-wi-widget:empty,
+.fi-wi-widget-content:empty,
+.fi-wi-widgets > *:empty {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    min-height: 0 !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
+}
+
+@supports selector(:has(*)) {
+    .fi-wi-widget:not(:has(*)),
+    .fi-wi-widget-content:not(:has(*)),
+    .fi-wi-widgets > *:not(:has(*)) {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        min-height: 0 !important;
+        height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: 0 !important;
+        box-shadow: none !important;
+        background: transparent !important;
+    }
+}
+
+/* Hapus kemungkinan animasi/spinner overlay dari patch sebelumnya */
+html.ngunjuk-page-transition .fi-main::before,
+html.ngunjuk-page-transition .fi-main::after {
+    display: none !important;
+    content: none !important;
+}
+
+html.ngunjuk-page-transition .fi-main {
+    pointer-events: auto !important;
+}
+
+
+
+/* =========================================================
+   NGUNJUK FINAL ADMIN HP TABLE SCROLL - TRUE NEW FIX
+   Fokus: area informasi data Biaya Operasional & Target Penjualan.
+   Prinsip:
+   - Tabel dibuat lebih lebar dari layar HP.
+   - Wrapper tabel dipaksa bisa scroll horizontal.
+   - Teks kolom tidak boleh pecah vertikal.
+   - Header/KPI/widget atas tidak disentuh.
+   ========================================================= */
+
+@media (max-width: 767px) {
+    .fi-page,
+    .fi-page-content,
+    .fi-main,
+    .fi-main-ctn {
+        max-width: 100vw !important;
+        overflow-x: hidden !important;
+    }
+
+    .fi-ta,
+    .fi-ta-ctn,
+    .fi-section:has(.fi-ta),
+    .fi-section:has(.fi-ta-ctn) {
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow: hidden !important;
+    }
+
+    .fi-ta-content,
+    .fi-ta-table-ctn,
+    .fi-ta-table-container,
+    .fi-ta .overflow-x-auto,
+    .fi-ta-ctn .overflow-x-auto,
+    .fi-section:has(.fi-ta) .overflow-x-auto,
+    .fi-section:has(.fi-ta-ctn) .overflow-x-auto {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: auto !important;
+        overflow-y: visible !important;
+        -webkit-overflow-scrolling: touch !important;
+        overscroll-behavior-x: contain !important;
+        scrollbar-width: thin !important;
+    }
+
+    .fi-ta table,
+    .fi-ta-ctn table,
+    table.fi-ta-table,
+    .fi-ta-table {
+        display: table !important;
+        width: 940px !important;
+        min-width: 940px !important;
+        max-width: none !important;
+        table-layout: fixed !important;
+        border-collapse: separate !important;
+        border-spacing: 0 !important;
+    }
+
+    .fi-ta table colgroup,
+    .fi-ta-ctn table colgroup,
+    table.fi-ta-table colgroup,
+    .fi-ta-table colgroup {
+        display: none !important;
+    }
+
+    .fi-ta table thead,
+    .fi-ta table tbody,
+    .fi-ta-ctn table thead,
+    .fi-ta-ctn table tbody,
+    .fi-ta-table thead,
+    .fi-ta-table tbody {
+        display: table-header-group !important;
+    }
+
+    .fi-ta table tbody,
+    .fi-ta-ctn table tbody,
+    .fi-ta-table tbody {
+        display: table-row-group !important;
+    }
+
+    .fi-ta table tr,
+    .fi-ta-ctn table tr,
+    .fi-ta-table tr {
+        display: table-row !important;
+    }
+
+    .fi-ta table th,
+    .fi-ta table td,
+    .fi-ta-ctn table th,
+    .fi-ta-ctn table td,
+    .fi-ta-header-cell,
+    .fi-ta-cell {
+        display: table-cell !important;
+        width: auto !important;
+        max-width: none !important;
+        min-width: 0 !important;
+        white-space: nowrap !important;
+        word-break: normal !important;
+        overflow-wrap: normal !important;
+        vertical-align: middle !important;
+        text-align: left !important;
+    }
+
+    .fi-ta table th *,
+    .fi-ta table td *,
+    .fi-ta-ctn table th *,
+    .fi-ta-ctn table td *,
+    .fi-ta-text,
+    .fi-ta-text *,
+    .fi-ta-text-item,
+    .fi-ta-text-item *,
+    .fi-ta-col-wrp,
+    .fi-ta-col-wrp * {
+        white-space: nowrap !important;
+        word-break: normal !important;
+        overflow-wrap: normal !important;
+        text-overflow: clip !important;
+        max-width: none !important;
+    }
+
+    .fi-ta table th:nth-child(1),
+    .fi-ta table td:nth-child(1),
+    .fi-ta-ctn table th:nth-child(1),
+    .fi-ta-ctn table td:nth-child(1) {
+        width: 270px !important;
+        min-width: 270px !important;
+        max-width: 270px !important;
+    }
+
+    .fi-ta table th:nth-child(2),
+    .fi-ta table td:nth-child(2),
+    .fi-ta-ctn table th:nth-child(2),
+    .fi-ta-ctn table td:nth-child(2) {
+        width: 230px !important;
+        min-width: 230px !important;
+        max-width: 230px !important;
+    }
+
+    .fi-ta table th:nth-child(3),
+    .fi-ta table td:nth-child(3),
+    .fi-ta-ctn table th:nth-child(3),
+    .fi-ta-ctn table td:nth-child(3) {
+        width: 190px !important;
+        min-width: 190px !important;
+        max-width: 190px !important;
+    }
+
+    .fi-ta table th:nth-child(4),
+    .fi-ta table td:nth-child(4),
+    .fi-ta-ctn table th:nth-child(4),
+    .fi-ta-ctn table td:nth-child(4) {
+        width: 200px !important;
+        min-width: 200px !important;
+        max-width: 200px !important;
+    }
+
+    .fi-ta table th:last-child,
+    .fi-ta table td:last-child,
+    .fi-ta-ctn table th:last-child,
+    .fi-ta-ctn table td:last-child {
+        width: 80px !important;
+        min-width: 80px !important;
+        max-width: 80px !important;
+        text-align: center !important;
+    }
+
+    .fi-ta .fi-ta-actions,
+    .fi-ta-ctn .fi-ta-actions {
+        white-space: nowrap !important;
+        justify-content: center !important;
+    }
+
+    .ng-sales-target-month-col,
+    .ng-operational-cost-name-col {
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+    }
+}
+
+@media (min-width: 768px) {
+    /* Desktop/tablet besar: kembalikan sedikit ruang kolom Bulan Target Penjualan sesuai desain sebelumnya. */
+    .ng-sales-target-month-col {
+        padding-left: 96px !important;
+        padding-right: 12px !important;
+    }
+}
+
+/* =========================================================
+   FIX ADMIN MOBILE/TABLET SIDEBAR
+   Samakan sidebar HP & tablet dengan desktop + hide search
+========================================================= */
+
+@media (max-width: 1023px) {
+    /*
+    |--------------------------------------------------------------------------
+    | Hide Sidebar Search on Mobile / Tablet
+    |--------------------------------------------------------------------------
+    */
+    .fi-sidebar .fi-global-search,
+    .fi-sidebar .fi-global-search-field,
+    .fi-sidebar [data-global-search],
+    .fi-sidebar form[role="search"],
+    .fi-sidebar .fi-input-wrp:has(input[type="search"]),
+    .fi-sidebar .fi-input-wrp:has(input[placeholder*="Search"]),
+    .fi-sidebar .fi-input-wrp:has(input[placeholder*="search"]) {
+        display: none !important;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Mobile / Tablet Sidebar Glass Orange
+    |--------------------------------------------------------------------------
+    */
+    .fi-sidebar {
+        color: #1f2937 !important;
+
+        background:
+            radial-gradient(circle at 28% 8%, rgba(255, 255, 255, 0.76), transparent 30%),
+            radial-gradient(circle at 95% 82%, rgba(255, 128, 0, 0.18), transparent 38%),
+            linear-gradient(145deg, rgba(255, 239, 219, 0.92), rgba(255, 224, 194, 0.72)) !important;
+
+        border-right: 1px solid rgba(255, 255, 255, 0.72) !important;
+
+        box-shadow:
+            20px 0 70px rgba(63, 40, 24, 0.18),
+            inset 0 1px 0 rgba(255, 255, 255, 0.86) !important;
+
+        backdrop-filter: blur(28px) saturate(150%) !important;
+        -webkit-backdrop-filter: blur(28px) saturate(150%) !important;
+    }
+
+    .fi-sidebar::before {
+        content: "" !important;
+        position: absolute !important;
+        inset: 0 !important;
+        z-index: 0 !important;
+        pointer-events: none !important;
+
+        background:
+            linear-gradient(
+                115deg,
+                transparent 0 44%,
+                rgba(255, 255, 255, 0.32) 44.2% 45%,
+                transparent 45.4% 100%
+            ) !important;
+    }
+
+    .fi-sidebar > * {
+        position: relative !important;
+        z-index: 1 !important;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Sidebar Header / Logo
+    |--------------------------------------------------------------------------
+    */
+    .fi-sidebar-header {
+        min-height: 4.4rem !important;
+        padding: 1rem 1rem 0.4rem !important;
+        background: transparent !important;
+        border-bottom: 0 !important;
+    }
+
+    .fi-sidebar-header .fi-logo,
+    .fi-sidebar-header a {
+        color: #111827 !important;
+        font-size: 1.15rem !important;
+        font-weight: 950 !important;
+        letter-spacing: -0.04em !important;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Sidebar Menu
+    |--------------------------------------------------------------------------
+    */
+    .fi-sidebar-nav {
+        padding: 0.45rem 0.85rem 0.85rem !important;
+        gap: 0.3rem !important;
+    }
+
+    .fi-sidebar-nav-groups {
+        gap: 0.35rem !important;
+    }
+
+    .fi-sidebar-group {
+        margin-top: 0.25rem !important;
+        margin-bottom: 0.1rem !important;
+        padding: 0 !important;
+    }
+
+    .fi-sidebar-group-label {
+        color: rgba(75, 85, 99, 0.72) !important;
+        font-size: 0.8rem !important;
+        font-weight: 900 !important;
+        letter-spacing: 0.01em !important;
+    }
+
+    .fi-sidebar-group-button {
+        min-height: 2rem !important;
+        padding-top: 0.15rem !important;
+        padding-bottom: 0.15rem !important;
+    }
+
+    .fi-sidebar-item {
+        margin-top: 0.05rem !important;
+        margin-bottom: 0.08rem !important;
+    }
+
+    .fi-sidebar-item a {
+        min-height: 2.55rem !important;
+        padding: 0.45rem 0.7rem !important;
+
+        border-radius: 1rem !important;
+
+        color: rgba(31, 41, 55, 0.76) !important;
+        background: transparent !important;
+
+        font-size: 0.9rem !important;
+        font-weight: 760 !important;
+        line-height: 1.18 !important;
+
+        transition:
+            transform 180ms ease,
+            background 180ms ease,
+            box-shadow 180ms ease,
+            color 180ms ease !important;
+    }
+
+    .fi-sidebar-item-label {
+        line-height: 1.18 !important;
+    }
+
+    .fi-sidebar-item svg {
+        width: 1.15rem !important;
+        height: 1.15rem !important;
+        color: rgba(148, 163, 184, 0.95) !important;
+    }
+
+    .fi-sidebar-item a:hover {
+        color: #f97316 !important;
+        background: rgba(255, 255, 255, 0.56) !important;
+
+        box-shadow:
+            0 12px 28px rgba(120, 53, 15, 0.08),
+            inset 0 1px 0 rgba(255, 255, 255, 0.82) !important;
+    }
+
+    .fi-sidebar-item-active a,
+    .fi-sidebar-item.fi-active a,
+    .fi-sidebar-item a[aria-current="page"] {
+        color: #ffffff !important;
+
+        background:
+            linear-gradient(135deg, #ff8a00, #ff6a00) !important;
+
+        box-shadow:
+            0 16px 34px rgba(255, 106, 0, 0.28),
+            inset 0 1px 0 rgba(255, 255, 255, 0.42) !important;
+    }
+
+    .fi-sidebar-item-active svg,
+    .fi-sidebar-item.fi-active svg,
+    .fi-sidebar-item a[aria-current="page"] svg {
+        color: #ffffff !important;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Sidebar Footer / User Menu
+    |--------------------------------------------------------------------------
+    */
+    .fi-sidebar-footer {
+        padding: 0.7rem 0.85rem 1rem !important;
+        background: transparent !important;
+    }
+
+    .fi-sidebar .fi-user-menu {
+        width: 100% !important;
+        min-height: 3rem !important;
+
+        border-radius: 1.2rem !important;
+
+        background: rgba(255, 255, 255, 0.62) !important;
+        border: 1px solid rgba(255, 255, 255, 0.76) !important;
+
+        box-shadow:
+            0 14px 34px rgba(120, 53, 15, 0.10),
+            inset 0 1px 0 rgba(255, 255, 255, 0.86) !important;
+
+        backdrop-filter: blur(18px) saturate(145%) !important;
+        -webkit-backdrop-filter: blur(18px) saturate(145%) !important;
+    }
+}
+
+
+/* =========================================================
+   FINAL FORCE SIDEBAR MOBILE/TABLET - SOFT ORANGE CREAM
+   Warna merata, tidak patah-patah per bagian
+========================================================= */
+
+@media (max-width: 1023px) {
+    html body .fi-sidebar,
+    html body aside.fi-sidebar {
+        position: fixed !important;
+        isolation: isolate !important;
+        overflow: hidden !important;
+
+        background: #ffe6cb !important;
+        background-color: #ffe6cb !important;
+
+        border-right: 1px solid rgba(255, 255, 255, 0.78) !important;
+
+        box-shadow:
+            22px 0 72px rgba(90, 48, 20, 0.18),
+            inset 0 1px 0 rgba(255, 255, 255, 0.88) !important;
+
+        backdrop-filter: blur(20px) saturate(140%) !important;
+        -webkit-backdrop-filter: blur(20px) saturate(140%) !important;
+    }
+
+    html body .fi-sidebar::before {
+        content: "" !important;
+        position: absolute !important;
+        inset: 0 !important;
+        z-index: 0 !important;
+        pointer-events: none !important;
+
+        background:
+            radial-gradient(circle at 18% 8%, rgba(255, 255, 255, 0.55), transparent 30%),
+            radial-gradient(circle at 90% 88%, rgba(255, 169, 91, 0.32), transparent 42%),
+            linear-gradient(180deg, #fff0df 0%, #ffe6cb 48%, #ffd8b2 100%) !important;
+
+        opacity: 1 !important;
+    }
+
+    html body .fi-sidebar::after {
+        content: "" !important;
+        position: absolute !important;
+        inset: 0 !important;
+        z-index: 0 !important;
+        pointer-events: none !important;
+
+        background:
+            linear-gradient(
+                115deg,
+                transparent 0 45%,
+                rgba(255, 255, 255, 0.20) 45.3% 46%,
+                transparent 46.4% 100%
+            ) !important;
+
+        opacity: 0.55 !important;
+    }
+
+    html body .fi-sidebar > *,
+    html body .fi-sidebar > div,
+    html body .fi-sidebar-header,
+    html body .fi-sidebar-nav,
+    html body .fi-sidebar-nav-groups,
+    html body .fi-sidebar-group,
+    html body .fi-sidebar-group-button,
+    html body .fi-sidebar-group-items,
+    html body .fi-sidebar-footer {
+        position: relative !important;
+        z-index: 1 !important;
+
+        background: transparent !important;
+        background-color: transparent !important;
+        background-image: none !important;
+
+        box-shadow: none !important;
+        border-color: transparent !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+    }
+
+    html body .fi-sidebar .fi-global-search,
+    html body .fi-sidebar .fi-global-search-field,
+    html body .fi-sidebar [data-global-search],
+    html body .fi-sidebar form[role="search"],
+    html body .fi-sidebar .fi-input-wrp:has(input[type="search"]),
+    html body .fi-sidebar .fi-input-wrp:has(input[placeholder*="Search"]),
+    html body .fi-sidebar .fi-input-wrp:has(input[placeholder*="search"]) {
+        display: none !important;
+    }
+
+    html body .fi-sidebar-header {
+        min-height: 4.35rem !important;
+        padding: 1rem 1rem 0.45rem !important;
+    }
+
+    html body .fi-sidebar-header .fi-logo,
+    html body .fi-sidebar-header a {
+        color: #121212 !important;
+        font-size: 1.12rem !important;
+        font-weight: 950 !important;
+        letter-spacing: -0.04em !important;
+    }
+
+    html body .fi-sidebar-group-label {
+        color: rgba(91, 66, 44, 0.72) !important;
+        font-size: 0.78rem !important;
+        font-weight: 900 !important;
+    }
+
+    html body .fi-sidebar-item a {
+        min-height: 2.55rem !important;
+        padding: 0.45rem 0.7rem !important;
+        border-radius: 1rem !important;
+
+        color: rgba(45, 35, 27, 0.82) !important;
+        background: transparent !important;
+        background-color: transparent !important;
+        background-image: none !important;
+
+        font-size: 0.9rem !important;
+        font-weight: 760 !important;
+        line-height: 1.18 !important;
+
+        box-shadow: none !important;
+    }
+
+    html body .fi-sidebar-item svg {
+        width: 1.12rem !important;
+        height: 1.12rem !important;
+        color: rgba(126, 96, 70, 0.46) !important;
+    }
+
+    html body .fi-sidebar-item a:hover {
+        color: #df6200 !important;
+        background: rgba(255, 255, 255, 0.36) !important;
+        box-shadow:
+            0 10px 24px rgba(126, 68, 24, 0.08),
+            inset 0 1px 0 rgba(255, 255, 255, 0.72) !important;
+    }
+
+    html body .fi-sidebar-item-active a,
+    html body .fi-sidebar-item.fi-active a,
+    html body .fi-sidebar-item a[aria-current="page"] {
+        color: #ffffff !important;
+        background: linear-gradient(135deg, #ff8726, #ff7218) !important;
+        box-shadow:
+            0 14px 30px rgba(255, 114, 24, 0.24),
+            inset 0 1px 0 rgba(255, 255, 255, 0.38) !important;
+    }
+
+    html body .fi-sidebar-item-active svg,
+    html body .fi-sidebar-item.fi-active svg,
+    html body .fi-sidebar-item a[aria-current="page"] svg {
+        color: #ffffff !important;
+    }
+
+    html body .fi-sidebar-footer {
+        padding: 0.7rem 0.85rem 1rem !important;
+    }
+
+    html body .fi-sidebar .fi-user-menu {
+        width: 100% !important;
+        min-height: 3rem !important;
+        border-radius: 1.15rem !important;
+
+        background: rgba(255, 255, 255, 0.48) !important;
+        border: 1px solid rgba(255, 255, 255, 0.76) !important;
+
+        box-shadow:
+            0 12px 28px rgba(126, 68, 24, 0.10),
+            inset 0 1px 0 rgba(255, 255, 255, 0.82) !important;
+
+        backdrop-filter: blur(14px) saturate(135%) !important;
+        -webkit-backdrop-filter: blur(14px) saturate(135%) !important;
+    }
+}
+

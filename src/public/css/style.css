@@ -1,0 +1,7513 @@
+/* =========================================================
+   NGUNJUK POS - CLEAN FRONTEND STYLE
+   File: public/css/style.css
+   Fokus:
+   1. Sidebar Home, History, Settings dibuat satu warna/effect.
+   2. CSS lama yang saling tumpuk dirapikan menjadi satu sumber style.
+   3. Tetap mendukung POS, History, Settings, modal checkout, invoice, cart, dan login frontend.
+   ========================================================= */
+
+:root {
+  --surface: #ffffff;
+  --surface-soft: #fff7ef;
+  --surface-warm: #ffe6cf;
+  --line: rgba(150, 86, 42, 0.2);
+  --line-soft: rgba(255, 255, 255, 0.52);
+  --text: #26272d;
+  --muted: #86776c;
+  --primary: #ff8b59;
+  --primary-dark: #e66b34;
+  --primary-soft: #fff0e8;
+  --danger: #e25555;
+  --success: #16a060;
+  --warning: #b7791f;
+  --orange-shadow: rgba(125, 72, 31, 0.1);
+  --soft-shadow: 0 18px 46px rgba(125, 72, 31, 0.08);
+  --deep-shadow: 0 28px 72px rgba(125, 72, 31, 0.16);
+  --panel-radius: 28px;
+  --card-radius: 22px;
+  --glass-bg: rgba(255, 255, 255, 0.22);
+  --glass-bg-strong: rgba(255, 255, 255, 0.34);
+  --glass-bg-soft: rgba(255, 255, 255, 0.16);
+  --glass-border: rgba(255, 255, 255, 0.28);
+  --glass-blur: blur(10px) saturate(116%);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  font-family: Poppins, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: var(--text);
+  background: #fff3e6 url("../images/pos-orange-bg.png") center center / cover no-repeat fixed;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  border: 0;
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* =========================================================
+   APP LAYOUT
+   Struktur ini dipakai Home, History, dan Settings.
+   Sidebar tidak dibedakan per halaman agar warna/effect sama.
+   ========================================================= */
+
+body.app-page,
+body.history-page,
+body.settings-page,
+body:has(.pos-luxury-area),
+body:has(.history-area),
+body:has(.settings-area) {
+  overflow: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 8% 8%, rgba(255, 255, 255, 0.36) 0 220px, transparent 226px),
+    radial-gradient(circle at 88% 18%, rgba(255, 156, 91, 0.18) 0 260px, transparent 268px),
+    radial-gradient(circle at 94% 92%, rgba(164, 82, 32, 0.16) 0 360px, transparent 368px),
+    linear-gradient(135deg, rgba(255, 244, 235, 0.1), rgba(255, 198, 139, 0.08));
+}
+
+.app-shell,
+.app-shell:not(.single-content),
+.app-shell.single-content {
+  width: 100%;
+  height: 100vh;
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 250px minmax(0, 1fr);
+  gap: 24px;
+  padding: 18px 22px;
+  background: transparent;
+  overflow: hidden;
+}
+
+.content,
+.app-shell.single-content .content {
+  min-width: 0;
+  height: calc(100vh - 36px);
+  min-height: 0;
+  overflow: hidden;
+  border-radius: var(--panel-radius);
+  border: 1px solid rgba(150, 86, 42, 0.2);
+  background: rgba(255, 255, 255, 0.22);
+  box-shadow: var(--soft-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.26);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+}
+
+/* =========================================================
+   SIDEBAR - STYLE FINAL YANG DIPAKAI SEMUA HALAMAN
+   Jangan buat override khusus .history-page .sidebar / .settings-page .sidebar
+   jika ingin warna/effect tetap sama.
+   ========================================================= */
+
+.sidebar,
+body.history-page .sidebar,
+body.settings-page .sidebar,
+body:has(.history-area) .sidebar,
+body:has(.settings-area) .sidebar {
+  position: relative;
+  height: calc(100vh - 36px);
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 28px 22px 28px;
+  overflow: hidden;
+  border-radius: var(--panel-radius);
+  border: 1px solid rgba(150, 86, 42, 0.2);
+  background: rgba(255, 255, 255, 0.22);
+  box-shadow: var(--soft-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.26);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  z-index: 5;
+}
+
+.sidebar::before,
+.sidebar::after {
+  content: none;
+  display: none;
+}
+
+.brand,
+.brand.brand-with-logo {
+  width: 100%;
+  min-height: 72px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  margin-bottom: 38px;
+  border-radius: 20px;
+  border: 1px solid rgba(150, 86, 42, 0.18);
+  background: rgba(255, 255, 255, 0.24);
+  box-shadow: 0 12px 30px rgba(125, 72, 31, 0.055), inset 0 1px 0 rgba(255, 255, 255, 0.32);
+}
+
+.brand-logo {
+  width: 52px;
+  height: 52px;
+  flex: 0 0 52px;
+  object-fit: contain;
+  border-radius: 16px;
+}
+
+.brand-text {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.brand strong,
+.brand-text strong {
+  display: block;
+  color: var(--text);
+  font-size: 27px;
+  line-height: 1;
+  font-weight: 900;
+  letter-spacing: -1.1px;
+}
+
+.brand strong span,
+.brand-text strong span {
+  color: var(--primary-dark);
+}
+
+.brand small,
+.brand-text small {
+  display: block;
+  margin-top: 7px;
+  color: #8d7b70;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.2em;
+}
+
+.nav-menu {
+  display: grid;
+  gap: 12px;
+}
+
+.nav-item {
+  position: relative;
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 0 14px;
+  border-radius: 18px;
+  border: 1px solid rgba(150, 86, 42, 0.16);
+  color: #393138;
+  background: rgba(255, 255, 255, 0.14);
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1;
+  text-align: left;
+  transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.nav-item:hover,
+.nav-item.active {
+  color: #ffffff;
+  background: linear-gradient(135deg, #ff7c45, #ff9b64);
+  border-color: rgba(255, 255, 255, 0.26);
+  box-shadow: 0 14px 30px rgba(255, 124, 69, 0.24);
+  transform: translateY(-1px);
+}
+
+.nav-item.active::after {
+  content: "";
+  position: absolute;
+  right: -23px;
+  width: 4px;
+  height: 34px;
+  border-radius: 999px;
+  background: #ff7c45;
+  box-shadow: 0 10px 24px rgba(255, 124, 69, 0.28);
+}
+
+.nav-icon {
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 22px;
+  font-size: 17px;
+}
+
+.logout-form {
+  width: 100%;
+  margin-top: auto;
+  padding-bottom: 6px;
+}
+
+.logout,
+.logout-button {
+  width: 100%;
+  margin-top: 0;
+  font-family: inherit;
+}
+
+.logout-button:not(:hover) {
+  color: #554941;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* =========================================================
+   TOPBAR
+   ========================================================= */
+
+.topbar,
+.app-shell.single-content .topbar {
+  height: 96px;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  padding: 0 34px;
+  border-bottom: 1px solid rgba(150, 86, 42, 0.18);
+  background: rgba(255, 255, 255, 0.16);
+  -webkit-backdrop-filter: blur(8px) saturate(112%);
+  backdrop-filter: blur(8px) saturate(112%);
+}
+
+.topbar h2 {
+  color: var(--text);
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+}
+
+.topbar-spacer {
+  flex: 1;
+}
+
+.search-box,
+.history-search {
+  width: min(430px, 56vw);
+  height: 54px;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 0 20px;
+  border-radius: 999px;
+  border: 1px solid rgba(150, 86, 42, 0.22);
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.24);
+  box-shadow: 0 10px 26px rgba(125, 72, 31, 0.045), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.search-box:focus-within,
+.history-search:focus-within {
+  border-color: rgba(230, 107, 52, 0.42);
+  box-shadow: 0 0 0 4px rgba(255, 139, 89, 0.1), 0 14px 30px rgba(125, 72, 31, 0.06);
+}
+
+.search-box input,
+.history-search input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  color: var(--text);
+  background: transparent;
+  font-size: 14px;
+}
+
+.search-box input::placeholder,
+.history-search input::placeholder {
+  color: #9a8f86;
+}
+
+.profile-mini {
+  height: 58px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 14px 8px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(150, 86, 42, 0.18);
+  background: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 10px 26px rgba(125, 72, 31, 0.045);
+}
+
+.avatar {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 42px;
+  border-radius: 50%;
+  color: #ffffff;
+  background: linear-gradient(135deg, #ff7c45, #ff9b64);
+  font-weight: 900;
+  box-shadow: 0 12px 26px rgba(255, 124, 69, 0.24);
+}
+
+.profile-mini strong {
+  display: block;
+  max-width: 160px;
+  overflow: hidden;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 900;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profile-mini p {
+  max-width: 160px;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 11px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cart-toggle,
+.order-btn,
+.export-btn,
+.add-btn,
+.confirm-primary-btn,
+.success-primary-btn,
+.success-print-btn,
+.invoice-print-btn,
+.luxury-login-btn {
+  min-height: 52px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 0 24px;
+  border-radius: 999px;
+  color: #ffffff;
+  background: linear-gradient(135deg, #ff7c45, #ff9b64);
+  font-weight: 900;
+  box-shadow: 0 16px 32px rgba(255, 124, 69, 0.24);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+
+.cart-toggle:hover,
+.order-btn:hover,
+.export-btn:hover,
+.add-btn:hover:not(:disabled),
+.confirm-primary-btn:hover,
+.success-primary-btn:hover,
+.success-print-btn:hover,
+.invoice-print-btn:hover,
+.luxury-login-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 20px 38px rgba(255, 124, 69, 0.32);
+}
+
+.cart-toggle small {
+  min-width: 22px;
+  height: 22px;
+  display: inline-grid;
+  place-items: center;
+  margin-left: 2px;
+  border-radius: 50%;
+  color: var(--primary-dark);
+  background: #ffffff;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+button:disabled,
+.add-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+  transform: none !important;
+}
+
+/* =========================================================
+   HOME / POS
+   ========================================================= */
+
+.menu-area,
+.abstract-area,
+.pos-luxury-area {
+  height: calc(100% - 96px);
+  position: relative;
+  overflow: hidden;
+  padding: 26px 34px 34px;
+  background: transparent;
+}
+
+.category-tabs,
+.luxury-category-tabs {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  padding: 0 0 22px;
+  scrollbar-width: none;
+}
+
+.category-tabs::-webkit-scrollbar,
+.luxury-category-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.category-tabs button,
+.luxury-category-tabs button,
+.size-btn,
+.qty-btn,
+.reset-profile-btn,
+.confirm-secondary-btn,
+.success-secondary-btn,
+.invoice-secondary-btn,
+.invoice-close-btn,
+.close-cart {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(150, 86, 42, 0.18);
+  color: #4d4038;
+  background: rgba(255, 255, 255, 0.22);
+  font-weight: 900;
+  box-shadow: 0 8px 22px rgba(125, 72, 31, 0.045);
+  transition: 0.2s ease;
+}
+
+.category-tabs button:hover,
+.category-tabs button.active,
+.luxury-category-tabs button:hover,
+.luxury-category-tabs button.active,
+.size-btn:hover,
+.size-btn.active {
+  color: #ffffff;
+  background: linear-gradient(135deg, #ff7c45, #ff9b64);
+  border-color: transparent;
+  box-shadow: 0 14px 30px rgba(255, 124, 69, 0.22);
+}
+
+.product-grid,
+.luxury-product-grid {
+  height: calc(100% - 70px);
+  min-height: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 18px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 2px 6px 18px 2px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(170, 88, 38, 0.38) transparent;
+}
+
+.product-grid::-webkit-scrollbar,
+.luxury-product-grid::-webkit-scrollbar {
+  width: 7px;
+}
+
+.product-grid::-webkit-scrollbar-thumb,
+.luxury-product-grid::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgba(170, 88, 38, 0.32);
+}
+
+.product-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-height: 320px;
+  padding: 16px;
+  border-radius: 24px;
+  border: 1px solid rgba(150, 86, 42, 0.2);
+  background: rgba(255, 255, 255, 0.34);
+  box-shadow: 0 16px 38px rgba(125, 72, 31, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(170, 88, 38, 0.3);
+  box-shadow: 0 22px 50px rgba(125, 72, 31, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.34);
+}
+
+.product-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 28px;
+  padding: 0 10px;
+  border-radius: 999px;
+  color: #fff;
+  background: rgba(22, 160, 96, 0.95);
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.status-pill.pending {
+  background: rgba(183, 121, 31, 0.95);
+}
+
+.status-pill.failed {
+  background: rgba(226, 85, 85, 0.95);
+}
+
+.drink-img,
+.product-card .drink-img,
+.cart-img {
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 20px;
+  border: 1px solid rgba(150, 86, 42, 0.16);
+  background: rgba(255, 255, 255, 0.26);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.product-card .drink-img,
+.drink-img {
+  height: 132px;
+}
+
+.drink-img img,
+.cart-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-info {
+  display: grid;
+  gap: 6px;
+}
+
+.product-info h3,
+.product-card h3 {
+  color: var(--text);
+  font-size: 17px;
+  font-weight: 900;
+  line-height: 1.22;
+}
+
+.product-info p,
+.product-card p,
+.price {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.price {
+  color: var(--primary-dark);
+  font-size: 15px;
+  font-weight: 900;
+}
+
+.size-row,
+.qty-row,
+.cart-price-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.size-label {
+  width: 100%;
+  color: #7b6e65;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.qty-btn {
+  width: 40px;
+  height: 40px;
+  min-height: 40px;
+  padding: 0;
+  font-size: 18px;
+}
+
+.add-btn {
+  width: 100%;
+  margin-top: auto;
+}
+
+.add-btn.added {
+  background: linear-gradient(135deg, #16a060, #35be7b);
+}
+
+.product-empty,
+.cart-empty,
+.empty {
+  display: grid;
+  place-items: center;
+  min-height: 160px;
+  border-radius: 22px;
+  border: 1px dashed rgba(150, 86, 42, 0.25);
+  color: #7f6f65;
+  background: rgba(255, 255, 255, 0.18);
+  font-weight: 800;
+  text-align: center;
+}
+
+/* =========================================================
+   CART DRAWER
+   ========================================================= */
+
+.cart-backdrop,
+.checkout-confirm-backdrop,
+.checkout-success-backdrop,
+.invoice-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 200;
+  background: rgba(32, 25, 20, 0.38);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  transition: opacity 0.22s ease;
+}
+
+.cart-backdrop.show,
+.checkout-confirm-backdrop.show,
+.checkout-success-backdrop.show,
+.invoice-modal-backdrop.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.cart-drawer {
+  position: fixed;
+  top: 18px;
+  right: 22px;
+  width: min(430px, calc(100vw - 44px));
+  height: calc(100vh - 36px);
+  z-index: 210;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 22px;
+  border-radius: 30px;
+  border: 1px solid rgba(150, 86, 42, 0.22);
+  background: rgba(255, 250, 245, 0.94);
+  box-shadow: -28px 0 90px rgba(75, 49, 34, 0.2), 0 24px 70px rgba(75, 49, 34, 0.12);
+  transform: translateX(calc(100% + 40px));
+  transition: transform 0.28s ease;
+}
+
+.cart-drawer.show {
+  transform: translateX(0);
+}
+
+.cart-drawer-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.cart-drawer-head h2 {
+  font-size: 24px;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+}
+
+.cart-drawer-head span {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.close-cart,
+.invoice-close-btn {
+  width: 42px;
+  height: 42px;
+  min-height: 42px;
+  padding: 0;
+  font-size: 24px;
+}
+
+.cart-list {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: grid;
+  gap: 12px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 4px;
+}
+
+.cart-item {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 22px;
+  border: 1px solid rgba(150, 86, 42, 0.18);
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.cart-img {
+  width: 72px;
+  height: 72px;
+}
+
+.cart-item-info,
+.cart-item-top {
+  min-width: 0;
+}
+
+.cart-item-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.cart-item h4,
+.cart-item strong {
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.cart-item-meta,
+.cart-item p {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.cart-line-total {
+  color: var(--primary-dark);
+  white-space: nowrap;
+}
+
+.cart-note-wrap {
+  margin-top: 10px;
+}
+
+.cart-note-input {
+  width: 100%;
+  min-height: 42px;
+  resize: vertical;
+  outline: none;
+  border-radius: 14px;
+  border: 1px solid rgba(150, 86, 42, 0.18);
+  padding: 10px 12px;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.6);
+  font-size: 12px;
+}
+
+.summary {
+  display: grid;
+  gap: 10px;
+  padding: 16px;
+  border-radius: 22px;
+  border: 1px solid rgba(150, 86, 42, 0.18);
+  background: rgba(255, 255, 255, 0.58);
+}
+
+.summary > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.summary strong,
+.summary-total strong {
+  color: var(--text);
+  font-size: 16px;
+  font-weight: 900;
+}
+
+.summary-total {
+  padding-top: 10px;
+  border-top: 1px solid rgba(150, 86, 42, 0.16);
+}
+
+/* =========================================================
+   HISTORY
+   ========================================================= */
+
+.history-area,
+.settings-area {
+  height: 100%;
+  min-height: 0;
+  padding: 30px 34px 34px;
+  overflow: hidden;
+}
+
+.history-area {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.history-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  gap: 18px;
+}
+
+.eyebrow {
+  display: inline-block;
+  margin-bottom: 6px;
+  color: var(--primary-dark);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.history-head h1,
+.settings-area h1 {
+  color: var(--text);
+  font-size: 32px;
+  line-height: 1.1;
+  font-weight: 900;
+  letter-spacing: -0.8px;
+}
+
+.history-stats,
+.history-stats-daily {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  flex-shrink: 0;
+}
+
+.stat-card {
+  min-height: 94px;
+  padding: 18px;
+  border-radius: 22px;
+  border: 1px solid rgba(150, 86, 42, 0.18);
+  background: rgba(255, 255, 255, 0.28);
+  box-shadow: 0 12px 28px rgba(125, 72, 31, 0.06);
+}
+
+.stat-card span {
+  display: block;
+  color: #715f53;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+.stat-card strong {
+  display: block;
+  margin-top: 10px;
+  color: var(--text);
+  font-size: 24px;
+  line-height: 1;
+  font-weight: 900;
+}
+
+.history-filter {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) 210px 190px;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.history-search {
+  width: 100%;
+}
+
+.history-filter select,
+.form-row input,
+.form-row select,
+.login-form input,
+.luxury-login-form input {
+  width: 100%;
+  height: 54px;
+  outline: none;
+  border-radius: 18px;
+  border: 1px solid rgba(150, 86, 42, 0.2);
+  padding: 0 16px;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.28);
+  font-weight: 700;
+  box-shadow: 0 8px 22px rgba(125, 72, 31, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.history-table-wrap {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 24px;
+  border: 1px solid rgba(150, 86, 42, 0.18);
+  background: rgba(255, 255, 255, 0.28);
+  box-shadow: 0 14px 32px rgba(125, 72, 31, 0.06);
+}
+
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.history-table thead {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+  background: rgba(255, 246, 238, 0.72);
+}
+
+.history-table tbody {
+  display: block;
+  flex: 1 1 auto;
+  max-height: calc(100vh - 440px);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.history-table tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.history-table th,
+.history-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(150, 86, 42, 0.12);
+  text-align: left;
+  vertical-align: top;
+}
+
+.history-table th {
+  color: #735f51;
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.history-table td {
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.history-table tbody::-webkit-scrollbar {
+  width: 7px;
+}
+
+.history-table tbody::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgba(170, 88, 38, 0.28);
+}
+
+.history-detail-btn {
+  min-height: 34px;
+  padding: 0 12px;
+  border-radius: 999px;
+  color: #ffffff;
+  background: linear-gradient(135deg, #ff7c45, #ff9b64);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.history-pagination {
+  min-height: 62px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-shrink: 0;
+  padding: 12px;
+  border-top: 1px solid rgba(150, 86, 42, 0.12);
+  background: rgba(255, 246, 238, 0.62);
+}
+
+.history-pagination.show {
+  display: flex;
+}
+
+.history-pagination button {
+  min-height: 38px;
+  padding: 0 14px;
+  border-radius: 999px;
+  color: #ffffff;
+  background: linear-gradient(135deg, #ff7c45, #ff9b64);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.history-pagination span {
+  color: #5f5148;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.history-pagination button:disabled {
+  opacity: 0.48;
+}
+
+.history-empty {
+  display: none;
+  margin: 16px;
+}
+
+.history-empty.show {
+  display: grid;
+}
+
+.history-item-summary,
+.history-item-card,
+.history-extra-item-card,
+.history-order-card,
+.order-item-card,
+.item-card {
+  display: grid;
+  gap: 4px;
+  padding: 10px;
+  border-radius: 14px;
+  border: 1px solid rgba(150, 86, 42, 0.14);
+  background: rgba(255, 255, 255, 0.34);
+}
+
+.history-item-summary-main,
+.history-extra-item-main,
+.history-item-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.history-item-summary-note,
+.history-item-note,
+.history-extra-item-card small,
+.order-note {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.history-more-toggle {
+  margin-top: 6px;
+  color: var(--primary-dark);
+  background: transparent;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.history-extra-items {
+  display: none;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.history-item-summary.show-extra .history-extra-items,
+.history-extra-items.show {
+  display: grid;
+}
+
+/* =========================================================
+   SETTINGS
+   Settings dibuat lebih pendek, rapi, dan tidak terpotong.
+   ========================================================= */
+
+.settings-area {
+  height: calc(100% - 96px);
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(360px, 0.92fr) minmax(420px, 1.08fr);
+  align-items: start;
+  gap: 18px;
+  padding: 28px 34px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.settings-area::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+}
+
+.profile-panel,
+.profile-form-panel {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 26px;
+  border: 1px solid rgba(150, 86, 42, 0.18);
+  background: rgba(255, 255, 255, 0.28);
+  box-shadow: 0 14px 32px rgba(125, 72, 31, 0.06);
+}
+
+.profile-card {
+  min-height: 0;
+}
+
+.profile-cover {
+  height: 96px;
+  background:
+    radial-gradient(circle at 18% 26%, rgba(255, 255, 255, 0.38), transparent 34%),
+    linear-gradient(135deg, #ff7c45, #ffb17f);
+}
+
+.profile-main,
+.profile-header {
+  position: relative;
+  display: grid;
+  grid-template-columns: 74px minmax(0, 1fr);
+  align-items: center;
+  gap: 16px;
+  padding: 0 24px 18px;
+  margin-top: -37px;
+}
+
+.profile-avatar {
+  width: 74px;
+  height: 74px;
+  flex-basis: 74px;
+  border: 4px solid rgba(255, 255, 255, 0.78);
+  font-size: 26px;
+  box-shadow: 0 18px 38px rgba(255, 124, 69, 0.22);
+}
+
+.profile-identity {
+  min-width: 0;
+  padding-top: 35px;
+}
+
+.profile-identity .eyebrow,
+.settings-form-head .eyebrow {
+  margin-bottom: 4px;
+}
+
+.profile-main h1,
+.profile-identity h1 {
+  margin: 0;
+  max-width: 100%;
+  overflow: hidden;
+  color: var(--text);
+  font-size: 25px;
+  line-height: 1.12;
+  font-weight: 900;
+  letter-spacing: -0.6px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profile-main p,
+.profile-identity p,
+.settings-form-head p {
+  color: var(--muted);
+  font-size: 12.5px;
+  line-height: 1.55;
+}
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  padding: 0 24px 22px;
+}
+
+.profile-grid div {
+  min-height: 76px;
+  display: grid;
+  align-content: center;
+  gap: 6px;
+  padding: 13px 14px;
+  border-radius: 18px;
+  border: 1px solid rgba(150, 86, 42, 0.16);
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.profile-grid span,
+.form-row label {
+  color: #735f51;
+  font-size: 11.5px;
+  font-weight: 900;
+}
+
+.profile-grid strong {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--text);
+  font-size: 13.5px;
+  font-weight: 900;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profile-form-panel {
+  padding: 24px;
+}
+
+.settings-form-head {
+  margin-bottom: 16px;
+}
+
+.settings-form-head h2 {
+  color: var(--text);
+  font-size: 23px;
+  line-height: 1.18;
+  font-weight: 900;
+  letter-spacing: -0.45px;
+}
+
+.settings-form {
+  display: grid;
+  gap: 12px;
+}
+
+.form-row {
+  display: grid;
+  gap: 7px;
+}
+
+.form-row input,
+.form-row select {
+  height: 50px;
+  border-radius: 17px;
+}
+
+.form-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.form-actions .order-btn,
+.reset-profile-btn {
+  min-height: 48px;
+  padding: 0 22px;
+}
+
+.reset-profile-btn {
+  color: #4d4038;
+  background: rgba(255, 255, 255, 0.22);
+}
+
+/* =========================================================
+   MODAL CHECKOUT / SUCCESS / INVOICE
+   ========================================================= */
+
+.checkout-confirm-modal,
+.checkout-success-modal,
+.invoice-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 220;
+  display: grid;
+  place-items: center;
+  padding: 22px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.22s ease;
+}
+
+.checkout-confirm-modal.show,
+.checkout-success-modal.show,
+.invoice-modal.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.checkout-confirm-card,
+.checkout-success-card,
+.invoice-modal-card {
+  width: min(520px, 100%);
+  max-height: calc(100vh - 44px);
+  overflow-y: auto;
+  border-radius: 30px;
+  border: 1px solid rgba(150, 86, 42, 0.22);
+  background: rgba(255, 250, 245, 0.96);
+  box-shadow: 0 28px 80px rgba(75, 49, 34, 0.22);
+  padding: 28px;
+}
+
+.invoice-modal-card {
+  width: min(620px, 100%);
+}
+
+.confirm-icon-wrap,
+.success-icon-wrap {
+  display: grid;
+  place-items: center;
+  margin-bottom: 14px;
+}
+
+.confirm-icon,
+.success-icon {
+  width: 64px;
+  height: 64px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #ffffff;
+  background: linear-gradient(135deg, #ff7c45, #ff9b64);
+  font-size: 30px;
+  font-weight: 900;
+  box-shadow: 0 16px 34px rgba(255, 124, 69, 0.24);
+}
+
+.success-icon {
+  background: linear-gradient(135deg, #16a060, #35be7b);
+}
+
+.confirm-eyebrow,
+.success-eyebrow {
+  display: block;
+  margin-bottom: 16px;
+  text-align: center;
+  color: var(--text);
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.confirm-order-box,
+.success-order-box,
+.invoice-total-box,
+.invoice-meta {
+  display: grid;
+  gap: 10px;
+  margin: 14px 0;
+  padding: 16px;
+  border-radius: 20px;
+  border: 1px solid rgba(150, 86, 42, 0.16);
+  background: rgba(255, 255, 255, 0.58);
+}
+
+.confirm-order-box > div,
+.success-order-box > div,
+.invoice-total-box > div,
+.invoice-meta > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.confirm-order-box span,
+.success-order-box span,
+.invoice-total-box span,
+.invoice-meta span {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.confirm-order-box strong,
+.success-order-box strong,
+.invoice-total-box strong,
+.invoice-meta strong {
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 900;
+}
+
+.confirm-total-row,
+.success-total-row,
+.invoice-grand-total {
+  padding-top: 10px;
+  border-top: 1px solid rgba(150, 86, 42, 0.14);
+}
+
+.confirm-order-items,
+.success-order-items,
+.invoice-items,
+.confirm-items-list,
+.success-items-list {
+  display: grid;
+  gap: 10px;
+}
+
+.confirm-item-card,
+.success-item-card,
+.confirm-order-item,
+.success-order-item,
+.invoice-item-row {
+  display: grid;
+  gap: 4px;
+  padding: 12px;
+  border-radius: 16px;
+  border: 1px solid rgba(150, 86, 42, 0.14);
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.confirm-item-main,
+.success-item-main,
+.confirm-order-row,
+.success-order-row,
+.invoice-item-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.confirm-item-note,
+.success-item-note,
+.invoice-item-note {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.confirm-actions,
+.success-actions,
+.invoice-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.success-actions-three {
+  justify-content: center;
+}
+
+.confirm-secondary-btn,
+.success-secondary-btn,
+.invoice-secondary-btn {
+  min-height: 52px;
+  padding: 0 22px;
+}
+
+.invoice-modal-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.invoice-modal-head p {
+  color: var(--text);
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.invoice-preview {
+  display: grid;
+  gap: 14px;
+  padding: 18px;
+  border-radius: 24px;
+  border: 1px solid rgba(150, 86, 42, 0.16);
+  background: rgba(255, 255, 255, 0.52);
+}
+
+.invoice-brand {
+  text-align: center;
+}
+
+.invoice-brand h3 {
+  color: var(--text);
+  font-size: 24px;
+  font-weight: 900;
+}
+
+.invoice-footer-note {
+  color: var(--muted);
+  text-align: center;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  z-index: 300;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 22px;
+  border-radius: 999px;
+  color: #ffffff;
+  background: rgba(38, 39, 45, 0.92);
+  box-shadow: 0 16px 40px rgba(38, 39, 45, 0.22);
+  transform: translate(-50%, 18px);
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.24s ease;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.toast.show {
+  transform: translate(-50%, 0);
+  opacity: 1;
+}
+
+/* =========================================================
+   LOGIN FRONTEND
+   ========================================================= */
+
+.login-page,
+body:has(.login-shell),
+body:has(.luxury-login-shell) {
+  min-height: 100vh;
+  overflow: hidden;
+  background: #fff3e6 url("../images/pos-orange-bg.png") center center / cover no-repeat fixed;
+}
+
+.login-shell,
+.luxury-login-shell {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 32px;
+}
+
+.login-card,
+.login-form,
+.luxury-login-card,
+.luxury-login-panel {
+  width: min(420px, 100%);
+  border-radius: 30px;
+  border: 1px solid rgba(150, 86, 42, 0.2);
+  background: rgba(255, 255, 255, 0.26);
+  box-shadow: var(--deep-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  padding: 30px;
+}
+
+.login-form,
+.luxury-login-form {
+  display: grid;
+  gap: 14px;
+}
+
+.login-card h1,
+.luxury-login-card h1,
+.luxury-login-panel h1 {
+  color: var(--text);
+  font-size: 30px;
+  font-weight: 900;
+  letter-spacing: -0.8px;
+}
+
+.login-card p,
+.luxury-login-card p,
+.luxury-login-panel p,
+.login-alert {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.login-alert {
+  border-radius: 16px;
+  border: 1px solid rgba(226, 85, 85, 0.24);
+  background: rgba(226, 85, 85, 0.08);
+  padding: 12px 14px;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1100px) {
+  .app-shell,
+  .app-shell:not(.single-content),
+  .app-shell.single-content {
+    grid-template-columns: 220px minmax(0, 1fr);
+    gap: 18px;
+    padding: 14px;
+  }
+
+  .sidebar,
+  body.history-page .sidebar,
+  body.settings-page .sidebar,
+  body:has(.history-area) .sidebar,
+  body:has(.settings-area) .sidebar,
+  .content,
+  .app-shell.single-content .content {
+    height: calc(100vh - 28px);
+  }
+
+  .history-filter {
+    grid-template-columns: 1fr;
+  }
+
+  .history-stats,
+  .history-stats-daily,
+  .settings-area {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 820px) {
+  body.app-page,
+  body.history-page,
+  body.settings-page,
+  body:has(.pos-luxury-area),
+  body:has(.history-area),
+  body:has(.settings-area) {
+    overflow: auto;
+  }
+
+  .app-shell,
+  .app-shell:not(.single-content),
+  .app-shell.single-content {
+    height: auto;
+    min-height: 100vh;
+    grid-template-columns: 1fr;
+    padding: 12px;
+  }
+
+  .sidebar,
+  body.history-page .sidebar,
+  body.settings-page .sidebar,
+  body:has(.history-area) .sidebar,
+  body:has(.settings-area) .sidebar {
+    height: auto;
+    min-height: auto;
+    padding: 18px;
+  }
+
+  .brand,
+  .brand.brand-with-logo {
+    margin-bottom: 18px;
+  }
+
+  .nav-menu {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .logout-form {
+    margin-top: 14px;
+  }
+
+  .content,
+  .app-shell.single-content .content {
+    height: auto;
+    min-height: 80vh;
+    overflow: visible;
+  }
+
+  .topbar,
+  .app-shell.single-content .topbar {
+    height: auto;
+    flex-wrap: wrap;
+    padding: 18px;
+  }
+
+  .search-box,
+  .history-search {
+    width: 100%;
+  }
+
+  .menu-area,
+  .abstract-area,
+  .pos-luxury-area,
+  .history-area,
+  .settings-area {
+    height: auto;
+    min-height: 70vh;
+    overflow: visible;
+    padding: 20px;
+  }
+
+  .product-grid,
+  .luxury-product-grid {
+    height: auto;
+    max-height: none;
+    overflow: visible;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+
+  .history-table-wrap {
+    overflow-x: auto;
+  }
+
+  .history-table {
+    min-width: 780px;
+  }
+
+  .history-table tbody {
+    max-height: none;
+  }
+
+  .profile-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .nav-menu {
+    grid-template-columns: 1fr;
+  }
+
+  .history-stats,
+  .history-stats-daily {
+    grid-template-columns: 1fr;
+  }
+
+  .cart-drawer {
+    inset: 10px;
+    width: auto;
+    height: auto;
+    border-radius: 24px;
+  }
+
+  .checkout-confirm-card,
+  .checkout-success-card,
+  .invoice-modal-card {
+    padding: 22px;
+    border-radius: 24px;
+  }
+
+  .confirm-actions,
+  .success-actions,
+  .invoice-actions,
+  .form-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .confirm-actions > *,
+  .success-actions > *,
+  .invoice-actions > *,
+  .form-actions > * {
+    width: 100%;
+  }
+}
+
+/* =========================================================
+   FINAL HISTORY SCROLL + FLOATING PAGINATION
+   Perbaikan:
+   1. Hanya .history-table-wrap yang menjadi area scroll.
+   2. tbody tidak lagi menjadi scroll sendiri.
+   3. Pagination disembunyikan saat data masih di atas.
+   4. Pagination muncul saat historyy.js menambahkan class
+      .show-history-pagination pada .history-area.
+========================================================= */
+
+body.history-page {
+    height: 100vh !important;
+    overflow: hidden !important;
+}
+
+body.history-page .app-shell {
+  height: 100dvh !important;
+  min-height: 100dvh !important;
+  overflow: hidden !important;
+}
+
+body.history-page .content {
+  height: calc(100dvh - 36px) !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+
+body.history-page .history-area {
+    position: relative !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    padding: 30px 34px 34px !important;
+}
+
+body.history-page .history-head,
+body.history-page .history-stats,
+body.history-page .history-filter {
+    flex-shrink: 0 !important;
+}
+
+/* Scroll utama hanya di kotak table wrap */
+body.history-page .history-table-wrap {
+    position: relative !important;
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+
+    display: block !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
+
+    border-radius: 24px !important;
+    border: 1px solid rgba(150, 86, 42, 0.18) !important;
+    background: rgba(255, 255, 255, 0.28) !important;
+    box-shadow: 0 14px 32px rgba(125, 72, 31, 0.06) !important;
+
+    scroll-behavior: smooth !important;
+    overscroll-behavior: contain !important;
+    -webkit-overflow-scrolling: touch !important;
+
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+}
+
+body.history-page .history-table-wrap::-webkit-scrollbar {
+    width: 0 !important;
+    height: 0 !important;
+    display: none !important;
+}
+
+/* Table dikembalikan normal supaya JS bisa membaca scroll dari .history-table-wrap */
+body.history-page .history-table {
+    width: 100% !important;
+    margin-bottom: 0 !important;
+    border-collapse: collapse !important;
+    table-layout: fixed !important;
+}
+
+body.history-page .history-table thead {
+    display: table-header-group !important;
+    width: auto !important;
+    table-layout: fixed !important;
+}
+
+body.history-page .history-table tbody {
+    display: table-row-group !important;
+    width: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+}
+
+body.history-page .history-table tbody tr {
+    display: table-row !important;
+    width: auto !important;
+    table-layout: fixed !important;
+}
+
+body.history-page .history-table th {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 15 !important;
+    background: rgba(255, 246, 238, 0.94) !important;
+}
+
+body.history-page .history-table th,
+body.history-page .history-table td {
+    padding: 14px 16px !important;
+    border-bottom: 1px solid rgba(150, 86, 42, 0.12) !important;
+    text-align: left !important;
+    vertical-align: top !important;
+}
+
+body.history-page .history-table tbody tr:last-child td {
+    border-bottom: none !important;
+}
+
+/* Hilangkan scrollbar lama yang sebelumnya berada di tbody */
+body.history-page .history-table tbody::-webkit-scrollbar {
+    width: 0 !important;
+    height: 0 !important;
+    display: none !important;
+}
+
+/* Pagination floating */
+body.history-page .history-pagination {
+    position: absolute !important;
+    left: 50% !important;
+    bottom: 38px !important;
+    z-index: 80 !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 14px !important;
+
+    width: fit-content !important;
+    min-height: auto !important;
+    margin: 0 !important;
+    padding: 10px 14px !important;
+    border-radius: 999px !important;
+
+    background: rgba(255, 239, 222, 0.94) !important;
+    border: 1px solid rgba(255, 255, 255, 0.66) !important;
+    box-shadow: 0 18px 46px rgba(183, 91, 28, 0.18) !important;
+
+    backdrop-filter: blur(16px) saturate(140%) !important;
+    -webkit-backdrop-filter: blur(16px) saturate(140%) !important;
+
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+
+    transform: translate(-50%, 18px) scale(0.98) !important;
+    transition:
+        opacity 0.22s ease,
+        visibility 0.22s ease,
+        transform 0.22s ease !important;
+}
+
+/* historyy.js menambahkan class ini saat scroll sudah sampai bawah */
+body.history-page .history-area.show-history-pagination .history-pagination {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    transform: translate(-50%, 0) scale(1) !important;
+}
+
+body.history-page .history-pagination button {
+    min-width: 112px !important;
+    height: 40px !important;
+    border: none !important;
+    border-radius: 999px !important;
+
+    background: linear-gradient(135deg, #ff9b6b, #ff7045) !important;
+    color: #ffffff !important;
+
+    font-size: 13px !important;
+    font-weight: 800 !important;
+    cursor: pointer !important;
+
+    box-shadow: 0 12px 26px rgba(255, 112, 69, 0.25) !important;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        opacity 0.2s ease !important;
+}
+
+body.history-page .history-pagination button:hover:not(:disabled) {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 16px 34px rgba(255, 112, 69, 0.32) !important;
+}
+
+body.history-page .history-pagination button:disabled {
+    opacity: 0.45 !important;
+    cursor: not-allowed !important;
+    box-shadow: none !important;
+}
+
+body.history-page .history-pagination span {
+    color: #2a2521 !important;
+    font-size: 13px !important;
+    font-weight: 800 !important;
+    white-space: nowrap !important;
+}
+
+/* Mobile tetap aman */
+@media (max-width: 820px) {
+    body.history-page {
+        height: auto !important;
+        overflow: auto !important;
+    }
+
+    body.history-page .app-shell,
+    body.history-page .content,
+    body.history-page .history-area {
+        height: auto !important;
+        min-height: 70vh !important;
+        overflow: visible !important;
+    }
+
+    body.history-page .history-table-wrap {
+        overflow-x: auto !important;
+        overflow-y: visible !important;
+    }
+
+    body.history-page .history-table {
+        min-width: 780px !important;
+    }
+
+    body.history-page .history-pagination {
+        position: static !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        pointer-events: auto !important;
+        transform: none !important;
+        margin: 18px auto 0 !important;
+    }
+}
+
+/* =========================================================
+   FINAL SETTINGS PAGE FIX
+   Mengunci layout settings agar tidak terlalu panjang ke bawah.
+========================================================= */
+
+body.settings-page {
+  height: 100vh !important;
+  overflow: hidden !important;
+}
+
+body.settings-page .app-shell {
+  height: 100vh !important;
+  min-height: 100vh !important;
+  overflow: hidden !important;
+}
+
+body.settings-page .content {
+  height: calc(100vh - 36px) !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+
+body.settings-page .topbar {
+  height: 96px !important;
+  flex-shrink: 0 !important;
+}
+
+body.settings-page .settings-area {
+  height: calc(100% - 96px) !important;
+  min-height: 0 !important;
+  align-items: start !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+
+body.settings-page .profile-panel,
+body.settings-page .profile-form-panel {
+  align-self: start !important;
+  height: auto !important;
+  max-height: none !important;
+}
+
+@media (max-width: 1100px) {
+  body.settings-page .settings-area {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 820px) {
+  body.settings-page {
+    height: auto !important;
+    overflow: auto !important;
+  }
+
+  body.settings-page .app-shell,
+  body.settings-page .content,
+  body.settings-page .settings-area {
+    height: auto !important;
+    min-height: auto !important;
+    overflow: visible !important;
+  }
+
+  body.settings-page .settings-area {
+    grid-template-columns: 1fr !important;
+    padding: 20px !important;
+  }
+
+  body.settings-page .profile-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* =========================================================
+   FINAL CART DRAWER FIX
+   Perbaikan:
+   1. Item cart tidak lagi stretch panjang ke bawah saat 1/2 item.
+   2. Semua card item tetap compact seperti contoh 3 item.
+   3. Scroll hanya muncul jika item sudah banyak.
+   ========================================================= */
+
+.cart-drawer {
+  overflow: hidden !important;
+}
+
+.cart-list {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  grid-auto-rows: max-content !important;
+  align-content: start !important;
+  align-items: start !important;
+  gap: 12px !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  padding-right: 4px !important;
+  padding-bottom: 2px !important;
+}
+
+.cart-list > * {
+  align-self: start !important;
+}
+
+.cart-item {
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  align-self: start !important;
+  display: grid !important;
+  grid-template-columns: 72px minmax(0, 1fr) !important;
+  gap: 12px !important;
+  padding: 12px !important;
+  border-radius: 22px !important;
+}
+
+.cart-item-info {
+  min-width: 0 !important;
+  height: auto !important;
+  min-height: 0 !important;
+  align-self: start !important;
+}
+
+.cart-item-top {
+  min-width: 0 !important;
+  align-items: flex-start !important;
+}
+
+.cart-price-row {
+  margin-top: 4px !important;
+}
+
+.cart-note-wrap {
+  display: block !important;
+  margin-top: 8px !important;
+}
+
+.cart-note-wrap span {
+  display: block !important;
+  margin-bottom: 5px !important;
+  color: var(--text) !important;
+  font-size: 15px !important;
+  font-weight: 500 !important;
+}
+
+.cart-note-input {
+  width: 100% !important;
+  height: 42px !important;
+  min-height: 42px !important;
+  max-height: 42px !important;
+  resize: none !important;
+  padding: 0 13px !important;
+  border-radius: 14px !important;
+}
+
+.summary,
+.order-btn,
+#placeOrder {
+  flex-shrink: 0 !important;
+}
+
+.cart-empty {
+  align-self: start !important;
+}
+
+/* =========================================================
+   FINAL CART SCROLLBAR HIDE
+   Scroll tetap aktif, tapi tampilan scrollbar disembunyikan.
+   ========================================================= */
+
+.cart-list {
+  scrollbar-width: none !important;        /* Firefox */
+  -ms-overflow-style: none !important;     /* Internet Explorer / Edge lama */
+}
+
+.cart-list::-webkit-scrollbar {
+  width: 0 !important;                     /* Chrome, Edge, Safari */
+  height: 0 !important;
+  display: none !important;
+}
+
+.cart-list::-webkit-scrollbar-track {
+  display: none !important;
+}
+
+.cart-list::-webkit-scrollbar-thumb {
+  display: none !important;
+}
+
+/* =========================================================
+   FINAL CHECKOUT MODAL SCROLL FIX
+   Perbaikan:
+   1. Modal Konfirmasi Order dan Transaksi Berhasil tidak memanjang ke bawah.
+   2. Daftar menu masuk ke kotak khusus yang bisa discroll.
+   3. Scrollbar disembunyikan, tetapi scroll tetap aktif.
+   4. Total dan tombol aksi tetap berada di bawah modal.
+   ========================================================= */
+
+.checkout-confirm-card,
+.checkout-success-card {
+  width: min(520px, calc(100vw - 44px)) !important;
+  max-height: calc(100vh - 54px) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+  padding: 26px 28px !important;
+}
+
+.checkout-confirm-card::-webkit-scrollbar,
+.checkout-success-card::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
+  display: none !important;
+}
+
+.confirm-icon-wrap,
+.success-icon-wrap,
+.confirm-eyebrow,
+.success-eyebrow,
+.success-order-box,
+.confirm-order-box,
+.confirm-actions,
+.success-actions {
+  flex-shrink: 0 !important;
+}
+
+/* Kotak daftar menu di modal */
+.confirm-order-items,
+.success-order-items {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  max-height: min(42vh, 360px) !important;
+  display: grid !important;
+  grid-template-rows: auto minmax(0, 1fr) !important;
+  gap: 10px !important;
+  margin: 10px 0 12px !important;
+  padding: 12px !important;
+  border-radius: 22px !important;
+  border: 1px solid rgba(150, 86, 42, 0.16) !important;
+  background: rgba(255, 255, 255, 0.34) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28) !important;
+  overflow: hidden !important;
+}
+
+.confirm-items-head,
+.success-items-head {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+  flex-shrink: 0 !important;
+  padding: 0 2px 2px !important;
+}
+
+.confirm-items-head span,
+.success-items-head span {
+  color: var(--text) !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+}
+
+.confirm-items-head strong,
+.success-items-head strong {
+  color: var(--text) !important;
+  font-size: 14px !important;
+  font-weight: 900 !important;
+}
+
+/* Bagian ini yang scroll, bukan seluruh modal */
+.confirm-items-list,
+.success-items-list {
+  min-height: 0 !important;
+  max-height: none !important;
+  display: grid !important;
+  grid-auto-rows: max-content !important;
+  align-content: start !important;
+  gap: 10px !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  padding-right: 0 !important;
+  padding-bottom: 2px !important;
+  scroll-behavior: smooth !important;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+.confirm-items-list::-webkit-scrollbar,
+.success-items-list::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
+  display: none !important;
+}
+
+.confirm-items-list::-webkit-scrollbar-track,
+.success-items-list::-webkit-scrollbar-track,
+.confirm-items-list::-webkit-scrollbar-thumb,
+.success-items-list::-webkit-scrollbar-thumb {
+  display: none !important;
+}
+
+.confirm-item-card,
+.success-item-card {
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  align-self: start !important;
+  padding: 11px 12px !important;
+  border-radius: 16px !important;
+  background: rgba(255, 255, 255, 0.62) !important;
+}
+
+.confirm-item-main,
+.success-item-main {
+  align-items: center !important;
+}
+
+.confirm-item-main div,
+.success-item-main div {
+  min-width: 0 !important;
+}
+
+.confirm-item-main strong,
+.success-item-main strong {
+  font-size: 13.5px !important;
+  line-height: 1.35 !important;
+}
+
+.confirm-item-main span,
+.success-item-main span {
+  color: var(--muted) !important;
+  font-size: 13px !important;
+}
+
+.confirm-item-main b,
+.success-item-main b {
+  flex-shrink: 0 !important;
+  color: var(--text) !important;
+  font-size: 13.5px !important;
+  font-weight: 900 !important;
+  white-space: nowrap !important;
+}
+
+.confirm-order-box,
+.success-order-box {
+  margin: 8px 0 0 !important;
+}
+
+.confirm-actions,
+.success-actions {
+  margin-top: 16px !important;
+}
+
+/* Mobile tetap aman */
+@media (max-width: 560px) {
+  .checkout-confirm-card,
+  .checkout-success-card {
+    max-height: calc(100vh - 28px) !important;
+    padding: 22px !important;
+  }
+
+  .confirm-order-items,
+  .success-order-items {
+    max-height: 40vh !important;
+  }
+}
+
+/* =========================================================
+   FINAL SUCCESS BUTTONS FIX
+   Tombol Transaksi Berhasil dibuat 1 baris dan warna sama.
+   ========================================================= */
+
+.checkout-success-card .success-actions,
+.checkout-success-card .success-actions-three {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 12px !important;
+  width: 100% !important;
+  margin-top: 18px !important;
+}
+
+.checkout-success-card .success-actions > *,
+.checkout-success-card .success-actions-three > * {
+  width: 100% !important;
+  min-width: 0 !important;
+}
+
+.checkout-success-card .success-secondary-btn,
+.checkout-success-card .success-print-btn,
+.checkout-success-card .success-primary-btn {
+  width: 100% !important;
+  min-height: 50px !important;
+  padding: 0 12px !important;
+  border-radius: 999px !important;
+
+  color: #ffffff !important;
+  background: linear-gradient(135deg, #ff9a72, #ff7f57) !important;
+  border: 1px solid rgba(255, 255, 255, 0.42) !important;
+
+  font-size: 14px !important;
+  font-weight: 900 !important;
+  white-space: nowrap !important;
+
+  box-shadow: 0 12px 28px rgba(255, 127, 87, 0.18) !important;
+}
+
+.checkout-success-card .success-secondary-btn:hover,
+.checkout-success-card .success-print-btn:hover,
+.checkout-success-card .success-primary-btn:hover {
+  transform: translateY(-1px) !important;
+  background: linear-gradient(135deg, #ff8f66, #ff754e) !important;
+  box-shadow: 0 16px 32px rgba(255, 127, 87, 0.24) !important;
+}
+
+/* Supaya tetap aman di layar kecil */
+@media (max-width: 560px) {
+  .checkout-success-card .success-actions,
+  .checkout-success-card .success-actions-three {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* =========================================================
+   FINAL POS PRODUCT CARD REDESIGN
+   Tampilan product card dibuat horizontal, rapi, dan terstruktur
+   seperti referensi gambar 2.
+   ========================================================= */
+
+/* Area POS dibuat lebih lega dan rapi */
+.menu-area,
+.abstract-area,
+.pos-luxury-area {
+  height: calc(100% - 96px) !important;
+  padding: 22px 34px 34px !important;
+  overflow: hidden !important;
+}
+
+/* Category tabs lebih rapi seperti contoh */
+.category-tabs,
+.luxury-category-tabs {
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+  padding: 0 0 24px !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+.category-tabs::-webkit-scrollbar,
+.luxury-category-tabs::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
+  display: none !important;
+}
+
+.category-tabs button,
+.luxury-category-tabs button {
+  min-height: 54px !important;
+  flex: 0 0 auto !important;
+  padding: 0 28px !important;
+  border-radius: 999px !important;
+  border: 1px solid rgba(150, 86, 42, 0.16) !important;
+  background: rgba(255, 250, 244, 0.72) !important;
+  color: #2c2b31 !important;
+  font-size: 14px !important;
+  font-weight: 900 !important;
+  box-shadow: 0 10px 24px rgba(125, 72, 31, 0.06) !important;
+}
+
+.category-tabs button.active,
+.category-tabs button:hover,
+.luxury-category-tabs button.active,
+.luxury-category-tabs button:hover {
+  color: #ffffff !important;
+  background: linear-gradient(135deg, #ff8458, #ff7045) !important;
+  border-color: rgba(255, 255, 255, 0.42) !important;
+  box-shadow: 0 15px 30px rgba(255, 112, 69, 0.22) !important;
+}
+
+/* Grid produk dibuat 3 kolom besar seperti referensi */
+.product-grid,
+.luxury-product-grid {
+  height: calc(100% - 78px) !important;
+  min-height: 0 !important;
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(300px, 1fr)) !important;
+  align-content: start !important;
+  gap: 22px 28px !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  padding: 0 8px 26px 0 !important;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+.product-grid::-webkit-scrollbar,
+.luxury-product-grid::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
+  display: none !important;
+}
+
+/* Card produk horizontal */
+.product-card {
+  min-height: 184px !important;
+  height: 184px !important;
+  display: grid !important;
+  grid-template-columns: 112px minmax(0, 1fr) !important;
+  gap: 18px !important;
+  align-items: stretch !important;
+  padding: 18px !important;
+  border-radius: 24px !important;
+  border: 1px solid rgba(150, 86, 42, 0.18) !important;
+  background: rgba(255, 250, 244, 0.50) !important;
+  box-shadow: 0 15px 34px rgba(125, 72, 31, 0.06) !important;
+  overflow: hidden !important;
+}
+
+.product-card:hover {
+  transform: translateY(-2px) !important;
+  border-color: rgba(255, 124, 69, 0.25) !important;
+  box-shadow: 0 20px 42px rgba(125, 72, 31, 0.10) !important;
+}
+
+/* Gambar produk di kiri */
+.product-card .drink-img,
+.drink-img {
+  width: 112px !important;
+  height: 132px !important;
+  align-self: center !important;
+  border-radius: 22px !important;
+  background: rgba(255, 255, 255, 0.54) !important;
+  border: 1px solid rgba(150, 86, 42, 0.16) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45) !important;
+}
+
+.product-card .drink-img img,
+.drink-img img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  border-radius: inherit !important;
+}
+
+/* Isi card di kanan */
+.product-card .product-info {
+  min-width: 0 !important;
+  height: 100% !important;
+  display: grid !important;
+  grid-template-rows: auto auto 1fr auto !important;
+  gap: 8px !important;
+}
+
+/* Nama produk + harga sejajar */
+.product-card .product-head {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  align-items: start !important;
+  gap: 12px !important;
+}
+
+.product-card .product-head > div {
+  min-width: 0 !important;
+  display: grid !important;
+  gap: 6px !important;
+}
+
+.product-card h3,
+.product-card .product-info h3 {
+  margin: 0 !important;
+  max-width: 100% !important;
+  color: #292a31 !important;
+  font-size: 17px !important;
+  line-height: 1.25 !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.35px !important;
+}
+
+.product-card .price {
+  margin-top: 1px !important;
+  color: #f06b3b !important;
+  font-size: 15px !important;
+  font-weight: 900 !important;
+  line-height: 1.2 !important;
+  white-space: nowrap !important;
+}
+
+/* Size dibuat satu baris seperti referensi */
+.product-card .size-row {
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: nowrap !important;
+  gap: 12px !important;
+  min-height: 26px !important;
+}
+
+.product-card .size-label {
+  width: auto !important;
+  flex: 0 0 auto !important;
+  color: #27272e !important;
+  font-size: 12px !important;
+  font-weight: 900 !important;
+}
+
+.product-card .regular-size {
+  min-width: 0 !important;
+  color: #8b7b70 !important;
+  font-size: 12px !important;
+  font-weight: 800 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+/* Footer qty + add button satu baris */
+.product-card .card-footer {
+  display: grid !important;
+  grid-template-columns: auto minmax(140px, 1fr) !important;
+  align-items: center !important;
+  gap: 14px !important;
+  margin-top: auto !important;
+}
+
+.product-card .qty-row {
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: nowrap !important;
+  gap: 8px !important;
+}
+
+.product-card .qty-btn {
+  width: 34px !important;
+  height: 34px !important;
+  min-height: 34px !important;
+  padding: 0 !important;
+  border-radius: 50% !important;
+  background: rgba(255, 255, 255, 0.72) !important;
+  border: 1px solid rgba(150, 86, 42, 0.16) !important;
+  color: #292a31 !important;
+  font-size: 17px !important;
+  font-weight: 900 !important;
+  box-shadow: 0 8px 18px rgba(125, 72, 31, 0.05) !important;
+}
+
+.product-card .qty-row span {
+  min-width: 14px !important;
+  color: #292a31 !important;
+  font-size: 15px !important;
+  font-weight: 900 !important;
+  text-align: center !important;
+}
+
+.product-card .add-btn {
+  width: 100% !important;
+  min-height: 48px !important;
+  margin: 0 !important;
+  padding: 0 22px !important;
+  border-radius: 999px !important;
+  color: #ff7045 !important;
+  background: rgba(255, 255, 255, 0.58) !important;
+  border: 1px solid rgba(150, 86, 42, 0.14) !important;
+  box-shadow: 0 10px 24px rgba(125, 72, 31, 0.055) !important;
+  font-size: 13px !important;
+  font-weight: 900 !important;
+}
+
+.product-card .add-btn:hover:not(:disabled) {
+  color: #ffffff !important;
+  background: linear-gradient(135deg, #ff8d62, #ff7045) !important;
+  box-shadow: 0 14px 28px rgba(255, 112, 69, 0.22) !important;
+}
+
+.product-card .add-btn.added {
+  color: #ffffff !important;
+  background: linear-gradient(135deg, #16a060, #35be7b) !important;
+}
+
+/* Empty state tetap rapi */
+.product-empty {
+  grid-column: 1 / -1 !important;
+  min-height: 180px !important;
+}
+
+/* Responsive */
+@media (max-width: 1380px) {
+  .product-grid,
+  .luxury-product-grid {
+    grid-template-columns: repeat(2, minmax(300px, 1fr)) !important;
+  }
+}
+
+@media (max-width: 980px) {
+  .product-grid,
+  .luxury-product-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .product-card {
+    height: auto !important;
+    min-height: 180px !important;
+  }
+}
+
+@media (max-width: 560px) {
+  .product-card {
+    grid-template-columns: 92px minmax(0, 1fr) !important;
+    gap: 14px !important;
+    padding: 14px !important;
+  }
+
+  .product-card .drink-img,
+  .drink-img {
+    width: 92px !important;
+    height: 118px !important;
+  }
+
+  .product-card .card-footer {
+    grid-template-columns: 1fr !important;
+  }
+
+  .product-card .qty-row {
+    justify-content: flex-start !important;
+  }
+}
+
+/* =========================================================
+   FINAL POS PRODUCT CARD ALIGNMENT FIX
+   Perbaikan:
+   1. Semua card produk dibuat tinggi dan struktur sama.
+   2. Posisi gambar dibuat rata.
+   3. Nama panjang tidak membuat layout turun berantakan.
+   4. Produk satu ukuran dan produk banyak ukuran tetap sejajar.
+   ========================================================= */
+
+.product-grid,
+.luxury-product-grid {
+  align-items: start !important;
+  grid-auto-rows: 202px !important;
+}
+
+/* Card dibuat satu ukuran konsisten */
+.product-card {
+  height: 202px !important;
+  min-height: 202px !important;
+  max-height: 202px !important;
+  display: grid !important;
+  grid-template-columns: 112px minmax(0, 1fr) !important;
+  align-items: center !important;
+  gap: 18px !important;
+  padding: 18px !important;
+  overflow: hidden !important;
+}
+
+/* Gambar selalu rata tengah dan ukurannya sama */
+.product-card .drink-img,
+.product-card > .drink-img {
+  width: 112px !important;
+  height: 132px !important;
+  min-width: 112px !important;
+  min-height: 132px !important;
+  max-width: 112px !important;
+  max-height: 132px !important;
+  align-self: center !important;
+  justify-self: center !important;
+  margin: 0 !important;
+}
+
+.product-card .drink-img img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+
+/* Bagian kanan dikunci row-nya agar semua isi sejajar */
+.product-card .product-info {
+  height: 100% !important;
+  min-height: 0 !important;
+  display: grid !important;
+  grid-template-rows: 58px 42px 44px !important;
+  gap: 10px !important;
+  align-content: center !important;
+}
+
+/* Header nama + harga dibuat tinggi tetap */
+.product-card .product-head {
+  min-height: 58px !important;
+  height: 58px !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  align-items: start !important;
+  gap: 12px !important;
+}
+
+.product-card .product-head > div {
+  min-width: 0 !important;
+  height: 58px !important;
+  display: grid !important;
+  grid-template-rows: 35px 23px !important;
+  gap: 4px !important;
+  align-content: start !important;
+}
+
+/* Nama produk maksimal 2 baris supaya tidak merusak layout */
+.product-card h3,
+.product-card .product-info h3 {
+  height: 35px !important;
+  min-height: 35px !important;
+  max-height: 35px !important;
+  overflow: hidden !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  color: #292a31 !important;
+  font-size: 16px !important;
+  line-height: 1.1 !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.35px !important;
+}
+
+/* Harga selalu rata kanan atas */
+.product-card .price {
+  align-self: start !important;
+  justify-self: end !important;
+  margin: 0 !important;
+  padding-top: 1px !important;
+  color: #f06b3b !important;
+  font-size: 14.5px !important;
+  font-weight: 900 !important;
+  white-space: nowrap !important;
+}
+
+/* Area size dibuat tinggi tetap */
+.product-card .size-row {
+  height: 42px !important;
+  min-height: 42px !important;
+  max-height: 42px !important;
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: nowrap !important;
+  gap: 10px !important;
+  overflow: hidden !important;
+}
+
+.product-card .size-label {
+  width: auto !important;
+  flex: 0 0 auto !important;
+  margin: 0 !important;
+  color: #292a31 !important;
+  font-size: 12px !important;
+  font-weight: 900 !important;
+}
+
+/* Produk satu ukuran */
+.product-card .regular-size {
+  min-width: 0 !important;
+  flex: 1 1 auto !important;
+  overflow: hidden !important;
+  color: #8b7b70 !important;
+  font-size: 12px !important;
+  font-weight: 800 !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+/* Produk dengan pilihan ukuran */
+.product-card .size-btn {
+  height: 38px !important;
+  min-height: 38px !important;
+  padding: 0 20px !important;
+  border-radius: 999px !important;
+  font-size: 13px !important;
+  font-weight: 900 !important;
+  flex: 0 0 auto !important;
+}
+
+.product-card .size-btn.active {
+  color: #ffffff !important;
+  background: linear-gradient(135deg, #ff8d62, #ff7045) !important;
+}
+
+/* Footer qty + tombol dibuat sejajar */
+.product-card .card-footer {
+  height: 44px !important;
+  min-height: 44px !important;
+  max-height: 44px !important;
+  display: grid !important;
+  grid-template-columns: auto minmax(128px, 1fr) !important;
+  align-items: center !important;
+  gap: 14px !important;
+  margin: 0 !important;
+}
+
+.product-card .qty-row {
+  height: 40px !important;
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: nowrap !important;
+  gap: 8px !important;
+}
+
+.product-card .qty-btn {
+  width: 34px !important;
+  height: 34px !important;
+  min-width: 34px !important;
+  min-height: 34px !important;
+}
+
+.product-card .qty-row span {
+  width: 16px !important;
+  min-width: 16px !important;
+  text-align: center !important;
+}
+
+.product-card .add-btn {
+  height: 44px !important;
+  min-height: 44px !important;
+  max-height: 44px !important;
+  margin: 0 !important;
+  padding: 0 18px !important;
+  font-size: 12.5px !important;
+  white-space: nowrap !important;
+}
+
+/* Jika nama sangat panjang, card tetap aman */
+.product-card .product-head,
+.product-card .product-info,
+.product-card .size-row,
+.product-card .card-footer {
+  min-width: 0 !important;
+}
+
+/* Responsive tetap aman */
+@media (max-width: 1380px) {
+  .product-grid,
+  .luxury-product-grid {
+    grid-auto-rows: 202px !important;
+  }
+}
+
+@media (max-width: 980px) {
+  .product-card {
+    height: 202px !important;
+    min-height: 202px !important;
+  }
+}
+
+@media (max-width: 560px) {
+  .product-grid,
+  .luxury-product-grid {
+    grid-auto-rows: auto !important;
+  }
+
+  .product-card {
+    height: auto !important;
+    min-height: 190px !important;
+    max-height: none !important;
+    grid-template-columns: 92px minmax(0, 1fr) !important;
+  }
+
+  .product-card .drink-img,
+  .product-card > .drink-img {
+    width: 92px !important;
+    height: 118px !important;
+    min-width: 92px !important;
+    min-height: 118px !important;
+  }
+
+  .product-card .product-info {
+    grid-template-rows: auto auto auto !important;
+  }
+
+  .product-card .card-footer {
+    grid-template-columns: 1fr !important;
+    height: auto !important;
+    max-height: none !important;
+  }
+}
+
+/* =========================================================
+   FINAL POS LOGIN REDESIGN
+   Tampilan login POS dibuat seperti referensi gambar 2.
+   Class dibuat baru agar tidak bentrok dengan style lama.
+   ========================================================= */
+
+body.pos-login-page {
+  width: 100%;
+  min-height: 100vh;
+  overflow: hidden;
+  font-family: Poppins, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #26272d;
+  background:
+    radial-gradient(circle at 12% 12%, rgba(255, 255, 255, 0.48) 0 190px, transparent 198px),
+    radial-gradient(circle at 90% 85%, rgba(255, 117, 67, 0.42) 0 230px, transparent 245px),
+    radial-gradient(circle at 72% 20%, rgba(255, 255, 255, 0.38) 0 220px, transparent 235px),
+    linear-gradient(135deg, #fff3db 0%, #ffd59a 42%, #ffad61 100%);
+}
+
+body.pos-login-page::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(120deg, transparent 0 22%, rgba(255, 255, 255, 0.28) 23%, transparent 40%),
+    linear-gradient(135deg, transparent 0 58%, rgba(255, 255, 255, 0.22) 59%, transparent 75%);
+  opacity: 0.7;
+}
+
+.pos-login-shell {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 42px;
+}
+
+.pos-login-card {
+  width: min(1260px, 100%);
+  min-height: 640px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
+  border-radius: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.68);
+  background: rgba(255, 255, 255, 0.62);
+  box-shadow:
+    0 34px 92px rgba(123, 68, 28, 0.20),
+    inset 0 1px 0 rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(14px) saturate(130%);
+  -webkit-backdrop-filter: blur(14px) saturate(130%);
+}
+
+.pos-login-left {
+  position: relative;
+  min-height: 640px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 88px 70px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 93% 93%, rgba(255, 128, 56, 0.48) 0 230px, transparent 235px),
+    radial-gradient(circle at 54% 115%, rgba(255, 158, 84, 0.42) 0 320px, transparent 330px),
+    linear-gradient(145deg, rgba(255, 252, 247, 0.94), rgba(255, 215, 175, 0.72));
+}
+
+.pos-login-left::before {
+  content: "";
+  position: absolute;
+  inset: auto -80px -120px 35%;
+  width: 520px;
+  height: 360px;
+  border-radius: 50%;
+  background: rgba(255, 126, 58, 0.28);
+  pointer-events: none;
+}
+
+.pos-login-left-content {
+  position: relative;
+  z-index: 2;
+  max-width: 560px;
+}
+
+.pos-login-line {
+  width: 92px;
+  height: 5px;
+  display: block;
+  margin-bottom: 34px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #e86a34, #ffc461);
+}
+
+.pos-login-left h1 {
+  margin: 0;
+  color: #272936;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(54px, 6vw, 82px);
+  line-height: 0.95;
+  font-weight: 900;
+  letter-spacing: -2.4px;
+}
+
+.pos-login-left h1 strong {
+  display: block;
+  color: #e86a34;
+  font: inherit;
+}
+
+.pos-login-left p {
+  max-width: 520px;
+  margin-top: 42px;
+  color: #5f6472;
+  font-size: 18px;
+  line-height: 1.75;
+  font-weight: 700;
+}
+
+.pos-login-footer {
+  position: absolute;
+  left: 70px;
+  bottom: 46px;
+  z-index: 2;
+  color: #e86a34;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.pos-login-right {
+  position: relative;
+  min-height: 640px;
+  display: grid;
+  place-items: center;
+  padding: 56px;
+  background:
+    radial-gradient(circle at 96% 4%, rgba(255, 235, 219, 0.78) 0 160px, transparent 168px),
+    rgba(255, 255, 255, 0.86);
+}
+
+.pos-login-form-card {
+  width: min(500px, 100%);
+  padding: 54px 48px;
+  border-radius: 30px;
+  border: 1px solid rgba(150, 86, 42, 0.16);
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow:
+    0 30px 70px rgba(93, 63, 43, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.76);
+  backdrop-filter: blur(12px) saturate(130%);
+  -webkit-backdrop-filter: blur(12px) saturate(130%);
+}
+
+.pos-login-head {
+  margin-bottom: 28px;
+}
+
+.pos-login-head span {
+  display: block;
+  margin-bottom: 10px;
+  color: #e86a34;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.pos-login-head h2 {
+  margin: 0;
+  color: #272936;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 50px;
+  line-height: 1;
+  font-weight: 900;
+  letter-spacing: -1.4px;
+}
+
+.pos-login-head p {
+  margin-top: 10px;
+  color: #8b8790;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.pos-login-form {
+  display: grid;
+  gap: 22px;
+}
+
+.pos-login-field {
+  display: grid;
+  gap: 10px;
+}
+
+.pos-login-field > span {
+  color: #2d2e36;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.pos-login-input {
+  height: 62px;
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr) 32px;
+  align-items: center;
+  gap: 10px;
+  padding: 0 16px;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 128, 76, 0.28);
+  background: #eaf2ff;
+  box-shadow: 0 18px 32px rgba(73, 92, 128, 0.08);
+}
+
+.pos-login-input i {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  color: #e86a34;
+  background: rgba(255, 255, 255, 0.72);
+  font-style: normal;
+  font-size: 15px;
+}
+
+.pos-login-input input {
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #272936;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.pos-login-input input::placeholder {
+  color: #767b87;
+}
+
+.pos-password-toggle {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  background: transparent;
+  color: #777b86;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.pos-login-remember {
+  width: fit-content;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #555963;
+  font-size: 13px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.pos-login-remember input {
+  width: 18px;
+  height: 18px;
+  accent-color: #ff7c45;
+  cursor: pointer;
+}
+
+.pos-login-submit {
+  width: 100%;
+  min-height: 60px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 8px;
+  border: 0;
+  border-radius: 18px;
+  color: #ffffff;
+  background: linear-gradient(135deg, #ff7c45, #ff9b64);
+  box-shadow: 0 20px 42px rgba(255, 124, 69, 0.28);
+  font-size: 15px;
+  font-weight: 900;
+  cursor: pointer;
+  transition: 0.22s ease;
+}
+
+.pos-login-submit:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 26px 52px rgba(255, 124, 69, 0.36);
+}
+
+.pos-login-alert {
+  min-height: 46px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+  padding: 10px 14px;
+  border-radius: 16px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.pos-login-alert span {
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 24px;
+  border-radius: 50%;
+  font-weight: 900;
+}
+
+.pos-login-alert p {
+  margin: 0;
+  line-height: 1.45;
+}
+
+.pos-login-alert.success {
+  color: #6e5b51;
+  border: 1px solid rgba(22, 160, 96, 0.22);
+  background: rgba(22, 160, 96, 0.08);
+}
+
+.pos-login-alert.success span {
+  color: #ffffff;
+  background: #16a060;
+}
+
+.pos-login-alert.error {
+  color: #8f3f36;
+  border: 1px solid rgba(226, 85, 85, 0.22);
+  background: rgba(226, 85, 85, 0.08);
+}
+
+.pos-login-alert.error span {
+  color: #ffffff;
+  background: #e25555;
+}
+
+@media (max-width: 1050px) {
+  body.pos-login-page {
+    overflow-y: auto;
+  }
+
+  .pos-login-card {
+    grid-template-columns: 1fr;
+  }
+
+  .pos-login-left,
+  .pos-login-right {
+    min-height: auto;
+  }
+
+  .pos-login-left {
+    padding: 64px 48px 88px;
+  }
+
+  .pos-login-footer {
+    left: 48px;
+    bottom: 34px;
+  }
+}
+
+@media (max-width: 620px) {
+  .pos-login-shell {
+    padding: 18px;
+  }
+
+  .pos-login-card {
+    border-radius: 24px;
+  }
+
+  .pos-login-left {
+    padding: 44px 28px 78px;
+  }
+
+  .pos-login-left h1 {
+    font-size: 46px;
+  }
+
+  .pos-login-left p {
+    margin-top: 28px;
+    font-size: 15px;
+  }
+
+  .pos-login-footer {
+    left: 28px;
+  }
+
+  .pos-login-right {
+    padding: 26px;
+  }
+
+  .pos-login-form-card {
+    padding: 34px 26px;
+    border-radius: 24px;
+  }
+
+  .pos-login-head h2 {
+    font-size: 40px;
+  }
+}
+
+/* =========================================================
+   FINAL LOGIN BACKGROUND RESTORE
+   Background login dikembalikan ke background lama POS.
+   Desain baru hanya dipakai untuk kotak info POS dan form login.
+   ========================================================= */
+
+body.pos-login-page {
+  min-height: 100vh !important;
+  overflow: hidden !important;
+  background: #fff3e6 url("../images/pos-orange-bg.png") center center / cover no-repeat fixed !important;
+}
+
+/* Hilangkan layer gradient baru yang kemarin menimpa background lama */
+body.pos-login-page::before {
+  content: none !important;
+  display: none !important;
+}
+
+/* Shell tetap transparan supaya background lama terlihat */
+.pos-login-shell {
+  background: transparent !important;
+}
+
+/* Kotak utama tetap desain baru */
+.pos-login-card {
+  background: rgba(255, 255, 255, 0.58) !important;
+  backdrop-filter: blur(12px) saturate(130%) !important;
+  -webkit-backdrop-filter: blur(12px) saturate(130%) !important;
+}
+
+/* Panel kiri tetap elegan, tapi tidak mengubah background halaman */
+.pos-login-left {
+  background:
+    radial-gradient(circle at 92% 92%, rgba(255, 128, 56, 0.36) 0 230px, transparent 238px),
+    radial-gradient(circle at 55% 112%, rgba(255, 158, 84, 0.28) 0 320px, transparent 330px),
+    linear-gradient(145deg, rgba(255, 252, 247, 0.92), rgba(255, 216, 179, 0.62)) !important;
+}
+
+/* Panel kanan tetap putih bersih */
+.pos-login-right {
+  background:
+    radial-gradient(circle at 96% 4%, rgba(255, 235, 219, 0.64) 0 160px, transparent 168px),
+    rgba(255, 255, 255, 0.84) !important;
+}
+
+/* =========================================================
+   FINAL LOGIN BACKGROUND SOFT BLUR
+   Background lama tetap dipakai, hanya dibuat blur tipis.
+   Kotak login tetap tajam/tidak ikut blur.
+========================================================= */
+
+body.pos-login-page {
+  position: relative !important;
+  min-height: 100vh !important;
+  overflow: hidden !important;
+  background: #fff3e6 !important;
+}
+
+/* Background lama dibuat blur tipis */
+body.pos-login-page::before {
+  content: "" !important;
+  display: block !important;
+  position: fixed !important;
+  inset: -12px !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
+
+  background: url("../images/pos-orange-bg.png") center center / cover no-repeat fixed !important;
+
+  filter: blur(8px) !important;
+  transform: scale(1.025) !important;
+  opacity: 0.96 !important;
+}
+
+/* Lapisan tipis supaya blur tetap soft dan elegan */
+body.pos-login-page::after {
+  content: "" !important;
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
+
+  background: rgba(255, 244, 232, 0.12) !important;
+}
+
+/* Konten login tetap di atas dan tidak ikut blur */
+.pos-login-shell {
+  position: relative !important;
+  z-index: 2 !important;
+  background: transparent !important;
+}
+
+.pos-login-card {
+  position: relative !important;
+  z-index: 3 !important;
+}
+
+/* =========================================================
+   FINAL LOGIN LEFT PANEL ELEGANT WAVE FIX
+   Perbaikan:
+   1. Menghapus visual bulat besar di area kiri login.
+   2. Mengganti dengan efek wave/abstract seperti background POS.
+   3. Background utama halaman tetap memakai background lama.
+   4. Form login kanan tidak ikut berubah.
+========================================================= */
+
+.pos-login-left {
+  position: relative !important;
+  overflow: hidden !important;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 252, 247, 0.94) 0%,
+      rgba(255, 236, 214, 0.82) 42%,
+      rgba(255, 201, 153, 0.72) 100%
+    ),
+    url("../images/pos-orange-bg.png") center center / cover no-repeat !important;
+}
+
+/* Hapus bentuk bulat lama, ganti jadi alur cahaya lembut */
+.pos-login-left::before {
+  content: "" !important;
+  position: absolute !important;
+  inset: -18% -14% -18% -14% !important;
+  z-index: 1 !important;
+  pointer-events: none !important;
+
+  width: auto !important;
+  height: auto !important;
+  border-radius: 0 !important;
+
+  background:
+    linear-gradient(
+      118deg,
+      transparent 0%,
+      transparent 18%,
+      rgba(255, 255, 255, 0.36) 26%,
+      rgba(255, 255, 255, 0.14) 34%,
+      transparent 44%,
+      transparent 100%
+    ),
+    linear-gradient(
+      146deg,
+      transparent 0%,
+      transparent 48%,
+      rgba(255, 255, 255, 0.25) 56%,
+      rgba(255, 175, 104, 0.16) 63%,
+      transparent 74%,
+      transparent 100%
+    ),
+    linear-gradient(
+      28deg,
+      transparent 0%,
+      transparent 56%,
+      rgba(232, 106, 52, 0.18) 66%,
+      rgba(255, 205, 146, 0.18) 74%,
+      transparent 86%
+    ) !important;
+
+  opacity: 0.88 !important;
+  transform: rotate(-1.5deg) scale(1.04) !important;
+  filter: blur(0.2px) !important;
+}
+
+/* Layer tipis tambahan agar terlihat mewah, bukan polos */
+.pos-login-left::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 1 !important;
+  pointer-events: none !important;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.34) 0%,
+      rgba(255, 255, 255, 0.12) 42%,
+      rgba(255, 139, 89, 0.08) 100%
+    ),
+    linear-gradient(
+      128deg,
+      rgba(255, 255, 255, 0.18) 0%,
+      transparent 26%,
+      transparent 62%,
+      rgba(255, 126, 69, 0.14) 100%
+    ) !important;
+
+  mix-blend-mode: soft-light !important;
+  opacity: 0.9 !important;
+}
+
+/* Pastikan teks tetap tajam di atas efek */
+.pos-login-left-content,
+.pos-login-footer {
+  position: relative !important;
+  z-index: 3 !important;
+}
+
+/* Judul dibuat lebih clean dan mewah */
+.pos-login-line {
+  width: 92px !important;
+  height: 5px !important;
+  margin-bottom: 34px !important;
+  border-radius: 999px !important;
+  background: linear-gradient(135deg, #e86a34, #ffd06f) !important;
+  box-shadow: 0 10px 24px rgba(232, 106, 52, 0.18) !important;
+}
+
+.pos-login-left h1 {
+  text-shadow: 0 12px 34px rgba(74, 45, 30, 0.08) !important;
+}
+
+.pos-login-left h1 strong {
+  color: #e86a34 !important;
+  text-shadow: 0 12px 34px rgba(232, 106, 52, 0.10) !important;
+}
+
+.pos-login-left p {
+  color: #5f6472 !important;
+  text-shadow: 0 8px 22px rgba(255, 255, 255, 0.22) !important;
+}
+
+.pos-login-footer {
+  color: #e86a34 !important;
+  text-shadow: 0 8px 22px rgba(255, 255, 255, 0.28) !important;
+}
+
+/* Kotak utama tetap glass, tapi background kiri lebih terlihat */
+.pos-login-card {
+  background: rgba(255, 255, 255, 0.54) !important;
+  border: 1px solid rgba(255, 255, 255, 0.62) !important;
+  box-shadow:
+    0 34px 92px rgba(123, 68, 28, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.72) !important;
+}
+
+/* =========================================================
+   FINAL LOGIN LEFT PANEL PREMIUM COLOR + FOOTER FIX
+   Perbaikan:
+   1. Warna panel kiri dibuat lebih elegant dan soft.
+   2. Efek wave tetap dipertahankan.
+   3. Tulisan DIGITAL CASHIER dikembalikan ke bawah kiri.
+   4. Tidak mengubah form login kanan.
+========================================================= */
+
+.pos-login-left {
+  position: relative !important;
+  overflow: hidden !important;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 251, 244, 0.96) 0%,
+      rgba(255, 239, 221, 0.88) 38%,
+      rgba(255, 210, 171, 0.74) 100%
+    ),
+    url("../images/pos-orange-bg.png") center center / cover no-repeat !important;
+}
+
+/* Efek wave elegant, tanpa bentuk bulat */
+.pos-login-left::before {
+  content: "" !important;
+  position: absolute !important;
+  inset: -16% -14% -16% -14% !important;
+  z-index: 1 !important;
+  pointer-events: none !important;
+
+  width: auto !important;
+  height: auto !important;
+  border-radius: 0 !important;
+
+  background:
+    linear-gradient(
+      118deg,
+      transparent 0%,
+      transparent 18%,
+      rgba(255, 255, 255, 0.40) 26%,
+      rgba(255, 255, 255, 0.16) 35%,
+      transparent 46%,
+      transparent 100%
+    ),
+    linear-gradient(
+      146deg,
+      transparent 0%,
+      transparent 47%,
+      rgba(255, 255, 255, 0.28) 55%,
+      rgba(220, 111, 55, 0.11) 63%,
+      transparent 75%,
+      transparent 100%
+    ),
+    linear-gradient(
+      32deg,
+      transparent 0%,
+      transparent 56%,
+      rgba(212, 104, 52, 0.11) 66%,
+      rgba(255, 214, 157, 0.20) 75%,
+      transparent 88%
+    ) !important;
+
+  opacity: 0.9 !important;
+  transform: rotate(-1.2deg) scale(1.04) !important;
+  filter: blur(0.15px) !important;
+}
+
+/* Layer soft premium */
+.pos-login-left::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 1 !important;
+  pointer-events: none !important;
+
+  background:
+    radial-gradient(circle at 14% 10%, rgba(255, 255, 255, 0.36) 0 150px, transparent 158px),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.30) 0%,
+      rgba(255, 255, 255, 0.08) 45%,
+      rgba(220, 111, 55, 0.08) 100%
+    ) !important;
+
+  opacity: 0.95 !important;
+  mix-blend-mode: soft-light !important;
+}
+
+/* Konten utama tetap tajam */
+.pos-login-left-content {
+  position: relative !important;
+  z-index: 3 !important;
+}
+
+/* Judul lebih premium */
+.pos-login-line {
+  width: 92px !important;
+  height: 5px !important;
+  display: block !important;
+  margin-bottom: 34px !important;
+  border-radius: 999px !important;
+  background: linear-gradient(135deg, #d85f2f, #f4c163) !important;
+  box-shadow: 0 10px 24px rgba(216, 95, 47, 0.16) !important;
+}
+
+.pos-login-left h1 {
+  color: #272936 !important;
+  text-shadow: 0 14px 34px rgba(70, 45, 32, 0.075) !important;
+}
+
+.pos-login-left h1 strong {
+  color: #d96535 !important;
+  text-shadow: 0 14px 34px rgba(217, 101, 53, 0.10) !important;
+}
+
+.pos-login-left p {
+  max-width: 540px !important;
+  color: #5f6472 !important;
+  font-weight: 800 !important;
+  line-height: 1.75 !important;
+  text-shadow: 0 8px 22px rgba(255, 255, 255, 0.25) !important;
+}
+
+/* FIX: Digital Cashier kembali ke bawah kiri */
+.pos-login-footer {
+  position: absolute !important;
+  left: 70px !important;
+  bottom: 46px !important;
+  z-index: 4 !important;
+
+  display: inline-flex !important;
+  align-items: center !important;
+
+  color: #d96535 !important;
+  font-size: 12px !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+
+  text-shadow: 0 8px 22px rgba(255, 255, 255, 0.32) !important;
+}
+
+/* Kotak utama tetap soft glass */
+.pos-login-card {
+  background: rgba(255, 255, 255, 0.56) !important;
+  border: 1px solid rgba(255, 255, 255, 0.64) !important;
+  box-shadow:
+    0 34px 92px rgba(123, 68, 28, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.72) !important;
+}
+
+/* Responsive footer */
+@media (max-width: 1050px) {
+  .pos-login-footer {
+    left: 48px !important;
+    bottom: 34px !important;
+  }
+}
+
+@media (max-width: 620px) {
+  .pos-login-footer {
+    left: 28px !important;
+    bottom: 30px !important;
+  }
+}
+
+/* =========================================================
+   FINAL LOGIN LOGO NGUNJUK
+   Menambahkan logo pada panel kiri login.
+========================================================= */
+
+.pos-login-logo-wrap {
+  position: relative !important;
+  z-index: 5 !important;
+
+  width: fit-content !important;
+  margin-bottom: 26px !important;
+  padding: 10px 16px 10px 12px !important;
+
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  border-radius: 22px !important;
+  border: 1px solid rgba(201, 92, 49, 0.14) !important;
+  background: rgba(255, 255, 255, 0.34) !important;
+
+  box-shadow:
+    0 16px 34px rgba(123, 68, 28, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.56) !important;
+
+  backdrop-filter: blur(8px) saturate(120%) !important;
+  -webkit-backdrop-filter: blur(8px) saturate(120%) !important;
+}
+
+.pos-login-logo {
+  width: 154px !important;
+  height: auto !important;
+  object-fit: contain !important;
+  display: block !important;
+}
+
+/* Setelah logo masuk, garis orange dibuat sedikit lebih dekat */
+.pos-login-logo-wrap + .pos-login-line {
+  margin-top: 0 !important;
+  margin-bottom: 30px !important;
+}
+
+@media (max-width: 620px) {
+  .pos-login-logo {
+    width: 132px !important;
+  }
+
+  .pos-login-logo-wrap {
+    margin-bottom: 22px !important;
+  }
+}
+
+/* =========================================================
+   LOGIN BRAND ROW
+   Logo di samping tulisan Point of Sale Ngunjuk
+========================================================= */
+
+.pos-login-brand-row {
+  position: relative !important;
+  z-index: 5 !important;
+
+  display: flex !important;
+  align-items: center !important;
+  gap: 28px !important;
+  margin-bottom: 28px !important;
+}
+
+.pos-login-brand-text {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  min-width: 0 !important;
+  flex: 1 !important;
+}
+
+.pos-login-logo-wrap {
+  flex: 0 0 170px !important;
+  width: 170px !important;
+  min-width: 170px !important;
+  margin-bottom: 0 !important;
+  padding: 16px !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  border-radius: 28px !important;
+  border: 1px solid rgba(201, 92, 49, 0.10) !important;
+  background: rgba(255, 255, 255, 0.26) !important;
+  box-shadow:
+    0 14px 30px rgba(123, 68, 28, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.46) !important;
+
+  backdrop-filter: blur(6px) saturate(115%) !important;
+  -webkit-backdrop-filter: blur(6px) saturate(115%) !important;
+}
+
+.pos-login-logo {
+  width: 100% !important;
+  max-width: 120px !important;
+  height: auto !important;
+  object-fit: contain !important;
+  display: block !important;
+}
+
+.pos-login-brand-text .pos-login-line {
+  width: 140px !important;
+  margin-bottom: 18px !important;
+}
+
+.pos-login-brand-text h1 {
+  margin: 0 !important;
+  font-size: clamp(64px, 6vw, 92px) !important;
+  line-height: 0.95 !important;
+  letter-spacing: -2px !important;
+}
+
+.pos-login-brand-text h1 strong {
+  display: block !important;
+  margin-top: 6px !important;
+}
+
+.pos-login-left-content > p {
+  max-width: 700px !important;
+  margin-top: 6px !important;
+}
+
+/* Footer tetap di bawah kiri */
+.pos-login-footer {
+  position: absolute !important;
+  left: 70px !important;
+  bottom: 46px !important;
+  z-index: 6 !important;
+}
+
+/* Tablet */
+@media (max-width: 1200px) {
+  .pos-login-brand-row {
+    gap: 22px !important;
+  }
+
+  .pos-login-logo-wrap {
+    flex: 0 0 145px !important;
+    width: 145px !important;
+    min-width: 145px !important;
+  }
+
+  .pos-login-logo {
+    max-width: 102px !important;
+  }
+
+  .pos-login-brand-text h1 {
+    font-size: clamp(54px, 5.4vw, 78px) !important;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .pos-login-brand-row {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 20px !important;
+  }
+
+  .pos-login-logo-wrap {
+    flex: 0 0 auto !important;
+    width: 138px !important;
+    min-width: 138px !important;
+    padding: 14px !important;
+  }
+
+  .pos-login-logo {
+    max-width: 94px !important;
+  }
+
+  .pos-login-brand-text .pos-login-line {
+    width: 110px !important;
+    margin-bottom: 16px !important;
+  }
+
+  .pos-login-brand-text h1 {
+    font-size: clamp(46px, 9vw, 64px) !important;
+    line-height: 0.98 !important;
+  }
+}
+
+/* =========================================================
+   FINAL LOGIN BRAND SIZE FIX
+   - Font judul diperkecil
+   - Box/widget belakang logo dihilangkan
+   - Layout logo + text tetap sejajar
+========================================================= */
+
+.pos-login-brand-row {
+  position: relative !important;
+  z-index: 5 !important;
+
+  display: flex !important;
+  align-items: center !important;
+  gap: 28px !important;
+  margin-bottom: 26px !important;
+}
+
+.pos-login-brand-text {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  min-width: 0 !important;
+  flex: 1 !important;
+}
+
+/* Hilangkan effect kotak / widget pada logo */
+.pos-login-logo-wrap {
+  flex: 0 0 150px !important;
+  width: 150px !important;
+  min-width: 150px !important;
+  margin-bottom: 0 !important;
+  padding: 0 !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  border: none !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.pos-login-logo {
+  width: 100% !important;
+  max-width: 125px !important;
+  height: auto !important;
+  object-fit: contain !important;
+  display: block !important;
+}
+
+/* Garis orange */
+.pos-login-brand-text .pos-login-line {
+  width: 140px !important;
+  margin-bottom: 16px !important;
+}
+
+/* Font judul diperkecil */
+.pos-login-brand-text h1 {
+  margin: 0 !important;
+  font-size: clamp(44px, 4.4vw, 68px) !important;
+  line-height: 0.98 !important;
+  letter-spacing: -1.2px !important;
+}
+
+.pos-login-brand-text h1 strong {
+  display: block !important;
+  margin-top: 4px !important;
+}
+
+/* Deskripsi sedikit dirapikan */
+.pos-login-left-content > p {
+  max-width: 640px !important;
+  margin-top: 10px !important;
+  font-size: 19px !important;
+  line-height: 1.6 !important;
+}
+
+/* Footer tetap di bawah */
+.pos-login-footer {
+  position: absolute !important;
+  left: 70px !important;
+  bottom: 46px !important;
+  z-index: 6 !important;
+}
+
+/* Tablet */
+@media (max-width: 1200px) {
+  .pos-login-brand-row {
+    gap: 20px !important;
+  }
+
+  .pos-login-logo-wrap {
+    flex: 0 0 130px !important;
+    width: 130px !important;
+    min-width: 130px !important;
+  }
+
+  .pos-login-logo {
+    max-width: 108px !important;
+  }
+
+  .pos-login-brand-text h1 {
+    font-size: clamp(40px, 4.8vw, 58px) !important;
+  }
+
+  .pos-login-left-content > p {
+    font-size: 17px !important;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .pos-login-brand-row {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 16px !important;
+  }
+
+  .pos-login-logo-wrap {
+    flex: 0 0 auto !important;
+    width: 110px !important;
+    min-width: 110px !important;
+  }
+
+  .pos-login-logo {
+    max-width: 92px !important;
+  }
+
+  .pos-login-brand-text .pos-login-line {
+    width: 100px !important;
+    margin-bottom: 14px !important;
+  }
+
+  .pos-login-brand-text h1 {
+    font-size: clamp(36px, 8vw, 50px) !important;
+    line-height: 1 !important;
+  }
+
+  .pos-login-left-content > p {
+    font-size: 16px !important;
+  }
+}
+
+/* =========================================================
+   FINAL LOGIN BRAND TOP ALIGN FIX
+   - Logo + brand dinaikkan ke atas
+   - "Point of Sale" 1 baris
+   - "Ngunjuk" tetap di bawah
+   - Font judul diperkecil sedikit
+   - Logo disesuaikan
+   - Deskripsi dibuat hitam, lebih elegan, lebih kecil
+========================================================= */
+
+.pos-login-left-content {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  align-items: flex-start !important;
+  padding-top: 28px !important;
+}
+
+.pos-login-brand-row {
+  position: relative !important;
+  z-index: 5 !important;
+
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 28px !important;
+  margin-bottom: 26px !important;
+}
+
+/* Logo dirapikan dan disesuaikan dengan teks */
+.pos-login-logo-wrap {
+  flex: 0 0 132px !important;
+  width: 132px !important;
+  min-width: 132px !important;
+  margin-bottom: 0 !important;
+  padding: 0 !important;
+
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: center !important;
+
+  border: none !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.pos-login-logo {
+  width: 100% !important;
+  max-width: 112px !important;
+  height: auto !important;
+  object-fit: contain !important;
+  display: block !important;
+}
+
+/* Area teks brand */
+.pos-login-brand-text {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  align-items: flex-start !important;
+  min-width: 0 !important;
+  flex: 1 !important;
+  padding-top: 6px !important;
+}
+
+.pos-login-brand-text .pos-login-line {
+  width: 132px !important;
+  height: 6px !important;
+  margin-bottom: 18px !important;
+}
+
+/* Judul utama */
+.pos-login-brand-text h1 {
+  margin: 0 !important;
+  font-size: clamp(38px, 4vw, 58px) !important;
+  line-height: 0.98 !important;
+  letter-spacing: -0.8px !important;
+  color: #232638 !important;
+  white-space: nowrap !important;
+}
+
+/* "Point of Sale" tetap 1 baris, "Ngunjuk" di bawah */
+.pos-login-brand-text h1 strong {
+  display: block !important;
+  margin-top: 6px !important;
+  color: #d96535 !important;
+  white-space: normal !important;
+}
+
+/* Deskripsi bawah brand */
+.pos-login-left-content > p {
+  max-width: 620px !important;
+  margin-top: 8px !important;
+  margin-bottom: 0 !important;
+
+  color: #111111 !important;
+  font-size: 17px !important;
+  line-height: 1.55 !important;
+  font-weight: 600 !important;
+
+  /* dibuat lebih mirip karakter judul */
+  font-family: "Playfair Display", Georgia, serif !important;
+  letter-spacing: 0 !important;
+  text-shadow: none !important;
+}
+
+/* Footer tetap di bawah kiri */
+.pos-login-footer {
+  position: absolute !important;
+  left: 70px !important;
+  bottom: 46px !important;
+  z-index: 6 !important;
+}
+
+/* Responsif tablet */
+@media (max-width: 1200px) {
+  .pos-login-brand-row {
+    gap: 22px !important;
+  }
+
+  .pos-login-logo-wrap {
+    flex: 0 0 118px !important;
+    width: 118px !important;
+    min-width: 118px !important;
+  }
+
+  .pos-login-logo {
+    max-width: 98px !important;
+  }
+
+  .pos-login-brand-text h1 {
+    font-size: clamp(34px, 4.2vw, 50px) !important;
+  }
+
+  .pos-login-left-content > p {
+    font-size: 16px !important;
+    max-width: 560px !important;
+  }
+}
+
+/* Responsif mobile */
+@media (max-width: 768px) {
+  .pos-login-left-content {
+    padding-top: 10px !important;
+  }
+
+  .pos-login-brand-row {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 16px !important;
+    margin-bottom: 18px !important;
+  }
+
+  .pos-login-logo-wrap {
+    flex: 0 0 auto !important;
+    width: 96px !important;
+    min-width: 96px !important;
+  }
+
+  .pos-login-logo {
+    max-width: 82px !important;
+  }
+
+  .pos-login-brand-text .pos-login-line {
+    width: 104px !important;
+    margin-bottom: 14px !important;
+  }
+
+  .pos-login-brand-text h1 {
+    font-size: clamp(30px, 8vw, 42px) !important;
+    line-height: 1 !important;
+    white-space: normal !important;
+  }
+
+  .pos-login-left-content > p {
+    font-size: 15px !important;
+    max-width: 100% !important;
+  }
+
+  .pos-login-footer {
+    left: 28px !important;
+    bottom: 28px !important;
+  }
+}
+
+/* =========================================================
+   FINAL LOGIN BRAND MOVE TO TOP
+   Logo + judul Point of Sale Ngunjuk dinaikkan ke atas.
+========================================================= */
+
+.pos-login-left {
+  justify-content: flex-start !important;
+  padding-top: 76px !important;
+  padding-bottom: 120px !important;
+}
+
+.pos-login-left-content {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+  transform: translateY(80px) !important;
+}
+
+/* Logo + tulisan tetap sejajar */
+.pos-login-brand-row {
+  align-items: center !important;
+  margin-bottom: 34px !important;
+}
+
+/* Deskripsi ikut naik, tapi tetap punya jarak */
+.pos-login-left-content > p {
+  margin-top: 18px !important;
+}
+
+/* Digital cashier tetap di bawah kiri */
+.pos-login-footer {
+  position: absolute !important;
+  left: 70px !important;
+  bottom: 46px !important;
+  z-index: 6 !important;
+}
+
+/* =========================================================
+   LOGIN LEFT PANEL - DESCRIPTION LOWER + SOFT ORANGE CIRCLES
+========================================================= */
+
+.pos-login-left {
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+/* Konten utama tetap di atas efek */
+.pos-login-left-content {
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+/* Deskripsi diturunkan ke bawah */
+.pos-login-left-content > p {
+  margin-top: 120px !important;
+  max-width: 680px !important;
+
+  color: #1b1b1b !important;
+  font-size: 15px !important;
+  line-height: 1.75 !important;
+  font-weight: 600 !important;
+  font-family: "Playfair Display", Georgia, serif !important;
+}
+
+/* Efek bulet oren tipis */
+.pos-login-left::before,
+.pos-login-left::after {
+  content: "" !important;
+  position: absolute !important;
+  border-radius: 50% !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+}
+
+/* Bulet besar kanan bawah */
+.pos-login-left::before {
+  width: 430px !important;
+  height: 430px !important;
+  right: -130px !important;
+  bottom: -130px !important;
+  background: radial-gradient(
+    circle,
+    rgba(241, 132, 72, 0.18) 0%,
+    rgba(241, 132, 72, 0.10) 42%,
+    rgba(241, 132, 72, 0.00) 74%
+  ) !important;
+}
+
+/* Bulet kedua yang lebih halus */
+.pos-login-left::after {
+  width: 300px !important;
+  height: 300px !important;
+  right: 60px !important;
+  bottom: 18px !important;
+  background: radial-gradient(
+    circle,
+    rgba(255, 181, 124, 0.12) 0%,
+    rgba(255, 181, 124, 0.06) 40%,
+    rgba(255, 181, 124, 0.00) 75%
+  ) !important;
+}
+
+/* Footer tetap di bawah */
+.pos-login-footer {
+  position: absolute !important;
+  left: 70px !important;
+  bottom: 46px !important;
+  z-index: 3 !important;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .pos-login-left-content > p {
+    margin-top: 58px !important;
+    font-size: 14px !important;
+    max-width: 560px !important;
+  }
+
+  .pos-login-left::before {
+    width: 340px !important;
+    height: 340px !important;
+    right: -110px !important;
+    bottom: -110px !important;
+  }
+
+  .pos-login-left::after {
+    width: 240px !important;
+    height: 240px !important;
+    right: 40px !important;
+    bottom: 20px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .pos-login-left-content > p {
+    margin-top: 38px !important;
+    font-size: 13px !important;
+    line-height: 1.65 !important;
+    max-width: 100% !important;
+  }
+
+  .pos-login-left::before {
+    width: 240px !important;
+    height: 240px !important;
+    right: -70px !important;
+    bottom: -70px !important;
+  }
+
+  .pos-login-left::after {
+    width: 170px !important;
+    height: 170px !important;
+    right: 18px !important;
+    bottom: 24px !important;
+  }
+}
+
+/* =========================================================
+   LOGIN LEFT BRAND - LOGO MORE LEFT + TITLE BIGGER
+========================================================= */
+
+.pos-login-brand-row {
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  gap: 34px !important;
+  margin-bottom: 24px !important;
+  margin-left: -10px !important; /* geser keseluruhan sedikit ke kiri */
+}
+
+/* Logo digeser ke kiri */
+.pos-login-logo-wrap {
+  flex: 0 0 150px !important;
+  width: 150px !important;
+  min-width: 150px !important;
+  margin-left: -18px !important;   /* logo lebih ke kiri */
+  margin-right: 6px !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.pos-login-logo {
+  width: 100% !important;
+  max-width: 125px !important;
+  height: auto !important;
+  object-fit: contain !important;
+  display: block !important;
+}
+
+/* Area teks brand */
+.pos-login-brand-text {
+  flex: 1 !important;
+  min-width: 0 !important;
+  padding-top: 14px !important;
+}
+
+/* Garis oren */
+.pos-login-brand-text .pos-login-line {
+  width: 200px !important;
+  height: 6px !important;
+  margin-bottom: 18px !important;
+}
+
+/* Judul diperbesar */
+.pos-login-brand-text h1 {
+  margin: 0 !important;
+  font-size: clamp(40px, 3.5vw, 62px) !important;
+  line-height: 0.96 !important;
+  letter-spacing: -1px !important;
+  color: #22263a !important;
+  white-space: nowrap !important;
+}
+
+.pos-login-brand-text h1 strong {
+  display: block !important;
+  margin-top: 10px !important;
+  color: #de6c38 !important;
+  white-space: normal !important;
+}
+
+/* Deskripsi tetap rapi */
+.pos-login-left-content > p {
+  margin-top: 72px !important;
+  max-width: 760px !important;
+  color: #161616 !important;
+  font-size: 15px !important;
+  line-height: 1.75 !important;
+  font-weight: 600 !important;
+  font-family: "Playfair Display", Georgia, serif !important;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .pos-login-brand-row {
+    gap: 24px !important;
+    margin-left: -6px !important;
+  }
+
+  .pos-login-logo-wrap {
+    flex: 0 0 128px !important;
+    width: 128px !important;
+    min-width: 128px !important;
+    margin-left: -10px !important;
+  }
+
+  .pos-login-logo {
+    max-width: 108px !important;
+  }
+
+  .pos-login-brand-text h1 {
+    font-size: clamp(46px, 4.6vw, 68px) !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .pos-login-brand-row {
+    gap: 16px !important;
+    margin-left: 0 !important;
+  }
+
+  .pos-login-logo-wrap {
+    flex: 0 0 92px !important;
+    width: 92px !important;
+    min-width: 92px !important;
+    margin-left: 0 !important;
+  }
+
+  .pos-login-logo {
+    max-width: 82px !important;
+  }
+
+  .pos-login-brand-text h1 {
+    font-size: clamp(34px, 8vw, 50px) !important;
+    white-space: normal !important;
+  }
+}
+
+/* =========================================
+   LOGIN BRAND ALIGN TO LOGO CENTER
+   - Judul lebih mepet ke logo
+   - Judul center sejajar logo
+========================================= */
+
+.pos-login-brand-row {
+  display: flex !important;
+  align-items: center !important;      /* center vertikal dengan logo */
+  justify-content: flex-start !important;
+  gap: 14px !important;                /* jarak logo dan judul diperkecil */
+  margin-left: -6px !important;
+}
+
+.pos-login-logo-wrap {
+  flex: 0 0 145px !important;
+  width: 145px !important;
+  min-width: 145px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.pos-login-logo {
+  width: 100% !important;
+  max-width: 122px !important;
+  height: auto !important;
+  display: block !important;
+  object-fit: contain !important;
+}
+
+/* area tulisan digeser lebih ke kiri dan dibuat center */
+.pos-login-brand-text {
+  flex: 1 !important;
+  min-width: 0 !important;
+  padding-top: 0 !important;
+  margin-left: -10px !important;   /* bikin lebih mepet ke logo */
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+}
+
+/* garis oren */
+.pos-login-brand-text .pos-login-line {
+  width: 210px !important;
+  height: 6px !important;
+  margin-bottom: 16px !important;
+}
+
+/* judul utama */
+.pos-login-brand-text h1 {
+  margin: 0 !important;
+  font-size: clamp(58px, 5.2vw, 84px) !important;
+  line-height: 0.96 !important;
+  letter-spacing: -1px !important;
+  color: #20253a !important;
+  white-space: nowrap !important;
+}
+
+.pos-login-brand-text h1 strong {
+  display: block !important;
+  margin-top: 10px !important;
+  color: #de6b37 !important;
+}
+
+/* responsive */
+@media (max-width: 1200px) {
+  .pos-login-brand-row {
+    gap: 10px !important;
+  }
+
+  .pos-login-brand-text {
+    margin-left: -6px !important;
+  }
+
+  .pos-login-brand-text h1 {
+    font-size: clamp(48px, 4.7vw, 68px) !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .pos-login-brand-row {
+    gap: 10px !important;
+    align-items: center !important;
+  }
+
+  .pos-login-logo-wrap {
+    flex: 0 0 90px !important;
+    width: 90px !important;
+    min-width: 90px !important;
+  }
+
+  .pos-login-logo {
+    max-width: 78px !important;
+  }
+
+  .pos-login-brand-text {
+    margin-left: 0 !important;
+  }
+
+  .pos-login-brand-text h1 {
+    font-size: clamp(34px, 8vw, 50px) !important;
+    white-space: normal !important;
+  }
+
+  .pos-login-brand-text .pos-login-line {
+    width: 120px !important;
+  }
+}
+
+/* =========================================================
+   FINAL LOGIN BRAND BALANCE FIX
+   - Font judul diperkecil
+   - Logo digeser lebih ke kiri
+   - Jarak logo dan tulisan tetap rapi
+========================================================= */
+
+.pos-login-brand-row {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 18px !important;
+
+  /* geser area logo + judul ke kiri */
+  margin-left: -25px !important;
+  margin-bottom: 24px !important;
+}
+
+/* Logo lebih ke kiri dan proporsional */
+.pos-login-logo-wrap {
+  flex: 0 0 140px !important;
+  width: 140px !important;
+  min-width: 140px !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.pos-login-logo {
+  width: 100% !important;
+  max-width: 118px !important;
+  height: auto !important;
+  object-fit: contain !important;
+  display: block !important;
+}
+
+/* Tulisan lebih dekat ke logo */
+.pos-login-brand-text {
+  flex: 1 !important;
+  min-width: 0 !important;
+  margin-left: -4px !important;
+  padding-top: 0 !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+}
+
+/* Garis oren ikut mengecil */
+.pos-login-brand-text .pos-login-line {
+  width: 180px !important;
+  height: 6px !important;
+  margin-bottom: 16px !important;
+}
+
+/* Font judul diperkecil agar tidak kepotong kanan */
+.pos-login-brand-text h1 {
+  margin: 0 !important;
+  font-size: clamp(44px, 4.1vw, 64px) !important;
+  line-height: 0.98 !important;
+  letter-spacing: -0.8px !important;
+  color: #20253a !important;
+  white-space: nowrap !important;
+}
+
+.pos-login-brand-text h1 strong {
+  display: block !important;
+  margin-top: 8px !important;
+  color: #de6b37 !important;
+}
+
+/* Deskripsi tetap di bawah */
+.pos-login-left-content > p {
+  margin-top: 72px !important;
+  max-width: 700px !important;
+  color: #111111 !important;
+  font-size: 15px !important;
+  line-height: 1.75 !important;
+  font-weight: 600 !important;
+  font-family: "Playfair Display", Georgia, serif !important;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .pos-login-brand-row {
+    margin-left: -34px !important;
+    gap: 14px !important;
+  }
+
+  .pos-login-logo-wrap {
+    flex: 0 0 122px !important;
+    width: 122px !important;
+    min-width: 122px !important;
+  }
+
+  .pos-login-logo {
+    max-width: 104px !important;
+  }
+
+  .pos-login-brand-text h1 {
+    font-size: clamp(38px, 4.2vw, 54px) !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .pos-login-brand-row {
+    margin-left: 0 !important;
+    gap: 12px !important;
+  }
+
+  .pos-login-logo-wrap {
+    flex: 0 0 86px !important;
+    width: 86px !important;
+    min-width: 86px !important;
+  }
+
+  .pos-login-logo {
+    max-width: 76px !important;
+  }
+
+  .pos-login-brand-text h1 {
+    font-size: clamp(30px, 7.4vw, 44px) !important;
+    white-space: normal !important;
+  }
+}
+
+/* =========================================================
+   FIX POS PRODUCT TEXT ALIGNMENT
+   Merapihkan nama produk + harga agar sejajar dengan size
+   dan tombol Add to Cart
+========================================================= */
+
+.product-card {
+  align-items: center !important;
+}
+
+.product-card .product-info {
+  height: 132px !important;
+  min-height: 132px !important;
+  display: grid !important;
+  grid-template-rows: 42px 38px 44px !important;
+  align-content: center !important;
+  gap: 8px !important;
+}
+
+.product-card .product-head {
+  height: 42px !important;
+  min-height: 42px !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  align-items: center !important;
+  gap: 12px !important;
+  margin: 0 !important;
+}
+
+.product-card .product-head > div {
+  min-width: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.product-card h3,
+.product-card .product-info h3 {
+  margin: 0 !important;
+  max-height: 38px !important;
+  overflow: hidden !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  font-size: 16px !important;
+  line-height: 1.18 !important;
+}
+
+.product-card .price {
+  align-self: center !important;
+  justify-self: end !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  font-size: 14.5px !important;
+  line-height: 1.2 !important;
+  white-space: nowrap !important;
+}
+
+.product-card .size-row {
+  height: 38px !important;
+  min-height: 38px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  margin: 0 !important;
+}
+
+.product-card .card-footer {
+  height: 44px !important;
+  min-height: 44px !important;
+  display: grid !important;
+  grid-template-columns: auto minmax(128px, 1fr) !important;
+  align-items: center !important;
+  gap: 14px !important;
+  margin: 0 !important;
+}
+
+.product-card .add-btn {
+  height: 44px !important;
+  min-height: 44px !important;
+  margin: 0 !important;
+}
+
+/* =========================================================
+   FIX POS PRODUCT NAME & PRICE ALIGNMENT
+   Membuat harga sejajar dengan nama produk
+========================================================= */
+
+.product-card .product-head {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  align-items: start !important;
+  gap: 12px !important;
+  height: 42px !important;
+  min-height: 42px !important;
+  margin: 0 !important;
+}
+
+.product-card .product-head > div {
+  min-width: 0 !important;
+  display: block !important;
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+
+.product-card h3,
+.product-card .product-info h3 {
+  margin: 0 !important;
+  padding: 0 !important;
+  font-size: 16px !important;
+  line-height: 1.15 !important;
+  max-height: 38px !important;
+  overflow: hidden !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+}
+
+.product-card .price {
+  align-self: start !important;
+  justify-self: end !important;
+  margin: 0 !important;
+  padding: 1px 0 0 0 !important;
+  line-height: 1.15 !important;
+  font-size: 14.5px !important;
+  white-space: nowrap !important;
+  transform: translateY(0) !important;
+}
+
+/* =========================================================
+   FIX PRODUCT CARD BOTTOM CUT
+   Card tetap compact, tapi bagian bawah tidak kepotong
+========================================================= */
+
+.product-grid,
+.luxury-product-grid {
+  align-items: start !important;
+  padding-bottom: 40px !important;
+  overflow: visible !important;
+}
+
+.product-card {
+  height: 166px !important;
+  min-height: 166px !important;
+  max-height: none !important;
+  padding: 16px 18px !important;
+  overflow: visible !important;
+  align-items: center !important;
+}
+
+.product-card .drink-img {
+  width: 112px !important;
+  height: 112px !important;
+  min-width: 112px !important;
+}
+
+.product-card .product-info {
+  height: 122px !important;
+  min-height: 122px !important;
+  max-height: none !important;
+  display: grid !important;
+  grid-template-rows: 34px 38px 40px !important;
+  gap: 5px !important;
+  align-content: center !important;
+  overflow: visible !important;
+}
+
+.product-card .product-head {
+  height: 34px !important;
+  min-height: 34px !important;
+  align-items: start !important;
+}
+
+.product-card .size-row {
+  height: 38px !important;
+  min-height: 38px !important;
+  align-items: center !important;
+  overflow: visible !important;
+}
+
+.product-card .card-footer {
+  height: 40px !important;
+  min-height: 40px !important;
+  align-items: center !important;
+  overflow: visible !important;
+}
+
+.product-card .qty-btn {
+  width: 32px !important;
+  height: 32px !important;
+  min-width: 32px !important;
+}
+
+.product-card .add-btn {
+  height: 38px !important;
+  min-height: 38px !important;
+  padding: 0 24px !important;
+}
+
+/* =========================================================
+   FINAL FIX POS PRODUCT GRID
+   Rapatkan jarak antar card + aktifkan scroll produk
+========================================================= */
+
+.menu-area,
+.abstract-area,
+.pos-luxury-area {
+  height: calc(100% - 96px) !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+  padding: 22px 34px 24px !important;
+}
+
+.category-tabs,
+.luxury-category-tabs {
+  padding-bottom: 16px !important;
+}
+
+.product-grid,
+.luxury-product-grid {
+  height: calc(100% - 64px) !important;
+  max-height: calc(100% - 64px) !important;
+  min-height: 0 !important;
+
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  grid-auto-rows: 166px !important;
+
+  column-gap: 26px !important;
+  row-gap: 14px !important;
+
+  align-content: start !important;
+  align-items: start !important;
+
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+
+  padding: 0 10px 34px 0 !important;
+  scrollbar-width: thin !important;
+}
+
+/* scrollbar chrome */
+.product-grid::-webkit-scrollbar,
+.luxury-product-grid::-webkit-scrollbar {
+  width: 7px !important;
+}
+
+.product-grid::-webkit-scrollbar-thumb,
+.luxury-product-grid::-webkit-scrollbar-thumb {
+  border-radius: 999px !important;
+  background: rgba(170, 88, 38, 0.32) !important;
+}
+
+/* card tetap compact dan tidak kepotong */
+.product-card {
+  height: 166px !important;
+  min-height: 166px !important;
+  max-height: 166px !important;
+
+  padding: 16px 18px !important;
+  border-radius: 22px !important;
+
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 18px !important;
+
+  overflow: hidden !important;
+}
+
+/* gambar produk */
+.product-card .drink-img {
+  width: 112px !important;
+  height: 112px !important;
+  min-width: 112px !important;
+  max-width: 112px !important;
+  border-radius: 16px !important;
+}
+
+/* isi kanan card */
+.product-card .product-info {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  height: 122px !important;
+  min-height: 122px !important;
+
+  display: grid !important;
+  grid-template-rows: 34px 38px 40px !important;
+  gap: 5px !important;
+  align-content: center !important;
+
+  overflow: visible !important;
+}
+
+.product-card .product-head {
+  height: 34px !important;
+  min-height: 34px !important;
+
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  align-items: start !important;
+  gap: 10px !important;
+
+  margin: 0 !important;
+}
+
+.product-card h3,
+.product-card .product-info h3 {
+  margin: 0 !important;
+  padding: 0 !important;
+
+  font-size: 15px !important;
+  line-height: 1.12 !important;
+
+  max-height: 34px !important;
+  overflow: hidden !important;
+
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+}
+
+.product-card .price {
+  margin: 0 !important;
+  padding: 0 !important;
+
+  align-self: start !important;
+  justify-self: end !important;
+
+  font-size: 14px !important;
+  line-height: 1.12 !important;
+  white-space: nowrap !important;
+}
+
+/* size */
+.product-card .size-row {
+  height: 38px !important;
+  min-height: 38px !important;
+
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: nowrap !important;
+  gap: 8px !important;
+
+  margin: 0 !important;
+  overflow: visible !important;
+}
+
+.product-card .size-label {
+  width: auto !important;
+  font-size: 12px !important;
+  flex: 0 0 auto !important;
+}
+
+.product-card .regular-size {
+  font-size: 12px !important;
+  white-space: nowrap !important;
+}
+
+.product-card .size-btn {
+  min-height: 34px !important;
+  height: 34px !important;
+  padding: 0 22px !important;
+  font-size: 12px !important;
+}
+
+/* footer qty + add cart */
+.product-card .card-footer {
+  height: 40px !important;
+  min-height: 40px !important;
+
+  display: grid !important;
+  grid-template-columns: auto minmax(120px, 1fr) !important;
+  align-items: center !important;
+  gap: 12px !important;
+
+  margin: 0 !important;
+  overflow: visible !important;
+}
+
+.product-card .qty-row {
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: nowrap !important;
+  gap: 8px !important;
+}
+
+.product-card .qty-btn {
+  width: 32px !important;
+  height: 32px !important;
+  min-width: 32px !important;
+  min-height: 32px !important;
+  padding: 0 !important;
+  font-size: 15px !important;
+}
+
+.product-card .add-btn {
+  width: 100% !important;
+  height: 38px !important;
+  min-height: 38px !important;
+  padding: 0 22px !important;
+  margin: 0 !important;
+  font-size: 12px !important;
+}
+
+/* =========================================================
+   HIDE PRODUCT SCROLLBAR BUT KEEP SCROLL ACTIVE
+   Scroll tetap jalan, tampilan scrollbar disembunyikan
+========================================================= */
+
+.product-grid,
+.luxury-product-grid {
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+
+  /* Firefox */
+  scrollbar-width: none !important;
+
+  /* Internet Explorer / Edge lama */
+  -ms-overflow-style: none !important;
+}
+
+/* Chrome, Edge, Safari */
+.product-grid::-webkit-scrollbar,
+.luxury-product-grid::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
+  display: none !important;
+}
+
+.product-grid::-webkit-scrollbar-track,
+.luxury-product-grid::-webkit-scrollbar-track {
+  display: none !important;
+}
+
+.product-grid::-webkit-scrollbar-thumb,
+.luxury-product-grid::-webkit-scrollbar-thumb {
+  display: none !important;
+}
+
+/* =========================================================
+   RESPONSIVE POS RESET - DIBUAT ULANG DARI NOL
+   Patokan:
+   - Desktop/laptop di atas 1180px tetap memakai tampilan lama.
+   - Tablet/iPad menjadi layout atas + produk 2 kolom.
+   - HP menjadi bottom navigation + cart drawer bawah.
+   ========================================================= */
+
+/* Tablet / iPad / layar sedang */
+@media (min-width: 761px) and (max-width: 1180px) {
+  body:has(.pos-luxury-area) {
+    width: 100% !important;
+    height: 100dvh !important;
+    min-height: 100dvh !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+
+  body:has(.pos-luxury-area) .app-shell,
+  body:has(.pos-luxury-area) .app-shell:not(.single-content),
+  body:has(.pos-luxury-area) .app-shell.single-content {
+    width: 100% !important;
+    height: 100dvh !important;
+    min-height: 100dvh !important;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    grid-template-rows: auto minmax(0, 1fr) !important;
+    gap: 14px !important;
+    padding: 14px !important;
+    overflow: hidden !important;
+  }
+
+  body:has(.pos-luxury-area) .sidebar,
+  body:has(.pos-luxury-area) body.history-page .sidebar,
+  body:has(.pos-luxury-area) body.settings-page .sidebar {
+    position: relative !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    display: grid !important;
+    grid-template-columns: minmax(178px, auto) minmax(0, 1fr) auto !important;
+    align-items: center !important;
+    gap: 14px !important;
+    padding: 14px 16px !important;
+    border-radius: 24px !important;
+    overflow: visible !important;
+  }
+
+  body:has(.pos-luxury-area) .brand,
+  body:has(.pos-luxury-area) .brand.brand-with-logo {
+    width: auto !important;
+    min-width: 178px !important;
+    max-width: 220px !important;
+    height: 58px !important;
+    min-height: 58px !important;
+    margin: 0 !important;
+    padding: 8px 10px !important;
+    border-radius: 18px !important;
+    gap: 8px !important;
+  }
+
+  body:has(.pos-luxury-area) .brand-logo {
+    width: 42px !important;
+    height: 42px !important;
+    flex-basis: 42px !important;
+    border-radius: 14px !important;
+  }
+
+  body:has(.pos-luxury-area) .brand strong,
+  body:has(.pos-luxury-area) .brand-text strong {
+    font-size: 22px !important;
+    letter-spacing: -0.8px !important;
+  }
+
+  body:has(.pos-luxury-area) .brand small,
+  body:has(.pos-luxury-area) .brand-text small {
+    margin-top: 4px !important;
+    font-size: 8.5px !important;
+    letter-spacing: 0.16em !important;
+  }
+
+  body:has(.pos-luxury-area) .nav-menu {
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    padding: 0 2px !important;
+    scrollbar-width: none !important;
+  }
+
+  body:has(.pos-luxury-area) .nav-menu::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  body:has(.pos-luxury-area) .logout-form {
+    width: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  body:has(.pos-luxury-area) .nav-item,
+  body:has(.pos-luxury-area) .logout-button {
+    min-width: max-content !important;
+    min-height: 46px !important;
+    height: 46px !important;
+    gap: 8px !important;
+    padding: 0 14px !important;
+    margin: 0 !important;
+    border-radius: 16px !important;
+    font-size: 12px !important;
+    white-space: nowrap !important;
+  }
+
+  body:has(.pos-luxury-area) .nav-icon {
+    width: 18px !important;
+    height: 18px !important;
+    flex-basis: 18px !important;
+    font-size: 15px !important;
+  }
+
+  body:has(.pos-luxury-area) .nav-item.active::after {
+    display: none !important;
+  }
+
+  body:has(.pos-luxury-area) .content,
+  body:has(.pos-luxury-area) .app-shell.single-content .content {
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    border-radius: 24px !important;
+    overflow: hidden !important;
+  }
+
+  body:has(.pos-luxury-area) .topbar,
+  body:has(.pos-luxury-area) .app-shell.single-content .topbar {
+    height: 82px !important;
+    min-height: 82px !important;
+    display: flex !important;
+    align-items: center !important;
+    flex-wrap: nowrap !important;
+    gap: 14px !important;
+    padding: 0 22px !important;
+  }
+
+  body:has(.pos-luxury-area) .search-box {
+    width: auto !important;
+    max-width: none !important;
+    flex: 1 1 auto !important;
+    height: 50px !important;
+    min-height: 50px !important;
+  }
+
+  body:has(.pos-luxury-area) .topbar-spacer {
+    display: none !important;
+  }
+
+  body:has(.pos-luxury-area) .cart-toggle {
+    flex: 0 0 auto !important;
+    min-height: 50px !important;
+    height: 50px !important;
+    padding: 0 20px !important;
+    font-size: 13px !important;
+  }
+
+  body:has(.pos-luxury-area) .profile-mini {
+    flex: 0 0 auto !important;
+    height: 50px !important;
+    max-width: 210px !important;
+    padding: 7px 12px 7px 7px !important;
+  }
+
+  body:has(.pos-luxury-area) .profile-mini strong,
+  body:has(.pos-luxury-area) .profile-mini p {
+    max-width: 130px !important;
+  }
+
+  body:has(.pos-luxury-area) .avatar {
+    width: 38px !important;
+    height: 38px !important;
+    flex-basis: 38px !important;
+  }
+
+  body:has(.pos-luxury-area) .menu-area,
+  body:has(.pos-luxury-area) .abstract-area,
+  body:has(.pos-luxury-area) .pos-luxury-area {
+    height: calc(100% - 82px) !important;
+    min-height: 0 !important;
+    padding: 18px 22px 22px !important;
+    overflow: hidden !important;
+  }
+
+  body:has(.pos-luxury-area) .category-tabs,
+  body:has(.pos-luxury-area) .luxury-category-tabs {
+    gap: 10px !important;
+    width: 100% !important;
+    padding: 0 0 14px !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    flex-wrap: nowrap !important;
+    scrollbar-width: none !important;
+  }
+
+  body:has(.pos-luxury-area) .category-tabs::-webkit-scrollbar,
+  body:has(.pos-luxury-area) .luxury-category-tabs::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  body:has(.pos-luxury-area) .category-tabs button,
+  body:has(.pos-luxury-area) .luxury-category-tabs button {
+    flex: 0 0 auto !important;
+    min-height: 42px !important;
+    height: 42px !important;
+    padding: 0 16px !important;
+    font-size: 12px !important;
+    white-space: nowrap !important;
+  }
+
+  body:has(.pos-luxury-area) .product-grid,
+  body:has(.pos-luxury-area) .luxury-product-grid {
+    width: 100% !important;
+    height: calc(100% - 56px) !important;
+    max-height: calc(100% - 56px) !important;
+    min-height: 0 !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    grid-auto-rows: 174px !important;
+    gap: 14px !important;
+    align-content: start !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    padding: 2px 0 28px 0 !important;
+    scrollbar-width: none !important;
+  }
+
+  body:has(.pos-luxury-area) .product-grid::-webkit-scrollbar,
+  body:has(.pos-luxury-area) .luxury-product-grid::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  body:has(.pos-luxury-area) .product-card {
+    width: 100% !important;
+    height: 174px !important;
+    min-height: 174px !important;
+    max-height: 174px !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 14px !important;
+    padding: 14px !important;
+    border-radius: 22px !important;
+    overflow: hidden !important;
+  }
+
+  body:has(.pos-luxury-area) .product-card .drink-img {
+    width: 100px !important;
+    height: 100px !important;
+    min-width: 100px !important;
+    max-width: 100px !important;
+    border-radius: 16px !important;
+  }
+
+  body:has(.pos-luxury-area) .product-card .product-info {
+    flex: 1 1 auto !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    height: 126px !important;
+    min-height: 126px !important;
+    display: grid !important;
+    grid-template-rows: 36px 38px 40px !important;
+    align-content: center !important;
+    gap: 5px !important;
+    overflow: visible !important;
+  }
+
+  body:has(.pos-luxury-area) .product-card .product-head {
+    height: 36px !important;
+    min-height: 36px !important;
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    align-items: start !important;
+    gap: 8px !important;
+    overflow: hidden !important;
+  }
+
+  body:has(.pos-luxury-area) .product-card h3,
+  body:has(.pos-luxury-area) .product-card .product-info h3 {
+    max-height: 34px !important;
+    font-size: 14px !important;
+    line-height: 1.12 !important;
+  }
+
+  body:has(.pos-luxury-area) .product-card .price {
+    font-size: 12.8px !important;
+    line-height: 1.12 !important;
+    white-space: nowrap !important;
+  }
+
+  body:has(.pos-luxury-area) .product-card .size-row {
+    width: 100% !important;
+    height: 38px !important;
+    min-height: 38px !important;
+    display: flex !important;
+    align-items: center !important;
+    flex-wrap: nowrap !important;
+    gap: 6px !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    scrollbar-width: none !important;
+  }
+
+  body:has(.pos-luxury-area) .product-card .size-row::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  body:has(.pos-luxury-area) .product-card .size-label {
+    width: auto !important;
+    flex: 0 0 auto !important;
+    font-size: 11px !important;
+  }
+
+  body:has(.pos-luxury-area) .product-card .regular-size,
+  body:has(.pos-luxury-area) .product-card .size-row span {
+    min-width: 0 !important;
+    max-width: 120px !important;
+    overflow: hidden !important;
+    font-size: 11px !important;
+    white-space: nowrap !important;
+    text-overflow: ellipsis !important;
+  }
+
+  body:has(.pos-luxury-area) .product-card .size-btn {
+    flex: 0 0 auto !important;
+    height: 32px !important;
+    min-height: 32px !important;
+    padding: 0 14px !important;
+    font-size: 11px !important;
+  }
+
+  body:has(.pos-luxury-area) .product-card .card-footer {
+    width: 100% !important;
+    height: 40px !important;
+    min-height: 40px !important;
+    display: grid !important;
+    grid-template-columns: auto minmax(96px, 1fr) !important;
+    align-items: center !important;
+    gap: 8px !important;
+    overflow: visible !important;
+  }
+
+  body:has(.pos-luxury-area) .product-card .qty-row {
+    flex-wrap: nowrap !important;
+    gap: 6px !important;
+  }
+
+  body:has(.pos-luxury-area) .product-card .qty-btn {
+    width: 29px !important;
+    height: 29px !important;
+    min-width: 29px !important;
+    min-height: 29px !important;
+    font-size: 14px !important;
+  }
+
+  body:has(.pos-luxury-area) .product-card .add-btn {
+    width: 100% !important;
+    min-width: 0 !important;
+    height: 36px !important;
+    min-height: 36px !important;
+    padding: 0 12px !important;
+    font-size: 11px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+}
+
+/* HP / mobile */
+@media (max-width: 760px) {
+  body:has(.pos-luxury-area) {
+    width: 100% !important;
+    height: 100dvh !important;
+    min-height: 100dvh !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+
+  body:has(.pos-luxury-area) .app-shell,
+  body:has(.pos-luxury-area) .app-shell:not(.single-content),
+  body:has(.pos-luxury-area) .app-shell.single-content {
+    width: 100% !important;
+    height: 100dvh !important;
+    min-height: 100dvh !important;
+    display: block !important;
+    padding: 10px 10px 84px !important;
+    overflow: hidden !important;
+  }
+
+  body:has(.pos-luxury-area) .sidebar {
+    position: fixed !important;
+    left: 10px !important;
+    right: 10px !important;
+    bottom: 10px !important;
+    z-index: 190 !important;
+    width: auto !important;
+    height: 64px !important;
+    min-height: 64px !important;
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) 58px !important;
+    align-items: center !important;
+    gap: 8px !important;
+    padding: 8px !important;
+    border-radius: 24px !important;
+    overflow: hidden !important;
+  }
+
+  body:has(.pos-luxury-area) .brand,
+  body:has(.pos-luxury-area) .brand.brand-with-logo {
+    display: none !important;
+  }
+
+  body:has(.pos-luxury-area) .nav-menu {
+    width: 100% !important;
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 6px !important;
+  }
+
+  body:has(.pos-luxury-area) .logout-form {
+    width: 58px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  body:has(.pos-luxury-area) .nav-item,
+  body:has(.pos-luxury-area) .logout-button {
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 48px !important;
+    height: 48px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 3px !important;
+    padding: 0 4px !important;
+    margin: 0 !important;
+    border-radius: 18px !important;
+    font-size: 9.5px !important;
+    line-height: 1 !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+  }
+
+  body:has(.pos-luxury-area) .logout-button span:last-child {
+    display: none !important;
+  }
+
+  body:has(.pos-luxury-area) .nav-icon {
+    width: 17px !important;
+    height: 17px !important;
+    flex: 0 0 auto !important;
+    font-size: 15px !important;
+  }
+
+  body:has(.pos-luxury-area) .nav-item.active::after {
+    display: none !important;
+  }
+
+  body:has(.pos-luxury-area) .content,
+  body:has(.pos-luxury-area) .app-shell.single-content .content {
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    border-radius: 24px !important;
+    overflow: hidden !important;
+  }
+
+  body:has(.pos-luxury-area) .topbar,
+  body:has(.pos-luxury-area) .app-shell.single-content .topbar {
+    height: 116px !important;
+    min-height: 116px !important;
+    display: grid !important;
+    grid-template-columns: 1fr auto !important;
+    grid-template-areas:
+      "search search"
+      "cart cart" !important;
+    align-items: center !important;
+    gap: 10px !important;
+    padding: 14px !important;
+  }
+
+  body:has(.pos-luxury-area) .topbar-spacer,
+  body:has(.pos-luxury-area) .profile-mini {
+    display: none !important;
+  }
+
+  body:has(.pos-luxury-area) .search-box {
+    grid-area: search !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 46px !important;
+    min-height: 46px !important;
+    padding: 0 15px !important;
+  }
+
+  body:has(.pos-luxury-area) .search-box input {
+    font-size: 13px !important;
+  }
+
+  body:has(.pos-luxury-area) .cart-toggle {
+    grid-area: cart !important;
+    width: 100% !important;
+    min-height: 44px !important;
+    height: 44px !important;
+    padding: 0 16px !important;
+    font-size: 12px !important;
+  }
+
+  body:has(.pos-luxury-area) .cart-toggle small {
+    width: 21px !important;
+    height: 21px !important;
+    min-width: 21px !important;
+  }
+
+  body:has(.pos-luxury-area) .menu-area,
+  body:has(.pos-luxury-area) .abstract-area,
+  body:has(.pos-luxury-area) .pos-luxury-area {
+    height: calc(100% - 116px) !important;
+    min-height: 0 !important;
+    padding: 12px 12px 14px !important;
+    overflow: hidden !important;
+  }
+
+  body:has(.pos-luxury-area) .category-tabs,
+  body:has(.pos-luxury-area) .luxury-category-tabs {
+    width: 100% !important;
+    gap: 8px !important;
+    padding: 0 0 12px !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    flex-wrap: nowrap !important;
+    scrollbar-width: none !important;
+  }
+
+  body:has(.pos-luxury-area) .category-tabs::-webkit-scrollbar,
+  body:has(.pos-luxury-area) .luxury-category-tabs::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  body:has(.pos-luxury-area) .category-tabs button,
+  body:has(.pos-luxury-area) .luxury-category-tabs button {
+    flex: 0 0 auto !important;
+    min-height: 38px !important;
+    height: 38px !important;
+    padding: 0 14px !important;
+    font-size: 11px !important;
+    white-space: nowrap !important;
+  }
+
+  body:has(.pos-luxury-area) .product-grid,
+  body:has(.pos-luxury-area) .luxury-product-grid {
+    width: 100% !important;
+    height: calc(100% - 50px) !important;
+    max-height: calc(100% - 50px) !important;
+    min-height: 0 !important;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    grid-auto-rows: 156px !important;
+    row-gap: 12px !important;
+    column-gap: 0 !important;
+    align-content: start !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    padding: 0 0 22px 0 !important;
+    scrollbar-width: none !important;
+  }
+
+  body:has(.pos-luxury-area) .product-grid::-webkit-scrollbar,
+  body:has(.pos-luxury-area) .luxury-product-grid::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  body:has(.pos-luxury-area) .product-card {
+    width: 100% !important;
+    height: 156px !important;
+    min-height: 156px !important;
+    max-height: 156px !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 10px !important;
+    padding: 12px !important;
+    border-radius: 20px !important;
+    overflow: hidden !important;
+  }
+
+  body:has(.pos-luxury-area) .product-card .drink-img {
+    width: 88px !important;
+    height: 88px !important;
+    min-width: 88px !important;
+    max-width: 88px !important;
+    border-radius: 15px !important;
+  }
+
+  body:has(.pos-luxury-area) .product-card .product-info {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    height: 116px !important;
+    min-height: 116px !important;
+    display: grid !important;
+    grid-template-rows: 32px 36px 38px !important;
+    align-content: center !important;
+    gap: 4px !important;
+    overflow: visible !important;
+  }
+
+  body:has(.pos-luxury-area) .product-card .product-head {
+    height: 32px !important;
+    min-height: 32px !important;
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    align-items: start !important;
+    gap: 6px !important;
+    overflow: hidden !important;
+  }
+
+  body:has(.pos-luxury-area) .product-card h3,
+  body:has(.pos-luxury-area) .product-card .product-info h3 {
+    max-height: 32px !important;
+    font-size: 13.5px !important;
+    line-height: 1.12 !important;
+  }
+
+  body:has(.pos-luxury-area) .product-card .price {
+    font-size: 12.3px !important;
+    line-height: 1.12 !important;
+    white-space: nowrap !important;
+  }
+
+  body:has(.pos-luxury-area) .product-card .size-row {
+    width: 100% !important;
+    height: 36px !important;
+    min-height: 36px !important;
+    display: flex !important;
+    align-items: center !important;
+    flex-wrap: nowrap !important;
+    gap: 6px !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    scrollbar-width: none !important;
+  }
+
+  body:has(.pos-luxury-area) .product-card .size-row::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  body:has(.pos-luxury-area) .product-card .size-label {
+    width: auto !important;
+    flex: 0 0 auto !important;
+    font-size: 10.5px !important;
+  }
+
+  body:has(.pos-luxury-area) .product-card .regular-size,
+  body:has(.pos-luxury-area) .product-card .size-row span {
+    min-width: 0 !important;
+    max-width: 105px !important;
+    overflow: hidden !important;
+    font-size: 10.5px !important;
+    white-space: nowrap !important;
+    text-overflow: ellipsis !important;
+  }
+
+  body:has(.pos-luxury-area) .product-card .size-btn {
+    flex: 0 0 auto !important;
+    height: 30px !important;
+    min-height: 30px !important;
+    padding: 0 12px !important;
+    font-size: 10.5px !important;
+  }
+
+  body:has(.pos-luxury-area) .product-card .card-footer {
+    width: 100% !important;
+    height: 38px !important;
+    min-height: 38px !important;
+    display: grid !important;
+    grid-template-columns: auto minmax(92px, 1fr) !important;
+    align-items: center !important;
+    gap: 7px !important;
+    overflow: visible !important;
+  }
+
+  body:has(.pos-luxury-area) .product-card .qty-row {
+    flex-wrap: nowrap !important;
+    gap: 5px !important;
+  }
+
+  body:has(.pos-luxury-area) .product-card .qty-btn {
+    width: 28px !important;
+    height: 28px !important;
+    min-width: 28px !important;
+    min-height: 28px !important;
+    font-size: 13px !important;
+  }
+
+  body:has(.pos-luxury-area) .product-card .qty-row span {
+    min-width: 14px !important;
+    font-size: 12px !important;
+    text-align: center !important;
+  }
+
+  body:has(.pos-luxury-area) .product-card .add-btn {
+    width: 100% !important;
+    min-width: 0 !important;
+    height: 34px !important;
+    min-height: 34px !important;
+    padding: 0 10px !important;
+    font-size: 10.5px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  body:has(.pos-luxury-area) .cart-drawer {
+    top: auto !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    height: min(86dvh, 720px) !important;
+    max-height: 86dvh !important;
+    gap: 12px !important;
+    padding: 18px !important;
+    border-radius: 28px 28px 0 0 !important;
+    z-index: 260 !important;
+    transform: translateY(calc(100% + 34px)) !important;
+    box-shadow: 0 -28px 80px rgba(75, 49, 34, 0.24) !important;
+  }
+
+  body:has(.pos-luxury-area) .cart-drawer.show {
+    transform: translateY(0) !important;
+  }
+
+  body:has(.pos-luxury-area) .cart-backdrop,
+  body:has(.pos-luxury-area) .checkout-confirm-backdrop,
+  body:has(.pos-luxury-area) .checkout-success-backdrop,
+  body:has(.pos-luxury-area) .invoice-modal-backdrop {
+    z-index: 250 !important;
+  }
+
+  body:has(.pos-luxury-area) .cart-drawer-head h2 {
+    font-size: 21px !important;
+  }
+
+  body:has(.pos-luxury-area) .cart-list {
+    gap: 10px !important;
+  }
+
+  body:has(.pos-luxury-area) .cart-item {
+    grid-template-columns: 62px minmax(0, 1fr) !important;
+    gap: 10px !important;
+    padding: 10px !important;
+    border-radius: 20px !important;
+  }
+
+  body:has(.pos-luxury-area) .cart-img {
+    width: 62px !important;
+    height: 62px !important;
+  }
+
+  body:has(.pos-luxury-area) .summary {
+    padding: 14px !important;
+    border-radius: 20px !important;
+  }
+
+  body:has(.pos-luxury-area) .order-btn {
+    min-height: 48px !important;
+  }
+
+  body:has(.pos-luxury-area) .checkout-confirm-modal,
+  body:has(.pos-luxury-area) .checkout-success-modal,
+  body:has(.pos-luxury-area) .invoice-modal {
+    padding: 14px !important;
+    z-index: 270 !important;
+  }
+
+  body:has(.pos-luxury-area) .checkout-confirm-card,
+  body:has(.pos-luxury-area) .checkout-success-card,
+  body:has(.pos-luxury-area) .invoice-modal-card {
+    width: 100% !important;
+    max-height: calc(100dvh - 28px) !important;
+    padding: 20px !important;
+    border-radius: 26px !important;
+  }
+
+  body:has(.pos-luxury-area) .confirm-actions,
+  body:has(.pos-luxury-area) .success-actions,
+  body:has(.pos-luxury-area) .invoice-actions,
+  body:has(.pos-luxury-area) .success-actions-three {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+
+  body:has(.pos-luxury-area) .confirm-secondary-btn,
+  body:has(.pos-luxury-area) .confirm-primary-btn,
+  body:has(.pos-luxury-area) .success-secondary-btn,
+  body:has(.pos-luxury-area) .success-primary-btn,
+  body:has(.pos-luxury-area) .success-print-btn,
+  body:has(.pos-luxury-area) .invoice-secondary-btn,
+  body:has(.pos-luxury-area) .invoice-print-btn {
+    width: 100% !important;
+    min-height: 48px !important;
+  }
+}
+
+/* HP sangat kecil */
+@media (max-width: 420px) {
+  body:has(.pos-luxury-area) .app-shell {
+    padding: 8px 8px 80px !important;
+  }
+
+  body:has(.pos-luxury-area) .sidebar {
+    left: 8px !important;
+    right: 8px !important;
+    bottom: 8px !important;
+    height: 60px !important;
+    min-height: 60px !important;
+    grid-template-columns: minmax(0, 1fr) 52px !important;
+    border-radius: 22px !important;
+    padding: 7px !important;
+  }
+
+  body:has(.pos-luxury-area) .logout-form {
+    width: 52px !important;
+  }
+
+  body:has(.pos-luxury-area) .nav-item,
+  body:has(.pos-luxury-area) .logout-button {
+    height: 46px !important;
+    min-height: 46px !important;
+    border-radius: 16px !important;
+    font-size: 8.8px !important;
+  }
+
+  body:has(.pos-luxury-area) .content {
+    border-radius: 22px !important;
+  }
+
+  body:has(.pos-luxury-area) .topbar {
+    height: 108px !important;
+    min-height: 108px !important;
+    padding: 12px !important;
+    gap: 8px !important;
+  }
+
+  body:has(.pos-luxury-area) .search-box {
+    height: 44px !important;
+    min-height: 44px !important;
+  }
+
+  body:has(.pos-luxury-area) .cart-toggle {
+    height: 42px !important;
+    min-height: 42px !important;
+  }
+
+  body:has(.pos-luxury-area) .menu-area,
+  body:has(.pos-luxury-area) .abstract-area,
+  body:has(.pos-luxury-area) .pos-luxury-area {
+    height: calc(100% - 108px) !important;
+    padding: 10px 10px 12px !important;
+  }
+
+  body:has(.pos-luxury-area) .product-grid,
+  body:has(.pos-luxury-area) .luxury-product-grid {
+    grid-auto-rows: 148px !important;
+    row-gap: 10px !important;
+  }
+
+  body:has(.pos-luxury-area) .product-card {
+    height: 148px !important;
+    min-height: 148px !important;
+    max-height: 148px !important;
+    gap: 9px !important;
+    padding: 10px !important;
+  }
+
+  body:has(.pos-luxury-area) .product-card .drink-img {
+    width: 78px !important;
+    height: 78px !important;
+    min-width: 78px !important;
+    max-width: 78px !important;
+  }
+
+  body:has(.pos-luxury-area) .product-card .product-info {
+    height: 112px !important;
+    min-height: 112px !important;
+    grid-template-rows: 31px 35px 36px !important;
+    gap: 3px !important;
+  }
+
+  body:has(.pos-luxury-area) .product-card h3,
+  body:has(.pos-luxury-area) .product-card .product-info h3 {
+    font-size: 13px !important;
+    max-height: 31px !important;
+  }
+
+  body:has(.pos-luxury-area) .product-card .price {
+    font-size: 11.6px !important;
+  }
+
+  body:has(.pos-luxury-area) .product-card .card-footer {
+    grid-template-columns: auto minmax(80px, 1fr) !important;
+    gap: 6px !important;
+  }
+
+  body:has(.pos-luxury-area) .product-card .qty-btn {
+    width: 26px !important;
+    height: 26px !important;
+    min-width: 26px !important;
+    min-height: 26px !important;
+  }
+
+  body:has(.pos-luxury-area) .product-card .add-btn {
+    height: 32px !important;
+    min-height: 32px !important;
+    font-size: 10px !important;
+  }
+}
+
+/* Landscape HP / tablet rendah: area produk tetap bisa discroll */
+@media (max-height: 560px) and (max-width: 1180px) {
+  body:has(.pos-luxury-area) .product-grid,
+  body:has(.pos-luxury-area) .luxury-product-grid,
+  body:has(.pos-luxury-area) .cart-list,
+  body:has(.pos-luxury-area) .checkout-confirm-card,
+  body:has(.pos-luxury-area) .checkout-success-card {
+    overflow-y: auto !important;
+  }
+}
+
+
+/* =========================================================
+   FIX FINAL MOBILE SIDEBAR - HISTORY & SETTINGS
+   Tempel PALING BAWAH style.css
+   Tujuan: sidebar History/Settings sama seperti Home di HP
+========================================================= */
+
+@media (max-width: 900px) {
+  body.history-page,
+  body.settings-page {
+    height: auto !important;
+    min-height: 100dvh !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    padding: 0 !important;
+  }
+
+  body.history-page .app-shell,
+  body.settings-page .app-shell,
+  body.history-page .app-shell:not(.single-content),
+  body.settings-page .app-shell:not(.single-content) {
+    width: 100% !important;
+    min-height: 100dvh !important;
+    height: auto !important;
+    display: block !important;
+    padding: 10px 10px 92px !important;
+    overflow: visible !important;
+  }
+
+  body.history-page .sidebar,
+  body.settings-page .sidebar {
+    position: fixed !important;
+    left: 10px !important;
+    right: 10px !important;
+    bottom: 10px !important;
+    top: auto !important;
+
+    width: auto !important;
+    height: 68px !important;
+    min-height: 68px !important;
+    max-height: 68px !important;
+
+    z-index: 9999 !important;
+
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) 58px !important;
+    align-items: center !important;
+    gap: 8px !important;
+
+    padding: 8px !important;
+    margin: 0 !important;
+
+    border-radius: 24px !important;
+    border: 1px solid rgba(150, 86, 42, 0.22) !important;
+    background: rgba(255, 255, 255, 0.42) !important;
+    box-shadow: 0 18px 46px rgba(125, 72, 31, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.42) !important;
+    backdrop-filter: blur(16px) saturate(130%) !important;
+    -webkit-backdrop-filter: blur(16px) saturate(130%) !important;
+
+    overflow: hidden !important;
+  }
+
+  body.history-page .brand,
+  body.history-page .brand.brand-with-logo,
+  body.settings-page .brand,
+  body.settings-page .brand.brand-with-logo {
+    display: none !important;
+  }
+
+  body.history-page .nav-menu,
+  body.settings-page .nav-menu {
+    width: 100% !important;
+    min-width: 0 !important;
+
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 6px !important;
+
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  body.history-page .logout-form,
+  body.settings-page .logout-form {
+    width: 58px !important;
+    min-width: 58px !important;
+    max-width: 58px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  body.history-page .nav-item,
+  body.history-page .logout-button,
+  body.settings-page .nav-item,
+  body.settings-page .logout-button {
+    width: 100% !important;
+    min-width: 0 !important;
+
+    height: 52px !important;
+    min-height: 52px !important;
+    max-height: 52px !important;
+
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 3px !important;
+
+    padding: 0 4px !important;
+    margin: 0 !important;
+
+    border-radius: 18px !important;
+    font-size: 9px !important;
+    line-height: 1 !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+  }
+
+  body.history-page .nav-icon,
+  body.settings-page .nav-icon {
+    width: 18px !important;
+    height: 18px !important;
+    flex: 0 0 auto !important;
+    font-size: 15px !important;
+  }
+
+  body.history-page .logout-button span:last-child,
+  body.settings-page .logout-button span:last-child {
+    display: none !important;
+  }
+
+  body.history-page .nav-item.active::after,
+  body.settings-page .nav-item.active::after {
+    display: none !important;
+  }
+
+  body.history-page .content,
+  body.settings-page .content {
+    width: 100% !important;
+    height: auto !important;
+    min-height: calc(100dvh - 112px) !important;
+    overflow: visible !important;
+    border-radius: 24px !important;
+  }
+
+  body.settings-page .topbar {
+    display: none !important;
+  }
+
+  body.history-page .history-area,
+  body.settings-page .settings-area {
+    height: auto !important;
+    min-height: calc(100dvh - 112px) !important;
+    overflow: visible !important;
+    padding: 20px 16px 26px !important;
+  }
+
+  body.settings-page .settings-area {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  body.settings-page .profile-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  body.history-page .history-stats,
+  body.history-page .history-stats-daily,
+  body.history-page .history-filter {
+    grid-template-columns: 1fr !important;
+  }
+
+  body.history-page .history-table-wrap {
+    overflow-x: auto !important;
+    overflow-y: visible !important;
+  }
+
+  body.history-page .history-table {
+    min-width: 760px !important;
+  }
+}
+
+/* =========================================================
+   FIX FINAL MOBILE HISTORY SCROLL
+   Tempel PALING BAWAH style.css setelah fix mobile sidebar
+========================================================= */
+
+@media (max-width: 900px) {
+  body.history-page {
+    height: auto !important;
+    min-height: 100dvh !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    touch-action: pan-y !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  body.history-page .app-shell {
+    height: auto !important;
+    min-height: 100dvh !important;
+    overflow: visible !important;
+    display: block !important;
+    padding-bottom: 96px !important;
+  }
+
+  body.history-page .content {
+    height: auto !important;
+    min-height: auto !important;
+    overflow: visible !important;
+  }
+
+  body.history-page .history-area {
+    height: auto !important;
+    min-height: auto !important;
+    overflow: visible !important;
+    display: flex !important;
+    flex-direction: column !important;
+    padding-bottom: 26px !important;
+  }
+
+  body.history-page .history-head,
+  body.history-page .history-stats,
+  body.history-page .history-filter {
+    flex-shrink: 0 !important;
+  }
+
+  body.history-page .history-table-wrap {
+    width: 100% !important;
+    max-width: 100% !important;
+
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
+
+    display: block !important;
+
+    overflow-x: auto !important;
+    overflow-y: visible !important;
+
+    -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior: auto !important;
+    touch-action: pan-x pan-y !important;
+  }
+
+  body.history-page .history-table {
+    width: 100% !important;
+    min-width: 760px !important;
+    table-layout: fixed !important;
+  }
+
+  body.history-page .history-table thead {
+    display: table-header-group !important;
+  }
+
+  body.history-page .history-table tbody {
+    display: table-row-group !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  body.history-page .history-table tbody tr {
+    display: table-row !important;
+  }
+
+  body.history-page .history-pagination {
+    position: static !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    transform: none !important;
+    margin: 16px auto 0 !important;
+  }
+}
+
+/* =========================================================
+   FIX MOBILE HISTORY PAGINATION SIZE
+   Mengecilkan tombol Sebelumnya / Berikutnya di HP
+========================================================= */
+
+@media (max-width: 900px) {
+  body.history-page .history-pagination {
+    width: calc(100% - 12px) !important;
+    max-width: 100% !important;
+
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+
+    padding: 8px 10px !important;
+    margin: 14px auto 0 !important;
+
+    border-radius: 22px !important;
+    overflow: hidden !important;
+  }
+
+  body.history-page .history-pagination button {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 116px !important;
+
+    height: 38px !important;
+    min-height: 38px !important;
+
+    padding: 0 10px !important;
+    border-radius: 999px !important;
+
+    font-size: 12px !important;
+    font-weight: 900 !important;
+    white-space: nowrap !important;
+  }
+
+  body.history-page .history-pagination span {
+    min-width: max-content !important;
+    padding: 0 4px !important;
+
+    font-size: 12px !important;
+    font-weight: 900 !important;
+    white-space: nowrap !important;
+    text-align: center !important;
+  }
+}
+
+@media (max-width: 420px) {
+  body.history-page .history-pagination {
+    gap: 5px !important;
+    padding: 7px 8px !important;
+  }
+
+  body.history-page .history-pagination button {
+    max-width: 104px !important;
+    height: 36px !important;
+    min-height: 36px !important;
+    padding: 0 8px !important;
+    font-size: 11px !important;
+  }
+
+  body.history-page .history-pagination span {
+    font-size: 11px !important;
+  }
+}
+
+/* =========================================================
+   FIX TABLET HISTORY PAGINATION RESTORE
+   Tablet jangan ikut style pagination HP
+========================================================= */
+
+@media (min-width: 561px) and (max-width: 900px) {
+  body.history-page .history-pagination {
+    width: fit-content !important;
+    max-width: calc(100% - 28px) !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 14px !important;
+
+    padding: 10px 14px !important;
+    margin: 18px auto 0 !important;
+
+    border-radius: 999px !important;
+    overflow: visible !important;
+  }
+
+  body.history-page .history-pagination button {
+    width: auto !important;
+    min-width: 112px !important;
+    max-width: none !important;
+
+    height: 40px !important;
+    min-height: 40px !important;
+
+    padding: 0 16px !important;
+    border-radius: 999px !important;
+
+    font-size: 13px !important;
+    font-weight: 800 !important;
+    white-space: nowrap !important;
+  }
+
+  body.history-page .history-pagination span {
+    min-width: auto !important;
+    padding: 0 !important;
+
+    font-size: 13px !important;
+    font-weight: 800 !important;
+    white-space: nowrap !important;
+    text-align: center !important;
+  }
+}
+
+/* =========================================================
+   FIX PALING KUAT - LOGIN SCROLL TABLET & HP
+   Tempel PALING BAWAH style.css
+========================================================= */
+
+@media (max-width: 900px) {
+  html {
+    height: auto !important;
+    min-height: 100% !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+  }
+
+  body,
+  body.login-page,
+  body:has(.login-shell),
+  body:has(.luxury-login-shell) {
+    position: static !important;
+    height: auto !important;
+    min-height: 100dvh !important;
+    max-height: none !important;
+
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+
+    touch-action: pan-y !important;
+    overscroll-behavior-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  .login-shell,
+  .luxury-login-shell {
+    position: relative !important;
+
+    width: 100% !important;
+    height: auto !important;
+    min-height: 100dvh !important;
+    max-height: none !important;
+
+    display: block !important;
+
+    padding: 24px 14px 48px !important;
+
+    overflow: visible !important;
+  }
+
+  .login-card,
+  .login-form,
+  .luxury-login-card,
+  .luxury-login-panel {
+    position: relative !important;
+
+    width: min(420px, 100%) !important;
+    max-width: 100% !important;
+
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
+
+    margin: 0 auto !important;
+
+    overflow: visible !important;
+  }
+}
+
+@media (max-width: 560px) {
+  .login-shell,
+  .luxury-login-shell {
+    padding: 18px 12px 42px !important;
+  }
+
+  .login-card,
+  .login-form,
+  .luxury-login-card,
+  .luxury-login-panel {
+    padding: 22px 18px !important;
+    border-radius: 24px !important;
+  }
+}
+
+/* =========================================================
+   FINAL UNIFIED TABLET TOP WIDGET - HOME STYLE
+   History & Settings memakai pola widget atas Home.
+   Catatan:
+   - Tablet 561px - 1180px: header horizontal.
+   - Tombol menu mengikuti ukuran teks, bukan melebar.
+   - HP <= 560px tetap memakai bottom navigation dari rule sebelumnya.
+========================================================= */
+
+@media (min-width: 561px) and (max-width: 1180px) {
+  html body.history-page,
+  html body.app-page.settings-page,
+  html body.settings-page {
+    width: 100% !important;
+    height: 100dvh !important;
+    min-height: 100dvh !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+
+  html body.history-page main.app-shell,
+  html body.history-page main.app-shell:not(.single-content),
+  html body.history-page main.app-shell.single-content,
+  html body.app-page.settings-page main.app-shell,
+  html body.app-page.settings-page main.app-shell:not(.single-content),
+  html body.app-page.settings-page main.app-shell.single-content,
+  html body.settings-page main.app-shell,
+  html body.settings-page main.app-shell:not(.single-content),
+  html body.settings-page main.app-shell.single-content {
+    width: 100% !important;
+    height: 100dvh !important;
+    min-height: 100dvh !important;
+
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    grid-template-rows: auto minmax(0, 1fr) !important;
+    gap: 14px !important;
+
+    padding: 14px !important;
+    overflow: hidden !important;
+  }
+
+  html body.history-page main.app-shell > aside.sidebar,
+  html body.app-page.settings-page main.app-shell > aside.sidebar,
+  html body.settings-page main.app-shell > aside.sidebar {
+    position: relative !important;
+    inset: auto !important;
+
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+
+    display: grid !important;
+    grid-template-columns: minmax(178px, auto) minmax(0, 1fr) auto !important;
+    grid-template-areas: none !important;
+    align-items: center !important;
+    gap: 14px !important;
+
+    padding: 14px 16px !important;
+    margin: 0 !important;
+
+    border-radius: 24px !important;
+    overflow: visible !important;
+  }
+
+  html body.history-page main.app-shell > aside.sidebar > .brand,
+  html body.history-page main.app-shell > aside.sidebar > .brand.brand-with-logo,
+  html body.app-page.settings-page main.app-shell > aside.sidebar > .brand,
+  html body.app-page.settings-page main.app-shell > aside.sidebar > .brand.brand-with-logo,
+  html body.settings-page main.app-shell > aside.sidebar > .brand,
+  html body.settings-page main.app-shell > aside.sidebar > .brand.brand-with-logo {
+    grid-area: auto !important;
+
+    width: auto !important;
+    min-width: 178px !important;
+    max-width: 220px !important;
+
+    height: 58px !important;
+    min-height: 58px !important;
+    max-height: 58px !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 8px !important;
+
+    padding: 8px 10px !important;
+    margin: 0 !important;
+
+    border-radius: 18px !important;
+  }
+
+  html body.history-page main.app-shell > aside.sidebar .brand-logo,
+  html body.app-page.settings-page main.app-shell > aside.sidebar .brand-logo,
+  html body.settings-page main.app-shell > aside.sidebar .brand-logo {
+    width: 42px !important;
+    height: 42px !important;
+    min-width: 42px !important;
+    flex: 0 0 42px !important;
+    border-radius: 14px !important;
+  }
+
+  html body.history-page main.app-shell > aside.sidebar .brand-text,
+  html body.app-page.settings-page main.app-shell > aside.sidebar .brand-text,
+  html body.settings-page main.app-shell > aside.sidebar .brand-text {
+    min-width: 0 !important;
+    overflow: hidden !important;
+  }
+
+  html body.history-page main.app-shell > aside.sidebar .brand strong,
+  html body.history-page main.app-shell > aside.sidebar .brand-text strong,
+  html body.app-page.settings-page main.app-shell > aside.sidebar .brand strong,
+  html body.app-page.settings-page main.app-shell > aside.sidebar .brand-text strong,
+  html body.settings-page main.app-shell > aside.sidebar .brand strong,
+  html body.settings-page main.app-shell > aside.sidebar .brand-text strong {
+    font-size: 22px !important;
+    line-height: 1 !important;
+    letter-spacing: -0.8px !important;
+    white-space: nowrap !important;
+  }
+
+  html body.history-page main.app-shell > aside.sidebar .brand small,
+  html body.history-page main.app-shell > aside.sidebar .brand-text small,
+  html body.app-page.settings-page main.app-shell > aside.sidebar .brand small,
+  html body.app-page.settings-page main.app-shell > aside.sidebar .brand-text small,
+  html body.settings-page main.app-shell > aside.sidebar .brand small,
+  html body.settings-page main.app-shell > aside.sidebar .brand-text small {
+    margin-top: 4px !important;
+    font-size: 8.5px !important;
+    letter-spacing: 0.16em !important;
+    white-space: nowrap !important;
+  }
+
+  html body.history-page main.app-shell > aside.sidebar > nav.nav-menu,
+  html body.app-page.settings-page main.app-shell > aside.sidebar > nav.nav-menu,
+  html body.settings-page main.app-shell > aside.sidebar > nav.nav-menu {
+    grid-area: auto !important;
+
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+
+    display: flex !important;
+    grid-template-columns: none !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 10px !important;
+
+    padding: 0 2px !important;
+    margin: 0 !important;
+
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
+
+  html body.history-page main.app-shell > aside.sidebar > nav.nav-menu::-webkit-scrollbar,
+  html body.app-page.settings-page main.app-shell > aside.sidebar > nav.nav-menu::-webkit-scrollbar,
+  html body.settings-page main.app-shell > aside.sidebar > nav.nav-menu::-webkit-scrollbar {
+    width: 0 !important;
+    height: 0 !important;
+    display: none !important;
+  }
+
+  html body.history-page main.app-shell > aside.sidebar > nav.nav-menu > a.nav-item,
+  html body.app-page.settings-page main.app-shell > aside.sidebar > nav.nav-menu > a.nav-item,
+  html body.settings-page main.app-shell > aside.sidebar > nav.nav-menu > a.nav-item {
+    flex: 0 0 auto !important;
+
+    width: max-content !important;
+    min-width: max-content !important;
+    max-width: max-content !important;
+
+    height: 46px !important;
+    min-height: 46px !important;
+    max-height: 46px !important;
+
+    display: inline-flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+
+    padding: 0 14px !important;
+    margin: 0 !important;
+
+    border-radius: 16px !important;
+
+    font-size: 12px !important;
+    font-weight: 800 !important;
+    line-height: 1 !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+  }
+
+  html body.history-page main.app-shell > aside.sidebar > form.logout-form,
+  html body.app-page.settings-page main.app-shell > aside.sidebar > form.logout-form,
+  html body.settings-page main.app-shell > aside.sidebar > form.logout-form {
+    grid-area: auto !important;
+
+    flex: 0 0 auto !important;
+    width: max-content !important;
+    min-width: max-content !important;
+    max-width: max-content !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    align-self: center !important;
+    justify-self: end !important;
+  }
+
+  html body.history-page main.app-shell > aside.sidebar > form.logout-form > button.logout-button,
+  html body.app-page.settings-page main.app-shell > aside.sidebar > form.logout-form > button.logout-button,
+  html body.settings-page main.app-shell > aside.sidebar > form.logout-form > button.logout-button {
+    flex: 0 0 auto !important;
+
+    width: max-content !important;
+    min-width: max-content !important;
+    max-width: max-content !important;
+
+    height: 46px !important;
+    min-height: 46px !important;
+    max-height: 46px !important;
+
+    display: inline-flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+
+    padding: 0 14px !important;
+    margin: 0 !important;
+
+    border-radius: 16px !important;
+
+    font-size: 12px !important;
+    font-weight: 800 !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+  }
+
+  html body.history-page main.app-shell > aside.sidebar .nav-icon,
+  html body.app-page.settings-page main.app-shell > aside.sidebar .nav-icon,
+  html body.settings-page main.app-shell > aside.sidebar .nav-icon {
+    width: 18px !important;
+    height: 18px !important;
+    min-width: 18px !important;
+    flex: 0 0 18px !important;
+    font-size: 15px !important;
+  }
+
+  html body.history-page main.app-shell > aside.sidebar .nav-item.active::after,
+  html body.app-page.settings-page main.app-shell > aside.sidebar .nav-item.active::after,
+  html body.settings-page main.app-shell > aside.sidebar .nav-item.active::after {
+    display: none !important;
+  }
+
+  html body.history-page main.app-shell > section.content,
+  html body.app-page.settings-page main.app-shell > section.content,
+  html body.settings-page main.app-shell > section.content {
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    border-radius: 24px !important;
+    overflow: hidden !important;
+  }
+
+  html body.history-page .history-area {
+    height: 100% !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+    padding: 24px 28px 28px !important;
+  }
+
+  html body.app-page.settings-page .settings-area,
+  html body.settings-page .settings-area {
+    height: calc(100% - 96px) !important;
+    min-height: 0 !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    padding: 24px 28px 28px !important;
+  }
+}
+
+@media (min-width: 561px) and (max-width: 780px) {
+  html body.history-page main.app-shell > aside.sidebar,
+  html body.app-page.settings-page main.app-shell > aside.sidebar,
+  html body.settings-page main.app-shell > aside.sidebar {
+    grid-template-columns: minmax(168px, auto) minmax(0, 1fr) auto !important;
+    gap: 8px !important;
+    padding: 12px 14px !important;
+  }
+
+  html body.history-page main.app-shell > aside.sidebar > .brand,
+  html body.history-page main.app-shell > aside.sidebar > .brand.brand-with-logo,
+  html body.app-page.settings-page main.app-shell > aside.sidebar > .brand,
+  html body.app-page.settings-page main.app-shell > aside.sidebar > .brand.brand-with-logo,
+  html body.settings-page main.app-shell > aside.sidebar > .brand,
+  html body.settings-page main.app-shell > aside.sidebar > .brand.brand-with-logo {
+    min-width: 168px !important;
+    max-width: 168px !important;
+    height: 56px !important;
+    min-height: 56px !important;
+    max-height: 56px !important;
+  }
+
+  html body.history-page main.app-shell > aside.sidebar .brand-logo,
+  html body.app-page.settings-page main.app-shell > aside.sidebar .brand-logo,
+  html body.settings-page main.app-shell > aside.sidebar .brand-logo {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    flex-basis: 40px !important;
+  }
+
+  html body.history-page main.app-shell > aside.sidebar .brand strong,
+  html body.history-page main.app-shell > aside.sidebar .brand-text strong,
+  html body.app-page.settings-page main.app-shell > aside.sidebar .brand strong,
+  html body.app-page.settings-page main.app-shell > aside.sidebar .brand-text strong,
+  html body.settings-page main.app-shell > aside.sidebar .brand strong,
+  html body.settings-page main.app-shell > aside.sidebar .brand-text strong {
+    font-size: 20px !important;
+  }
+
+  html body.history-page main.app-shell > aside.sidebar > nav.nav-menu,
+  html body.app-page.settings-page main.app-shell > aside.sidebar > nav.nav-menu,
+  html body.settings-page main.app-shell > aside.sidebar > nav.nav-menu {
+    gap: 8px !important;
+  }
+
+  html body.history-page main.app-shell > aside.sidebar > nav.nav-menu > a.nav-item,
+  html body.history-page main.app-shell > aside.sidebar > form.logout-form > button.logout-button,
+  html body.app-page.settings-page main.app-shell > aside.sidebar > nav.nav-menu > a.nav-item,
+  html body.app-page.settings-page main.app-shell > aside.sidebar > form.logout-form > button.logout-button,
+  html body.settings-page main.app-shell > aside.sidebar > nav.nav-menu > a.nav-item,
+  html body.settings-page main.app-shell > aside.sidebar > form.logout-form > button.logout-button {
+    height: 44px !important;
+    min-height: 44px !important;
+    max-height: 44px !important;
+    padding: 0 12px !important;
+    border-radius: 15px !important;
+    font-size: 11.2px !important;
+  }
+}
+
+/* =========================================================
+   FINAL FIX SETTINGS TABLET / MOBILE OVERLAP
+   Perbaikan: panel Data Profile dan Ubah Data User tidak saling menumpuk.
+   Settings tablet dibuat satu kolom rapi dan scroll memakai halaman.
+========================================================= */
+
+@media (min-width: 561px) and (max-width: 1180px) {
+  html body.app-page.settings-page,
+  html body.settings-page {
+    height: auto !important;
+    min-height: 100dvh !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+  }
+
+  html body.app-page.settings-page main.app-shell,
+  html body.app-page.settings-page main.app-shell:not(.single-content),
+  html body.app-page.settings-page main.app-shell.single-content,
+  html body.settings-page main.app-shell,
+  html body.settings-page main.app-shell:not(.single-content),
+  html body.settings-page main.app-shell.single-content {
+    height: auto !important;
+    min-height: 100dvh !important;
+    grid-template-rows: auto auto !important;
+    overflow: visible !important;
+  }
+
+  html body.app-page.settings-page main.app-shell > section.content,
+  html body.settings-page main.app-shell > section.content {
+    height: auto !important;
+    min-height: auto !important;
+    overflow: visible !important;
+  }
+
+  html body.app-page.settings-page .topbar,
+  html body.settings-page .topbar {
+    display: none !important;
+  }
+
+  html body.app-page.settings-page .settings-area,
+  html body.settings-page .settings-area {
+    width: 100% !important;
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
+
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 18px !important;
+
+    padding: 24px 28px 30px !important;
+    overflow: visible !important;
+  }
+
+  html body.app-page.settings-page .settings-area > *,
+  html body.settings-page .settings-area > * {
+    position: relative !important;
+    inset: auto !important;
+    transform: none !important;
+    flex: 0 0 auto !important;
+    align-self: stretch !important;
+  }
+
+  html body.app-page.settings-page .profile-panel,
+  html body.app-page.settings-page .profile-form-panel,
+  html body.settings-page .profile-panel,
+  html body.settings-page .profile-form-panel {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    margin: 0 !important;
+  }
+
+  html body.app-page.settings-page .profile-card,
+  html body.settings-page .profile-card {
+    overflow: hidden !important;
+  }
+
+  html body.app-page.settings-page .profile-form-panel,
+  html body.settings-page .profile-form-panel {
+    padding: 24px !important;
+    overflow: visible !important;
+  }
+
+  html body.app-page.settings-page .profile-main,
+  html body.app-page.settings-page .profile-header,
+  html body.settings-page .profile-main,
+  html body.settings-page .profile-header {
+    position: relative !important;
+    margin-top: -37px !important;
+  }
+
+  html body.app-page.settings-page .profile-grid,
+  html body.settings-page .profile-grid {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+    padding: 0 24px 24px !important;
+  }
+
+  html body.app-page.settings-page .profile-grid div,
+  html body.settings-page .profile-grid div {
+    min-height: 74px !important;
+  }
+
+  html body.app-page.settings-page .settings-form,
+  html body.settings-page .settings-form {
+    display: grid !important;
+    gap: 12px !important;
+  }
+}
+
+@media (max-width: 560px) {
+  html body.app-page.settings-page,
+  html body.settings-page {
+    height: auto !important;
+    min-height: 100dvh !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+  }
+
+  html body.app-page.settings-page main.app-shell,
+  html body.settings-page main.app-shell {
+    height: auto !important;
+    min-height: 100dvh !important;
+    display: block !important;
+    overflow: visible !important;
+    padding-bottom: 96px !important;
+  }
+
+  html body.app-page.settings-page main.app-shell > section.content,
+  html body.settings-page main.app-shell > section.content {
+    height: auto !important;
+    min-height: auto !important;
+    overflow: visible !important;
+  }
+
+  html body.app-page.settings-page .topbar,
+  html body.settings-page .topbar {
+    display: none !important;
+  }
+
+  html body.app-page.settings-page .settings-area,
+  html body.settings-page .settings-area {
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
+
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+
+    padding: 18px 14px 24px !important;
+    overflow: visible !important;
+  }
+
+  html body.app-page.settings-page .profile-panel,
+  html body.app-page.settings-page .profile-form-panel,
+  html body.settings-page .profile-panel,
+  html body.settings-page .profile-form-panel {
+    width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    margin: 0 !important;
+  }
+
+  html body.app-page.settings-page .profile-form-panel,
+  html body.settings-page .profile-form-panel {
+    padding: 20px !important;
+  }
+
+  html body.app-page.settings-page .profile-grid,
+  html body.settings-page .profile-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+    padding: 0 18px 20px !important;
+  }
+}
+
+/* =========================================================
+   FIX LOGIN BRAND CENTER - TABLET & HP ONLY
+   Desktop tetap tidak berubah
+========================================================= */
+
+@media (max-width: 1200px) {
+  .pos-login-left-content {
+    width: 100% !important;
+    align-items: center !important;
+    text-align: center !important;
+  }
+
+  .pos-login-brand-row {
+    width: 100% !important;
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: center !important;
+  }
+
+  .pos-login-brand-text {
+    align-items: center !important;
+    text-align: center !important;
+    flex: 0 1 auto !important;
+  }
+
+  .pos-login-brand-text .pos-login-line {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  .pos-login-brand-text h1 {
+    text-align: center !important;
+  }
+
+  .pos-login-brand-text h1 strong {
+    text-align: center !important;
+  }
+
+  .pos-login-left-content > p {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    text-align: center !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .pos-login-brand-row {
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 16px !important;
+  }
+
+  .pos-login-logo-wrap {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+
+  .pos-login-logo {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  .pos-login-brand-text {
+    width: 100% !important;
+    align-items: center !important;
+  }
+
+  .pos-login-brand-text h1 {
+    width: 100% !important;
+    white-space: normal !important;
+  }
+}
+
+/* =========================================================
+   FIX TABLET HISTORY STATS + PAGINATION CENTER
+   1. Tablet: 3 widget total dibuat 1 baris
+   2. Pagination tetap center walaupun data discroll
+========================================================= */
+
+@media (min-width: 561px) and (max-width: 1180px) {
+  body.history-page .history-stats,
+  body.history-page .history-stats-daily {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 12px !important;
+  }
+
+  body.history-page .stat-card {
+    min-height: 86px !important;
+    padding: 14px 16px !important;
+    border-radius: 20px !important;
+  }
+
+  body.history-page .stat-card span {
+    font-size: 10.5px !important;
+    line-height: 1.35 !important;
+  }
+
+  body.history-page .stat-card strong {
+    margin-top: 8px !important;
+    font-size: 21px !important;
+  }
+
+  body.history-page .history-area {
+    position: relative !important;
+    padding-bottom: 86px !important;
+  }
+
+  body.history-page .history-table-wrap {
+    padding-bottom: 0 !important;
+  }
+
+  body.history-page .history-pagination,
+  body.history-page .history-area.show-history-pagination .history-pagination {
+    position: fixed !important;
+
+    left: 50% !important;
+    right: auto !important;
+    bottom: 34px !important;
+
+    z-index: 9998 !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px !important;
+
+    width: fit-content !important;
+    max-width: calc(100vw - 40px) !important;
+
+    margin: 0 !important;
+    padding: 9px 12px !important;
+
+    border-radius: 999px !important;
+
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+
+    transform: translateX(-50%) !important;
+  }
+
+  body.history-page .history-pagination button {
+    min-width: 104px !important;
+    height: 38px !important;
+    min-height: 38px !important;
+    padding: 0 14px !important;
+    border-radius: 999px !important;
+    font-size: 12px !important;
+    font-weight: 900 !important;
+    white-space: nowrap !important;
+  }
+
+  body.history-page .history-pagination span {
+    font-size: 12px !important;
+    font-weight: 900 !important;
+    white-space: nowrap !important;
+  }
+}
+
+/* HP tetap 1 kolom dan pagination tidak ikut style tablet */
+@media (max-width: 560px) {
+  body.history-page .history-stats,
+  body.history-page .history-stats-daily {
+    grid-template-columns: 1fr !important;
+  }
+
+  body.history-page .history-pagination,
+  body.history-page .history-area.show-history-pagination .history-pagination {
+    position: static !important;
+    transform: none !important;
+    margin: 16px auto 0 !important;
+  }
+}
+
+/* =========================================================
+   FIX HISTORY DETAIL MODAL LAYER
+   Saat detail transaksi dibuka, widget atas tidak ikut muncul
+========================================================= */
+
+body.history-page .invoice-modal-backdrop {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 20000 !important;
+
+  background: rgba(38, 30, 24, 0.48) !important;
+  backdrop-filter: blur(10px) saturate(120%) !important;
+  -webkit-backdrop-filter: blur(10px) saturate(120%) !important;
+}
+
+body.history-page .invoice-modal {
+  z-index: 20001 !important;
+}
+
+body.history-page:has(.invoice-modal.show) .sidebar,
+body.history-page:has(.invoice-modal.show) .history-pagination {
+  z-index: 1 !important;
+  pointer-events: none !important;
+}
