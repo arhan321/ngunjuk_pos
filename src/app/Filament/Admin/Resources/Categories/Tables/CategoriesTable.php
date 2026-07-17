@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources\Categories\Tables;
 
+use App\Models\Category;
+use Filament\Tables\Table;
+use Filament\Actions\EditAction;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\EditAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Table;
 
 class CategoriesTable
 {
@@ -190,13 +192,39 @@ class CategoriesTable
                     ->label('Edit')
                     ->icon('heroicon-o-pencil-square')
                     ->color('primary'),
+
+                DeleteAction::make()
+                    ->label('Hapus')
+                    ->icon('heroicon-o-trash')
+                    ->color('danger')
+                    ->requiresConfirmation()
+                    ->modalIcon('heroicon-o-exclamation-triangle')
+                    ->modalHeading(fn (Category $record): string => 'Hapus kategori "' . $record->name . '"?')
+                    ->modalDescription('Kategori yang sudah dihapus tidak dapat dikembalikan.')
+                    ->modalSubmitActionLabel('Ya, Hapus')
+                    ->successNotificationTitle('Kategori berhasil dihapus')
+                    ->disabled(fn (Category $record): bool => (int) ($record->products_count ?? 0) > 0)
+                    ->tooltip(fn (Category $record): ?string => (int) ($record->products_count ?? 0) > 0
+                        ? 'Kategori tidak dapat dihapus karena masih memiliki produk. Pindahkan atau hapus produknya terlebih dahulu.'
+                        : 'Hapus kategori'),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make()
-                        ->label('Hapus Kategori'),
+                        ->label('Hapus Kategori')
+                        ->icon('heroicon-o-trash')
+                        ->color('danger')
+                        ->requiresConfirmation()
+                        ->modalHeading('Hapus kategori terpilih?')
+                        ->modalDescription('Kategori yang sudah dihapus tidak dapat dikembalikan.')
+                        ->modalSubmitActionLabel('Ya, Hapus')
+                        ->successNotificationTitle('Kategori terpilih berhasil dihapus')
+                        ->deselectRecordsAfterCompletion(),
                 ]),
             ])
+            ->checkIfRecordIsSelectableUsing(
+                fn (Category $record): bool => (int) ($record->products_count ?? 0) === 0,
+            )
             ->defaultSort('created_at', 'desc');
     }
 }

@@ -1,6 +1,7 @@
 <?php
     use Filament\Support\Enums\IconSize;
     use Filament\Support\Enums\Size;
+    use Filament\Support\View\ComponentAttributeBag as FilamentComponentAttributeBag;
     use Filament\Support\View\Components\BadgeComponent;
     use Filament\Support\View\Components\IconButtonComponent;
     use Illuminate\View\ComponentAttributeBag;
@@ -106,6 +107,8 @@ unset($__defined_vars, $__key, $__value); ?>
     }
 
     $hasTooltip = $hasTooltip = filled($tooltip);
+
+    $loadingDelay = config('filament.livewire_loading_delay', 'default');
 ?>
 
 <<?php echo e($tag); ?>
@@ -128,9 +131,11 @@ unset($__defined_vars, $__key, $__value); ?>
     <?php echo e($attributes
             ->merge([
                 'aria-disabled' => $disabled ? 'true' : null,
-                'aria-label' => $label,
+                // Security: These attributes are rendered without escaping, so the `aria-label` must be escaped here, otherwise an `Htmlable` label could break out of the attribute. `doubleEncode: false` preserves entities that Blade has already escaped in a string label.
+                'aria-label' => filled($label) ? e(trim(strip_tags($label instanceof \Illuminate\Contracts\Support\Htmlable ? $label->toHtml() : $label)), doubleEncode: false) : null,
                 'disabled' => $disabled && blank($tooltip),
                 'form' => $formId,
+                'tabindex' => (($tag === 'a') && $disabled && $hasTooltip) ? '0' : null,
                 'type' => $tag === 'button' ? $type : null,
                 'wire:loading.attr' => $tag === 'button' ? 'disabled' : null,
                 'wire:target' => ($hasLoadingIndicator && $loadingIndicatorTarget) ? $loadingIndicatorTarget : null,
@@ -152,15 +157,15 @@ unset($__defined_vars, $__key, $__value); ?>
             ->color(IconButtonComponent::class, $color)); ?>
 
 >
-    <?php echo e(\Filament\Support\generate_icon_html($icon, $iconAlias, (new \Illuminate\View\ComponentAttributeBag([
-            'wire:loading.remove.delay.' . config('filament.livewire_loading_delay', 'default') => $hasLoadingIndicator,
+    <?php echo e(\Filament\Support\generate_icon_html($icon, $iconAlias, (new \Filament\Support\View\ComponentAttributeBag([
+            'wire:loading.remove.delay.' . $loadingDelay => $hasLoadingIndicator,
             'wire:target' => $hasLoadingIndicator ? $loadingIndicatorTarget : false,
         ])), size: $iconSize)); ?>
 
 
     <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($hasLoadingIndicator): ?>
-        <?php echo e(\Filament\Support\generate_loading_indicator_html((new \Illuminate\View\ComponentAttributeBag([
-                'wire:loading.delay.' . config('filament.livewire_loading_delay', 'default') => '',
+        <?php echo e(\Filament\Support\generate_loading_indicator_html((new \Filament\Support\View\ComponentAttributeBag([
+                'wire:loading.delay.' . $loadingDelay => '',
                 'wire:target' => $loadingIndicatorTarget,
             ])), size: $iconSize)); ?>
 
@@ -173,7 +178,7 @@ unset($__defined_vars, $__key, $__value); ?>
 
             <?php else: ?>
                 <span
-                    <?php echo e((new ComponentAttributeBag)->color(BadgeComponent::class, $badgeColor)->class([
+                    <?php echo e((new FilamentComponentAttributeBag)->color(BadgeComponent::class, $badgeColor)->class([
                             'fi-badge',
                             ($badgeSize instanceof Size) ? "fi-size-{$badgeSize->value}" : (is_string($badgeSize) ? $badgeSize : ''),
                         ])); ?>

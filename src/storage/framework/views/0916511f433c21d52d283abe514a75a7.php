@@ -1,1 +1,0 @@
-filament-tables::components.column-manager<?php /**PATH /var/www/html/storage/framework/views/4f43b9dde016e9d767fdf0fc17dc3299.blade.php ENDPATH**/ ?>

@@ -382,6 +382,237 @@
 
         /*
         |--------------------------------------------------------------------------
+        | PRODUCT FORM CUSTOM UI — SIDE BY SIDE
+        |--------------------------------------------------------------------------
+        */
+
+        body:has(.ng-product-form-page) .ng-product-main-section > .fi-section-content {
+            padding: 22px !important;
+        }
+
+        body:has(.ng-product-form-page) .ng-product-form-layout {
+            align-items: stretch !important;
+            gap: 22px !important;
+        }
+
+        body:has(.ng-product-form-page) .ng-product-info-panel,
+        body:has(.ng-product-form-page) .ng-product-pricing-panel {
+            position: relative !important;
+            min-width: 0 !important;
+            height: 100% !important;
+            padding: 20px !important;
+            border: 1px solid rgba(255, 255, 255, .64) !important;
+            border-radius: 22px !important;
+            background:
+                linear-gradient(145deg, rgba(255, 255, 255, .42), rgba(255, 247, 235, .22)),
+                radial-gradient(circle at 100% 0%, rgba(255, 137, 0, .10), transparent 40%) !important;
+            box-shadow:
+                0 16px 34px rgba(109, 62, 23, .09),
+                inset 0 1px 0 rgba(255, 255, 255, .72) !important;
+            backdrop-filter: blur(16px) !important;
+            -webkit-backdrop-filter: blur(16px) !important;
+        }
+
+        body:has(.ng-product-form-page) .ng-product-info-panel {
+            align-content: start !important;
+        }
+
+        body:has(.ng-product-form-page) .ng-product-info-panel::before {
+            content: "Informasi Utama Produk";
+            grid-column: 1 / -1;
+            display: flex;
+            align-items: center;
+            min-height: 44px;
+            margin: -4px -2px 2px;
+            padding: 0 2px 14px;
+            border-bottom: 1px solid rgba(116, 72, 36, .10);
+            color: #3d291b;
+            font-size: 15px;
+            line-height: 1.2;
+            font-weight: 950;
+            letter-spacing: -.02em;
+        }
+
+        body:has(.ng-product-form-page) .ng-product-info-panel::after {
+            content: "Data dasar, gambar, dan status produk";
+            position: absolute;
+            top: 24px;
+            right: 20px;
+            color: rgba(104, 76, 52, .66);
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: .02em;
+        }
+
+        body:has(.ng-product-form-page) .ng-product-pricing-panel > .fi-fo-field-wrp-label,
+        body:has(.ng-product-form-page) .ng-product-pricing-panel > div > .fi-fo-field-wrp-label {
+            margin-bottom: 14px !important;
+            padding-bottom: 14px !important;
+            border-bottom: 1px solid rgba(116, 72, 36, .10) !important;
+        }
+
+        body:has(.ng-product-form-page) .ng-product-pricing-panel .fi-fo-field-wrp-label > span,
+        body:has(.ng-product-form-page) .ng-product-pricing-panel > label {
+            font-size: 15px !important;
+            letter-spacing: -.02em !important;
+        }
+
+        body:has(.ng-product-form-page) .ng-product-pricing-panel .fi-fo-repeater-items,
+        body:has(.ng-product-form-page) .ng-product-pricing-panel [data-repeater-items] {
+            display: grid !important;
+            gap: 14px !important;
+        }
+
+        body:has(.ng-product-form-page) .ng-product-pricing-panel .fi-fo-repeater-item,
+        body:has(.ng-product-form-page) .ng-product-pricing-panel [data-repeater-item] {
+            position: relative !important;
+            overflow: visible !important;
+            border: 1px solid rgba(255, 255, 255, .76) !important;
+            border-radius: 20px !important;
+            background:
+                linear-gradient(145deg, rgba(255, 255, 255, .62), rgba(255, 242, 220, .32)),
+                radial-gradient(circle at 100% 0%, rgba(255, 126, 0, .10), transparent 38%) !important;
+            box-shadow:
+                0 13px 26px rgba(91, 51, 20, .08),
+                inset 0 1px 0 rgba(255, 255, 255, .88) !important;
+            transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease !important;
+        }
+
+        body:has(.ng-product-form-page) .ng-product-pricing-panel .fi-fo-repeater-item:hover,
+        body:has(.ng-product-form-page) .ng-product-pricing-panel [data-repeater-item]:hover {
+            transform: translateY(-1px) !important;
+            border-color: rgba(249, 115, 22, .26) !important;
+            box-shadow:
+                0 18px 34px rgba(91, 51, 20, .11),
+                inset 0 1px 0 rgba(255, 255, 255, .90) !important;
+        }
+
+        body:has(.ng-product-form-page) .ng-product-pricing-panel .fi-fo-repeater-item-header {
+            min-height: 48px !important;
+            padding: 10px 14px !important;
+            border-bottom: 1px solid rgba(116, 72, 36, .08) !important;
+            background: rgba(255, 255, 255, .13) !important;
+        }
+
+        body:has(.ng-product-form-page) .ng-product-pricing-panel .fi-fo-repeater-item-content {
+            padding: 16px !important;
+        }
+
+        body:has(.ng-product-form-page) .ng-product-pricing-panel .fi-fo-repeater-add,
+        body:has(.ng-product-form-page) .ng-product-pricing-panel .fi-fo-repeater-add-action,
+        body:has(.ng-product-form-page) .ng-product-pricing-panel .fi-btn.fi-color-gray {
+            width: 100% !important;
+            min-height: 44px !important;
+            margin-top: 14px !important;
+            border: 1.5px dashed rgba(238, 101, 0, .34) !important;
+            border-radius: 16px !important;
+            color: #c85400 !important;
+            background: rgba(255, 247, 235, .34) !important;
+            box-shadow: none !important;
+        }
+
+        body:has(.ng-product-form-page) .ng-product-pricing-panel .fi-fo-repeater-add:hover,
+        body:has(.ng-product-form-page) .ng-product-pricing-panel .fi-fo-repeater-add-action:hover,
+        body:has(.ng-product-form-page) .ng-product-pricing-panel .fi-btn.fi-color-gray:hover {
+            border-color: rgba(238, 101, 0, .56) !important;
+            color: #fff !important;
+            background: linear-gradient(135deg, #ff9d18, #ee6500) !important;
+            box-shadow: 0 12px 22px rgba(238, 101, 0, .18) !important;
+        }
+
+        body:has(.ng-product-form-page) .ng-product-upload-field .fi-fo-file-upload,
+        body:has(.ng-product-form-page) .ng-product-upload-field .filepond--panel-root,
+        body:has(.ng-product-form-page) .ng-product-upload-field [data-file-upload] {
+            border-radius: 18px !important;
+        }
+
+        body:has(.ng-product-form-page) .ng-product-upload-field .filepond--root {
+            min-height: 112px !important;
+            border: 1.5px dashed rgba(238, 101, 0, .28) !important;
+            border-radius: 18px !important;
+            background:
+                linear-gradient(145deg, rgba(255, 255, 255, .44), rgba(255, 242, 220, .22)) !important;
+        }
+
+        body:has(.ng-product-form-page) .ng-product-upload-field .filepond--drop-label {
+            color: #79583d !important;
+            font-weight: 850 !important;
+        }
+
+        body:has(.ng-product-form-page) .ng-product-status-field {
+            grid-column: 1 / -1 !important;
+            display: flex !important;
+            align-items: center !important;
+            min-height: 64px !important;
+            padding: 12px 14px !important;
+            border: 1px solid rgba(255, 255, 255, .58) !important;
+            border-radius: 17px !important;
+            background: rgba(255, 255, 255, .18) !important;
+        }
+
+        body:has(.ng-product-form-page) .ng-product-info-panel .fi-input-wrp:focus-within,
+        body:has(.ng-product-form-page) .ng-product-pricing-panel .fi-input-wrp:focus-within,
+        body:has(.ng-product-form-page) .ng-product-info-panel .fi-select-input:focus-within,
+        body:has(.ng-product-form-page) .ng-product-pricing-panel .fi-select-input:focus-within {
+            border-color: rgba(249, 115, 22, .50) !important;
+            box-shadow:
+                0 0 0 3px rgba(249, 115, 22, .10),
+                inset 0 1px 0 rgba(255, 255, 255, .46) !important;
+        }
+
+        body:has(.ng-product-form-page) form .fi-form-actions,
+        body:has(.ng-product-form-page) form .fi-ac {
+            position: sticky !important;
+            bottom: 10px !important;
+            z-index: 70 !important;
+            width: fit-content !important;
+            margin-left: auto !important;
+            margin-right: 24px !important;
+            padding: 10px !important;
+            border: 1px solid rgba(255, 255, 255, .64) !important;
+            border-radius: 18px !important;
+            background: rgba(255, 248, 238, .74) !important;
+            box-shadow: 0 18px 42px rgba(84, 45, 15, .16) !important;
+            backdrop-filter: blur(18px) !important;
+            -webkit-backdrop-filter: blur(18px) !important;
+        }
+
+        @media (max-width: 1279px) {
+            body:has(.ng-product-form-page) .ng-product-form-layout {
+                gap: 16px !important;
+            }
+
+            body:has(.ng-product-form-page) .ng-product-info-panel,
+            body:has(.ng-product-form-page) .ng-product-pricing-panel {
+                padding: 16px !important;
+            }
+
+            body:has(.ng-product-form-page) .ng-product-info-panel::after {
+                display: none;
+            }
+        }
+
+        @media (max-width: 767px) {
+            body:has(.ng-product-form-page) .ng-product-main-section > .fi-section-content {
+                padding: 12px !important;
+            }
+
+            body:has(.ng-product-form-page) .ng-product-info-panel,
+            body:has(.ng-product-form-page) .ng-product-pricing-panel {
+                padding: 13px !important;
+                border-radius: 18px !important;
+            }
+
+            body:has(.ng-product-form-page) form .fi-form-actions,
+            body:has(.ng-product-form-page) form .fi-ac {
+                position: static !important;
+                width: auto !important;
+                margin: 14px 12px 0 !important;
+            }
+        }
+
+        /*
+        |--------------------------------------------------------------------------
         | DATEPICKER / DROPDOWN FIX
         |--------------------------------------------------------------------------
         */

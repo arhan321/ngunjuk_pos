@@ -4,14 +4,16 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources\Products\Tables;
 
+use App\Models\Product;
+use Filament\Tables\Table;
+use Filament\Actions\EditAction;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\EditAction;
 use Filament\Tables\Columns\IconColumn;
-use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Filters\SelectFilter;
-use Filament\Tables\Table;
 
 class ProductsTable
 {
@@ -234,13 +236,39 @@ class ProductsTable
                     ->label('Edit')
                     ->icon('heroicon-o-pencil-square')
                     ->color('primary'),
+
+                DeleteAction::make()
+                    ->label('Hapus')
+                    ->icon('heroicon-o-trash')
+                    ->color('danger')
+                    ->requiresConfirmation()
+                    ->modalIcon('heroicon-o-exclamation-triangle')
+                    ->modalHeading(fn (Product $record): string => 'Hapus produk "' . $record->name . '"?')
+                    ->modalDescription('Produk beserta data size-nya akan dihapus permanen dan tidak dapat dikembalikan.')
+                    ->modalSubmitActionLabel('Ya, Hapus')
+                    ->successNotificationTitle('Produk berhasil dihapus')
+                    ->disabled(fn (Product $record): bool => (int) ($record->order_items_count ?? 0) > 0)
+                    ->tooltip(fn (Product $record): ?string => (int) ($record->order_items_count ?? 0) > 0
+                        ? 'Produk tidak dapat dihapus karena sudah digunakan pada transaksi. Nonaktifkan produk agar tidak tampil di kasir.'
+                        : 'Hapus produk'),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make()
-                        ->label('Hapus Produk'),
+                        ->label('Hapus Produk')
+                        ->icon('heroicon-o-trash')
+                        ->color('danger')
+                        ->requiresConfirmation()
+                        ->modalHeading('Hapus produk terpilih?')
+                        ->modalDescription('Produk beserta data size-nya akan dihapus permanen dan tidak dapat dikembalikan.')
+                        ->modalSubmitActionLabel('Ya, Hapus')
+                        ->successNotificationTitle('Produk terpilih berhasil dihapus')
+                        ->deselectRecordsAfterCompletion(),
                 ]),
             ])
+            ->checkIfRecordIsSelectableUsing(
+                fn (Product $record): bool => (int) ($record->order_items_count ?? 0) === 0,
+            )
             ->defaultSort('created_at', 'desc');
     }
 }

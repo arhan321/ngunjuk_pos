@@ -51,13 +51,21 @@ unset($__defined_vars, $__key, $__value); ?>
 
 >
     <button
-        aria-label="<?php echo e($ariaLabel); ?>"
+        <?php if(filled($ariaLabel)): ?>
+            aria-label="<?php echo e($ariaLabel); ?>"
+        <?php endif; ?>
+        <?php if($active): ?>
+            aria-current="page"
+        <?php endif; ?>
+        <?php if($disabled): ?>
+            aria-hidden="true"
+        <?php endif; ?>
         <?php if($disabled): echo 'disabled'; endif; ?>
         type="button"
         class="fi-pagination-item-btn"
     >
-        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(filled($icon)): ?>
-            <?php echo e(\Filament\Support\generate_icon_html($icon, $iconAlias, attributes: (new \Illuminate\View\ComponentAttributeBag)->class([
+        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($icon || $iconAlias): ?>
+            <?php echo e(\Filament\Support\generate_icon_html($icon, $iconAlias, attributes: (new \Filament\Support\View\ComponentAttributeBag)->merge(['aria-hidden' => 'true'], escape: false)->class([
                     'fi-pagination-item-icon',
                 ]))); ?>
 

@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources\Products\Schemas;
 
-use Filament\Forms\Components\FileUpload;
+use Illuminate\Support\Str;
+use Filament\Schemas\Schema;
 use Filament\Forms\Components\Hidden;
-use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
-use Filament\Schemas\Schema;
-use Illuminate\Support\Str;
+use Filament\Forms\Components\FileUpload;
 
 class ProductForm
 {
@@ -22,8 +22,12 @@ class ProductForm
         return $schema
             ->columns(1)
             ->components([
-                Section::make('Informasi Utama Produk')
-                    ->description('Lengkapi informasi dasar produk seperti kategori, nama produk, slug, deskripsi, gambar, dan status aktif.')
+                /*
+                 * Seluruh field produk dan daftar size ditempatkan dalam satu
+                 * Section agar halaman create/edit tampil sebagai satu container.
+                 */
+                Section::make('Informasi Produk, Size, Harga, dan HPP')
+                    ->description('Lengkapi informasi utama produk beserta daftar size, harga jual, dan detail HPP dalam satu form.')
                     ->icon('heroicon-o-cube')
                     ->columnSpanFull()
                     ->schema([
@@ -55,7 +59,8 @@ class ProductForm
                             ->helperText('Slug dibuat otomatis dari nama produk.'),
 
                         // Stock sengaja disembunyikan dari form admin.
-                        // Nilai tetap dikirim ke database supaya struktur lama aman dan tidak mengganggu logic lain.
+                        // Nilai tetap dikirim ke database supaya struktur lama aman
+                        // dan tidak mengganggu logic lain yang masih memakai kolom stock.
                         Hidden::make('stock')
                             ->default(0)
                             ->dehydrated(true),
@@ -81,19 +86,10 @@ class ProductForm
                             ->helperText('Produk aktif akan tampil pada halaman kasir.')
                             ->default(true)
                             ->columnSpanFull(),
-                    ])
-                    ->columns([
-                        'default' => 1,
-                        'md' => 2,
-                    ]),
 
-                Section::make('Size, Harga, dan Detail HPP Produk')
-                    ->description('Tambahkan minimal satu size. Untuk produk tanpa pilihan ukuran, gunakan Regular. Detail HPP tetap disimpan untuk admin dan tidak tampil di POS.')
-                    ->icon('heroicon-o-currency-dollar')
-                    ->columnSpanFull()
-                    ->schema([
                         Repeater::make('sizes')
                             ->label('Daftar Size, Harga, dan HPP')
+                            ->helperText('Tambahkan minimal satu size. Untuk produk tanpa pilihan ukuran, gunakan nama Regular.')
                             ->relationship('sizes')
                             ->schema([
                                 TextInput::make('name')
@@ -146,6 +142,10 @@ class ProductForm
                             ->addActionLabel('Tambah Size Baru')
                             ->reorderable(false)
                             ->columnSpanFull(),
+                    ])
+                    ->columns([
+                        'default' => 1,
+                        'md' => 2,
                     ]),
             ]);
     }

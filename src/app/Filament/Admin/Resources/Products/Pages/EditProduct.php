@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources\Products\Pages;
 
-use App\Filament\Admin\Resources\Products\ProductResource;
-use App\Filament\Admin\Resources\Products\Widgets\ProductFormHeroWidget;
+use App\Models\Product;
 use Filament\Actions\Action;
 use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
+use App\Filament\Admin\Resources\Products\ProductResource;
+use App\Filament\Admin\Resources\Products\Widgets\ProductFormHeroWidget;
 
 class EditProduct extends EditRecord
 {
@@ -38,7 +39,17 @@ class EditProduct extends EditRecord
             DeleteAction::make()
                 ->label('Hapus Produk')
                 ->icon('heroicon-o-trash')
-                ->color('danger'),
+                ->color('danger')
+                ->requiresConfirmation()
+                ->modalIcon('heroicon-o-exclamation-triangle')
+                ->modalHeading(fn (Product $record): string => 'Hapus produk "' . $record->name . '"?')
+                ->modalDescription('Produk beserta data size-nya akan dihapus permanen dan tidak dapat dikembalikan.')
+                ->modalSubmitActionLabel('Ya, Hapus')
+                ->successNotificationTitle('Produk berhasil dihapus')
+                ->disabled(fn (Product $record): bool => $record->orderItems()->exists())
+                ->tooltip(fn (Product $record): ?string => $record->orderItems()->exists()
+                    ? 'Produk tidak dapat dihapus karena sudah digunakan pada transaksi. Nonaktifkan produk agar tidak tampil di kasir.'
+                    : 'Hapus produk'),
         ];
     }
 

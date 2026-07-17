@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources\Products;
 
-use App\Filament\Admin\Resources\Products\Pages\CreateProduct;
+use App\Models\Product;
+use Filament\Tables\Table;
+use Filament\Schemas\Schema;
+use Filament\Resources\Resource;
+use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Admin\Resources\Products\Pages\EditProduct;
 use App\Filament\Admin\Resources\Products\Pages\ListProducts;
+use App\Filament\Admin\Resources\Products\Pages\CreateProduct;
 use App\Filament\Admin\Resources\Products\Schemas\ProductForm;
 use App\Filament\Admin\Resources\Products\Tables\ProductsTable;
-use App\Models\Product;
-use Filament\Resources\Resource;
-use Filament\Schemas\Schema;
-use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
 
 class ProductResource extends Resource
 {
@@ -49,7 +49,8 @@ class ProductResource extends Resource
             ->with([
                 'category',
                 'sizes',
-            ]);
+            ])
+            ->withCount('orderItems');
     }
 
     public static function getPages(): array

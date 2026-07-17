@@ -1,1 +1,0 @@
-filament-tables::components.column-manager

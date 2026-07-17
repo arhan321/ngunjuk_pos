@@ -2,6 +2,7 @@
 
 $__newAttributes = [];
 $__propNames = \Illuminate\View\ComponentAttributeBag::extractPropNames(([
+    'alt' => '',
     'circular' => true,
     'size' => 'md',
 ]));
@@ -20,6 +21,7 @@ unset($__propNames);
 unset($__newAttributes);
 
 foreach (array_filter(([
+    'alt' => '',
     'circular' => true,
     'size' => 'md',
 ]), 'is_string', ARRAY_FILTER_USE_KEY) as $__key => $__value) {
@@ -35,6 +37,7 @@ foreach ($attributes->all() as $__key => $__value) {
 unset($__defined_vars, $__key, $__value); ?>
 
 <img
+    alt="<?php echo e($alt); ?>"
     <?php echo e($attributes
             ->class([
                 'fi-avatar',

@@ -2,12 +2,12 @@
 
 namespace App\Filament\Admin\Resources\SalesTargets\Pages;
 
-use App\Filament\Admin\Resources\SalesTargets\SalesTargetResource;
-use App\Filament\Admin\Resources\SalesTargets\Widgets\SalesTargetFormHeroWidget;
 use Carbon\Carbon;
 use Filament\Actions\Action;
 use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
+use App\Filament\Admin\Resources\SalesTargets\SalesTargetResource;
+use App\Filament\Admin\Resources\SalesTargets\Widgets\SalesTargetFormHeroWidget;
 
 class EditSalesTarget extends EditRecord
 {
@@ -28,7 +28,12 @@ class EditSalesTarget extends EditRecord
             DeleteAction::make()
                 ->label('Hapus Target')
                 ->icon('heroicon-o-trash')
-                ->color('danger'),
+                ->color('danger')
+                ->requiresConfirmation()
+                ->modalHeading('Hapus target penjualan?')
+                ->modalDescription('Data target yang dihapus tidak dapat dikembalikan.')
+                ->modalSubmitActionLabel('Ya, Hapus Target')
+                ->successNotificationTitle('Target penjualan berhasil dihapus'),
         ];
     }
 

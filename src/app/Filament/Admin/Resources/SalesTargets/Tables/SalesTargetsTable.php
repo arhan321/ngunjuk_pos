@@ -5,14 +5,15 @@ declare(strict_types=1);
 namespace App\Filament\Admin\Resources\SalesTargets\Tables;
 
 use Carbon\Carbon;
-use Filament\Actions\ActionGroup;
-use Filament\Actions\EditAction;
-use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
-use Illuminate\Database\Query\Builder;
+use Filament\Actions\EditAction;
+use Filament\Actions\ActionGroup;
+use Filament\Actions\DeleteAction;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\Schema;
+use Filament\Tables\Columns\TextColumn;
+use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 
 class SalesTargetsTable
 {
@@ -94,6 +95,16 @@ class SalesTargetsTable
                         ->label('Edit Target')
                         ->icon('heroicon-o-pencil-square')
                         ->color('primary'),
+
+                    DeleteAction::make()
+                        ->label('Hapus Target')
+                        ->icon('heroicon-o-trash')
+                        ->color('danger')
+                        ->requiresConfirmation()
+                        ->modalHeading('Hapus target penjualan?')
+                        ->modalDescription('Data target yang dihapus tidak dapat dikembalikan.')
+                        ->modalSubmitActionLabel('Ya, Hapus Target')
+                        ->successNotificationTitle('Target penjualan berhasil dihapus'),
                 ])
                     ->label('')
                     ->icon('heroicon-m-ellipsis-vertical')
