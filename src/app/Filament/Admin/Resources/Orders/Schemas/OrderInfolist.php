@@ -9,7 +9,7 @@ use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
-final class OrderInfolist
+class OrderInfolist
 {
     public static function configure(Schema $schema): Schema
     {

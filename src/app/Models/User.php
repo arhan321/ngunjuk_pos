@@ -18,7 +18,6 @@ final class User extends Authenticatable implements HasAvatar
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory;
-
     use HasRoles;
     use Notifiable;
 
@@ -89,7 +88,7 @@ final class User extends Authenticatable implements HasAvatar
         */
         $hash = md5(mb_strtolower(mb_trim((string) $this->email)));
 
-        return 'https://www.gravatar.com/avatar/'.$hash.'?d=mp&r=g&s=250';
+        return 'https://www.gravatar.com/avatar/' . $hash . '?d=mp&r=g&s=250';
     }
 
     /**

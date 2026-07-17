@@ -8,7 +8,7 @@ use App\Models\Category;
 use App\Models\Product;
 use Filament\Widgets\Widget;
 
-final class ProductAnalyticsWidget extends Widget
+class ProductAnalyticsWidget extends Widget
 {
     protected string $view = 'filament.admin.resources.products.widgets.product-analytics-widget';
 

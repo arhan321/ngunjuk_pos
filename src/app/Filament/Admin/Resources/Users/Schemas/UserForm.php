@@ -13,7 +13,7 @@ use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Support\Facades\Hash;
 
-final class UserForm
+class UserForm
 {
     public static function configure(Schema $schema): Schema
     {

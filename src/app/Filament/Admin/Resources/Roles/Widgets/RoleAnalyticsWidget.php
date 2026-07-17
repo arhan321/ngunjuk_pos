@@ -7,7 +7,7 @@ namespace App\Filament\Admin\Resources\Roles\Widgets;
 use BezhanSalleh\FilamentShield\Support\Utils;
 use Filament\Widgets\Widget;
 
-final class RoleAnalyticsWidget extends Widget
+class RoleAnalyticsWidget extends Widget
 {
     protected string $view = 'filament.admin.resources.roles.widgets.role-analytics-widget';
 

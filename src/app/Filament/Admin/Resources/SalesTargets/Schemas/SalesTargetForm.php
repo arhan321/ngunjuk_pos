@@ -10,7 +10,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
-final class SalesTargetForm
+class SalesTargetForm
 {
     public static function configure(Schema $schema): Schema
     {
@@ -38,7 +38,7 @@ final class SalesTargetForm
                                     return null;
                                 }
 
-                                return Carbon::parse($state.'-01')->startOfMonth()->toDateString();
+                                return Carbon::parse($state . '-01')->startOfMonth()->toDateString();
                             })
                             ->extraInputAttributes([
                                 'style' => 'min-height: 46px;',

@@ -13,7 +13,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 
-final class ProductsTable
+class ProductsTable
 {
     public static function configure(Table $table): Table
     {
@@ -51,7 +51,7 @@ final class ProductsTable
                                     background:linear-gradient(135deg,#ff9d18,#ee6500);
                                     box-shadow:0 12px 24px rgba(238,101,0,.20);
                                 ">
-                                    '.e($initial).'
+                                    ' . e($initial) . '
                                 </div>
 
                                 <div style="min-width:0;">
@@ -61,7 +61,7 @@ final class ProductsTable
                                         font-weight:950;
                                         line-height:1.25;
                                     ">
-                                        '.e($name).'
+                                        ' . e($name) . '
                                     </div>
 
                                     <div style="
@@ -96,7 +96,7 @@ final class ProductsTable
                             font-weight:950;
                             white-space:nowrap;
                         ">
-                            • '.e($state ?? '-').'
+                            • ' . e($state ?? '-') . '
                         </span>
                     '),
 
@@ -142,7 +142,7 @@ final class ProductsTable
                                         font-size:10px;
                                         font-weight:950;
                                     ">
-                                        '.e($size->name ?? '-').'
+                                        ' . e($size->name ?? '-') . '
                                     </span>
                                 ';
                             })
@@ -191,12 +191,15 @@ final class ProductsTable
                                         font-size:10px;
                                         font-weight:950;
                                     ">
-                                        Rp '.number_format((int) ($size->price ?? 0), 0, ',', '.').'
+                                        Rp ' . number_format((int) ($size->price ?? 0), 0, ',', '.') . '
                                     </span>
                                 ';
                             })
                             ->implode('');
                     }),
+
+                // Kolom stock sengaja tidak ditampilkan di interface admin.
+                // Data stock tetap aman di database/model dan masih bisa dipakai logic sistem.
 
                 IconColumn::make('is_active')
                     ->label('Aktif')

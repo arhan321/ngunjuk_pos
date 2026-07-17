@@ -119,7 +119,7 @@ trait ManagesCustomRoleForm
         foreach ($permissions as $permissionName) {
             [$action, $subject] = $this->parsePermissionName($permissionName);
             $tabKey = $this->classifyPermissionTab($action, $subject);
-            $groupKey = Str::slug($tabKey.'-'.$subject);
+            $groupKey = Str::slug($tabKey . '-' . $subject);
 
             if (! isset($tabs[$tabKey]['groups'][$groupKey])) {
                 $tabs[$tabKey]['groups'][$groupKey] = [
@@ -182,9 +182,9 @@ trait ManagesCustomRoleForm
     protected function permissionSubtitle(string $tabKey, string $subject): string
     {
         return match ($tabKey) {
-            'pages' => 'Filament\\Pages\\'.$subject,
-            'widgets' => 'App\\Filament\\Admin\\Widgets\\'.$subject,
-            default => 'App\\Models\\'.$subject,
+            'pages' => 'Filament\\Pages\\' . $subject,
+            'widgets' => 'App\\Filament\\Admin\\Widgets\\' . $subject,
+            default => 'App\\Models\\' . $subject,
         };
     }
 

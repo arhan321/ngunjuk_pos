@@ -10,7 +10,7 @@ use Filament\Widgets\Widget;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 
-final class OrderAnalyticsWidget extends Widget
+class OrderAnalyticsWidget extends Widget
 {
     protected string $view = 'filament.admin.resources.orders.widgets.order-analytics-widget';
 
@@ -162,7 +162,7 @@ final class OrderAnalyticsWidget extends Widget
             return $start->format('d M Y');
         }
 
-        return $start->format('d M Y').' - '.$end->format('d M Y');
+        return $start->format('d M Y') . ' - ' . $end->format('d M Y');
     }
 
     protected function periodLabel(string $period, int $month, int $year): string
@@ -171,7 +171,7 @@ final class OrderAnalyticsWidget extends Widget
             return 'Hari Ini';
         }
 
-        return ($this->months()[$month] ?? 'Bulan').' '.$year;
+        return ($this->months()[$month] ?? 'Bulan') . ' ' . $year;
     }
 
     protected function months(): array

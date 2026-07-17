@@ -8,7 +8,7 @@ use App\Filament\Admin\Resources\Orders\OrderResource;
 use App\Filament\Admin\Resources\Orders\Widgets\OrderAnalyticsWidget;
 use Filament\Resources\Pages\ListRecords;
 
-final class ListOrders extends ListRecords
+class ListOrders extends ListRecords
 {
     protected static string $resource = OrderResource::class;
 

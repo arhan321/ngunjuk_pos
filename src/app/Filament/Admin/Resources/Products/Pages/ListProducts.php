@@ -8,7 +8,7 @@ use App\Filament\Admin\Resources\Products\ProductResource;
 use App\Filament\Admin\Resources\Products\Widgets\ProductAnalyticsWidget;
 use Filament\Resources\Pages\ListRecords;
 
-final class ListProducts extends ListRecords
+class ListProducts extends ListRecords
 {
     protected static string $resource = ProductResource::class;
 

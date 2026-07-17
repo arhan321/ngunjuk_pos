@@ -7,7 +7,7 @@ namespace App\Filament\Admin\Resources\Users\Widgets;
 use App\Models\User;
 use Filament\Widgets\Widget;
 
-final class UserAnalyticsWidget extends Widget
+class UserAnalyticsWidget extends Widget
 {
     protected string $view = 'filament.admin.resources.users.widgets.user-analytics-widget';
 

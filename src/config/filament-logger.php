@@ -6,7 +6,7 @@ return [
     'datetime_format' => 'd/m/Y H:i:s',
     'date_format' => 'd/m/Y',
 
-    'activity_resource' => App\Filament\Admin\Resources\ActivityLogs\ActivityLogResource::class,
+    'activity_resource' => App\Filament\Admin\Logger\ActivityLogResource::class,
     'scoped_to_tenant' => true,
     'navigation_sort' => 3,
 

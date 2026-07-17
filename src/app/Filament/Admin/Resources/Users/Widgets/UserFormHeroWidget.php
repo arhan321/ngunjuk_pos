@@ -8,7 +8,7 @@ use App\Filament\Admin\Resources\Users\UserResource;
 use App\Models\User;
 use Filament\Widgets\Widget;
 
-final class UserFormHeroWidget extends Widget
+class UserFormHeroWidget extends Widget
 {
     protected string $view = 'filament.admin.resources.users.widgets.user-form-hero-widget';
 

@@ -8,7 +8,7 @@ use App\Filament\Admin\Resources\Roles\RoleResource;
 use BezhanSalleh\FilamentShield\Support\Utils;
 use Filament\Widgets\Widget;
 
-final class RoleFormHeroWidget extends Widget
+class RoleFormHeroWidget extends Widget
 {
     protected string $view = 'filament.admin.resources.roles.widgets.role-form-hero-widget';
 

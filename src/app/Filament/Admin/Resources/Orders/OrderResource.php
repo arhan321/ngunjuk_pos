@@ -9,18 +9,16 @@ use App\Filament\Admin\Resources\Orders\Pages\ViewOrder;
 use App\Filament\Admin\Resources\Orders\Schemas\OrderInfolist;
 use App\Filament\Admin\Resources\Orders\Tables\OrdersTable;
 use App\Models\Order;
-use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use UnitEnum;
 
-final class OrderResource extends Resource
+class OrderResource extends Resource
 {
     protected static ?string $model = Order::class;
 
-    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-receipt-percent';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-receipt-percent';
 
     protected static ?string $navigationLabel = 'Order';
 
@@ -28,7 +26,7 @@ final class OrderResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Order';
 
-    protected static string|UnitEnum|null $navigationGroup = 'Transaksi';
+    protected static string|\UnitEnum|null $navigationGroup = 'Transaksi';
 
     protected static ?int $navigationSort = 1;
 

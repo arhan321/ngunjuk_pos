@@ -16,6 +16,8 @@ use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
+use Filament\Facades\Filament;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Panel;
 use Filament\Resources\Resource;
@@ -26,8 +28,9 @@ use Filament\Support\Enums\FontWeight;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rules\Unique;
 
-final class RoleResource extends Resource
+class RoleResource extends Resource
 {
     use Essentials\BelongsToParent;
     use Essentials\BelongsToTenant;
@@ -96,7 +99,7 @@ final class RoleResource extends Resource
                                     background:linear-gradient(135deg,#ff9d18,#ee6500);
                                     box-shadow:0 12px 24px rgba(238,101,0,.20);
                                 ">
-                                    '.e($initial).'
+                                    ' . e($initial) . '
                                 </div>
 
                                 <div style="min-width:0;">
@@ -106,7 +109,7 @@ final class RoleResource extends Resource
                                         font-weight:950;
                                         line-height:1.25;
                                     ">
-                                        '.e($name).'
+                                        ' . e($name) . '
                                     </div>
 
                                     <div style="
@@ -154,7 +157,7 @@ final class RoleResource extends Resource
                                 border-radius:999px;
                                 background:#f97316;
                             "></span>
-                            '.e($state ?? 'web').'
+                            ' . e($state ?? 'web') . '
                         </span>
                     '),
 
@@ -164,7 +167,7 @@ final class RoleResource extends Resource
                     ->color(fn (mixed $state): string => str($state)->contains('Global') ? 'gray' : 'primary')
                     ->label(__('filament-shield::filament-shield.column.team'))
                     ->searchable()
-                    ->visible(fn (): bool => self::shield()->isCentralApp() && Utils::isTenancyEnabled()),
+                    ->visible(fn (): bool => static::shield()->isCentralApp() && Utils::isTenancyEnabled()),
 
                 TextColumn::make('permissions_count')
                     ->label('Permissions')
@@ -202,21 +205,21 @@ final class RoleResource extends Resource
                                     align-items:center;
                                     border-radius:13px;
                                     padding:0 10px;
-                                    background:'.$bg.';
-                                    border:1px solid '.$border.';
-                                    color:'.$color.';
+                                    background:' . $bg . ';
+                                    border:1px solid ' . $border . ';
+                                    color:' . $color . ';
                                     font-weight:950;
                                     font-size:12px;
                                 ">
-                                    '.number_format($count, 0, ',', '.').'
+                                    ' . number_format($count, 0, ',', '.') . '
                                 </span>
 
                                 <span style="
-                                    color:'.$color.';
+                                    color:' . $color . ';
                                     font-size:10px;
                                     font-weight:850;
                                 ">
-                                    '.$caption.'
+                                    ' . $caption . '
                                 </span>
                             </div>
                         ';
@@ -240,7 +243,7 @@ final class RoleResource extends Resource
                             font-weight:950;
                             white-space:nowrap;
                         ">
-                            '.e(\Carbon\Carbon::parse($state)->translatedFormat('d M Y H:i')).'
+                            ' . e(\Carbon\Carbon::parse($state)->translatedFormat('d M Y H:i')) . '
                         </span>
                     '),
             ])

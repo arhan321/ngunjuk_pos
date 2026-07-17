@@ -8,7 +8,7 @@ use App\Filament\Admin\Resources\Roles\RoleResource;
 use App\Filament\Admin\Resources\Roles\Widgets\RoleAnalyticsWidget;
 use Filament\Resources\Pages\ListRecords;
 
-final class ListRoles extends ListRecords
+class ListRoles extends ListRecords
 {
     protected static string $resource = RoleResource::class;
 

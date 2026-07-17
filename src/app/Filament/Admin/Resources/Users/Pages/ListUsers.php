@@ -8,7 +8,7 @@ use App\Filament\Admin\Resources\Users\UserResource;
 use App\Filament\Admin\Resources\Users\Widgets\UserAnalyticsWidget;
 use Filament\Resources\Pages\ListRecords;
 
-final class ListUsers extends ListRecords
+class ListUsers extends ListRecords
 {
     protected static string $resource = UserResource::class;
 

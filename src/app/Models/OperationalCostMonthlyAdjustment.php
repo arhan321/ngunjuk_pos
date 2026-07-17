@@ -1,13 +1,11 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-final class OperationalCostMonthlyAdjustment extends Model
+class OperationalCostMonthlyAdjustment extends Model
 {
     protected $fillable = [
         'operational_cost_id',

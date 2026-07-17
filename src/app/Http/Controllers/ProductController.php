@@ -6,9 +6,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 
-final class ProductController extends Controller
+class ProductController extends Controller
 {
     public function index(): View
     {
@@ -36,6 +38,7 @@ final class ProductController extends Controller
                     'name' => $product->name,
                     'slug' => $product->slug,
                     'description' => $product->description,
+                    'stock' => $product->stock,
                     'image' => $product->image,
                     'is_active' => $product->is_active,
 
@@ -72,6 +75,72 @@ final class ProductController extends Controller
         return response()->json([
             'success' => true,
             'data' => $products,
+        ]);
+    }
+
+    public function store(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'category_id' => ['required', 'exists:categories,id'],
+            'name' => ['required', 'string', 'max:255'],
+            'description' => ['nullable', 'string'],
+            'stock' => ['required', 'integer', 'min:0'],
+            'image' => ['nullable', 'string'],
+
+            'sizes' => ['required', 'array', 'min:1'],
+            'sizes.*.name' => ['required', 'string', 'max:50'],
+            'sizes.*.price' => ['required', 'integer', 'min:0'],
+
+            /*
+            |--------------------------------------------------------------------------
+            | Field HPP baru
+            |--------------------------------------------------------------------------
+            | Dibuat nullable agar tetap aman kalau ada request lama yang belum mengirim HPP.
+            | Kalau tidak dikirim, otomatis disimpan 0.
+            */
+            'sizes.*.hpp' => ['nullable', 'integer', 'min:0'],
+
+            'sizes.*.is_default' => ['nullable', 'boolean'],
+            'sizes.*.is_active' => ['nullable', 'boolean'],
+        ]);
+
+        $product = Product::create([
+            'category_id' => $validated['category_id'],
+            'name' => $validated['name'],
+            'slug' => Str::slug($validated['name']),
+            'description' => $validated['description'] ?? null,
+            'stock' => $validated['stock'],
+            'image' => $validated['image'] ?? null,
+            'is_active' => true,
+        ]);
+
+        foreach ($validated['sizes'] as $index => $size) {
+            $product->sizes()->create([
+                'name' => $size['name'],
+                'price' => (int) $size['price'],
+                'hpp' => (int) ($size['hpp'] ?? 0),
+                'is_default' => (bool) ($size['is_default'] ?? $index === 0),
+                'is_active' => (bool) ($size['is_active'] ?? true),
+            ]);
+        }
+
+        $product->load(['category', 'sizes']);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Produk berhasil ditambahkan.',
+            'data' => [
+                'id' => $product->id,
+                'category_id' => $product->category_id,
+                'name' => $product->name,
+                'slug' => $product->slug,
+                'description' => $product->description,
+                'stock' => $product->stock,
+                'image' => $product->image,
+                'is_active' => $product->is_active,
+                'category' => $product->category,
+                'sizes' => $product->sizes,
+            ],
         ]);
     }
 }

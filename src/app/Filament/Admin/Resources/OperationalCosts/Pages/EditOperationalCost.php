@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Filament\Admin\Resources\OperationalCosts\Pages;
 
 use App\Filament\Admin\Resources\OperationalCosts\OperationalCostResource;
@@ -10,7 +8,7 @@ use Filament\Actions\Action;
 use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 
-final class EditOperationalCost extends EditRecord
+class EditOperationalCost extends EditRecord
 {
     protected static string $resource = OperationalCostResource::class;
 

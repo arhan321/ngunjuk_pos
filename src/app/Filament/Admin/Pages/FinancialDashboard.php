@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Filament\Admin\Pages;
 
 use BackedEnum;
@@ -12,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use UnitEnum;
 
-final class FinancialDashboard extends Page
+class FinancialDashboard extends Page
 {
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-chart-pie';
 
@@ -147,7 +145,7 @@ final class FinancialDashboard extends Page
                 ],
                 [
                     'label' => 'Profit Margin',
-                    'value' => $profitMargin.'%',
+                    'value' => $profitMargin . '%',
                     'trend' => null,
                     'caption' => 'Persentase laba kotor',
                     'icon' => '◎',
@@ -155,25 +153,25 @@ final class FinancialDashboard extends Page
                 ],
                 [
                     'label' => 'Target Revenue',
-                    'value' => $targetRevenue > 0 ? $revenueProgress.'%' : '0%',
+                    'value' => $targetRevenue > 0 ? $revenueProgress . '%' : '0%',
                     'trend' => null,
-                    'caption' => $targetRevenue > 0 ? 'Sisa '.$this->rupiah($remainingRevenueTarget) : 'Target belum diatur',
+                    'caption' => $targetRevenue > 0 ? 'Sisa ' . $this->rupiah($remainingRevenueTarget) : 'Target belum diatur',
                     'icon' => '⚑',
                     'color' => '#f97316',
                 ],
                 [
                     'label' => 'Target Gross Profit',
-                    'value' => $targetGrossProfit > 0 ? $grossProfitProgress.'%' : '0%',
+                    'value' => $targetGrossProfit > 0 ? $grossProfitProgress . '%' : '0%',
                     'trend' => null,
-                    'caption' => $targetGrossProfit > 0 ? 'Sisa '.$this->rupiah($remainingGrossProfitTarget) : 'Target belum diatur',
+                    'caption' => $targetGrossProfit > 0 ? 'Sisa ' . $this->rupiah($remainingGrossProfitTarget) : 'Target belum diatur',
                     'icon' => '◈',
                     'color' => '#22c55e',
                 ],
                 [
                     'label' => 'Target Net Profit',
-                    'value' => $targetNetProfit > 0 ? $netProfitProgress.'%' : '0%',
+                    'value' => $targetNetProfit > 0 ? $netProfitProgress . '%' : '0%',
                     'trend' => null,
-                    'caption' => $targetNetProfit > 0 ? 'Sisa '.$this->rupiah($remainingNetProfitTarget) : 'Target belum diatur',
+                    'caption' => $targetNetProfit > 0 ? 'Sisa ' . $this->rupiah($remainingNetProfitTarget) : 'Target belum diatur',
                     'icon' => '◉',
                     'color' => '#6366f1',
                 ],
@@ -210,7 +208,7 @@ final class FinancialDashboard extends Page
 
     public function rupiah(int|float|null $value): string
     {
-        return 'Rp '.number_format((int) round((float) ($value ?? 0)), 0, ',', '.');
+        return 'Rp ' . number_format((int) round((float) ($value ?? 0)), 0, ',', '.');
     }
 
     private function getSelectedRange(): array
@@ -240,7 +238,7 @@ final class FinancialDashboard extends Page
         return [
             $start,
             $end,
-            $this->monthName($selectedMonth).' '.$selectedYear,
+            $this->monthName($selectedMonth) . ' ' . $selectedYear,
             'month',
             (string) $selectedMonth,
             $selectedYear,
@@ -369,8 +367,8 @@ final class FinancialDashboard extends Page
         }
 
         $finance = $query
-            ->selectRaw($totalHppExpression.' as total_hpp')
-            ->selectRaw($grossProfitExpression.' as gross_profit')
+            ->selectRaw($totalHppExpression . ' as total_hpp')
+            ->selectRaw($grossProfitExpression . ' as gross_profit')
             ->first();
 
         return [
@@ -383,6 +381,8 @@ final class FinancialDashboard extends Page
     {
         return (int) $this->operationalCostRowsForPeriod($start, $end)->sum('amount');
     }
+
+
 
     private function getRevenueTrendData(Carbon $start, Carbon $end, string $periodKey, string $selectedMonth = 'all', ?int $selectedYear = null): array
     {
@@ -409,11 +409,11 @@ final class FinancialDashboard extends Page
         }
 
         if ($periodKey === 'today') {
-            $bucketExpression = 'HOUR('.$dateExpression.')';
+            $bucketExpression = 'HOUR(' . $dateExpression . ')';
 
             $rows = $query
-                ->selectRaw($bucketExpression.' as bucket')
-                ->selectRaw('COALESCE(SUM('.$revenueColumn.'), 0) as total')
+                ->selectRaw($bucketExpression . ' as bucket')
+                ->selectRaw('COALESCE(SUM(' . $revenueColumn . '), 0) as total')
                 ->groupBy(DB::raw($bucketExpression))
                 ->pluck('total', 'bucket');
 
@@ -421,9 +421,9 @@ final class FinancialDashboard extends Page
 
             for ($hour = 0; $hour <= 23; $hour++) {
                 $data[] = [
-                    'label' => mb_str_pad((string) $hour, 2, '0', STR_PAD_LEFT).':00',
-                    'short_label' => mb_str_pad((string) $hour, 2, '0', STR_PAD_LEFT),
-                    'tooltip_label' => mb_str_pad((string) $hour, 2, '0', STR_PAD_LEFT).':00',
+                    'label' => str_pad((string) $hour, 2, '0', STR_PAD_LEFT) . ':00',
+                    'short_label' => str_pad((string) $hour, 2, '0', STR_PAD_LEFT),
+                    'tooltip_label' => str_pad((string) $hour, 2, '0', STR_PAD_LEFT) . ':00',
                     'value' => (int) ($rows[$hour] ?? 0),
                 ];
             }
@@ -432,11 +432,11 @@ final class FinancialDashboard extends Page
         }
 
         if ($periodKey === 'year' && ! $this->isValidMonthValue($selectedMonth)) {
-            $bucketExpression = 'MONTH('.$dateExpression.')';
+            $bucketExpression = 'MONTH(' . $dateExpression . ')';
 
             $rows = $query
-                ->selectRaw($bucketExpression.' as bucket')
-                ->selectRaw('COALESCE(SUM('.$revenueColumn.'), 0) as total')
+                ->selectRaw($bucketExpression . ' as bucket')
+                ->selectRaw('COALESCE(SUM(' . $revenueColumn . '), 0) as total')
                 ->groupBy(DB::raw($bucketExpression))
                 ->pluck('total', 'bucket');
 
@@ -457,11 +457,11 @@ final class FinancialDashboard extends Page
             return $data;
         }
 
-        $bucketExpression = 'DATE('.$dateExpression.')';
+        $bucketExpression = 'DATE(' . $dateExpression . ')';
 
         $rows = $query
-            ->selectRaw($bucketExpression.' as bucket')
-            ->selectRaw('COALESCE(SUM('.$revenueColumn.'), 0) as total')
+            ->selectRaw($bucketExpression . ' as bucket')
+            ->selectRaw('COALESCE(SUM(' . $revenueColumn . '), 0) as total')
             ->groupBy(DB::raw($bucketExpression))
             ->pluck('total', 'bucket');
 
@@ -491,11 +491,11 @@ final class FinancialDashboard extends Page
                     $dayCursor->addDay();
                 }
 
-                $tooltipLabel = $weekStart->translatedFormat('d M').' - '.$weekEnd->translatedFormat('d M Y');
+                $tooltipLabel = $weekStart->translatedFormat('d M') . ' - ' . $weekEnd->translatedFormat('d M Y');
 
                 $data[] = [
-                    'label' => 'Minggu '.$weekIndex,
-                    'short_label' => 'M'.$weekIndex,
+                    'label' => 'Minggu ' . $weekIndex,
+                    'short_label' => 'M' . $weekIndex,
                     'tooltip_label' => $tooltipLabel,
                     'value' => $total,
                 ];
@@ -692,16 +692,16 @@ final class FinancialDashboard extends Page
                 return 'Dihapus dari bulan aktif';
             }
 
-            return 'Khusus bulan ini'.(! empty($adjustment->note) ? ' • '.(string) $adjustment->note : '');
+            return 'Khusus bulan ini' . (! empty($adjustment->note) ? ' • ' . (string) $adjustment->note : '');
         }
 
         $type = $this->costType($cost);
-        $note = mb_trim((string) ($cost->note ?? ''));
+        $note = trim((string) ($cost->note ?? ''));
 
         if ($type === 'annual') {
             $monthlyAmount = (int) round(((int) ($cost->amount ?? 0)) / 12);
 
-            return 'Tahunan '.$this->rupiah((int) ($cost->amount ?? 0)).' • dihitung '.$this->rupiah($monthlyAmount).'/bulan';
+            return 'Tahunan ' . $this->rupiah((int) ($cost->amount ?? 0)) . ' • dihitung ' . $this->rupiah($monthlyAmount) . '/bulan';
         }
 
         if ($type === 'one_time') {
@@ -710,6 +710,7 @@ final class FinancialDashboard extends Page
 
         return $note !== '' ? $note : 'Rutin bulanan sejak tanggal mulai';
     }
+
 
     private function getProductMarginList(Carbon $start, Carbon $end): array
     {
@@ -740,8 +741,8 @@ final class FinancialDashboard extends Page
             ->selectRaw('COALESCE(order_items.product_name, "Produk") as name')
             ->selectRaw('SUM(order_items.quantity) as units')
             ->selectRaw('SUM(order_items.subtotal) as revenue')
-            ->selectRaw($totalHppExpression.' as total_hpp')
-            ->selectRaw($grossProfitExpression.' as gross_profit')
+            ->selectRaw($totalHppExpression . ' as total_hpp')
+            ->selectRaw($grossProfitExpression . ' as gross_profit')
             ->whereBetween(
                 DB::raw('COALESCE(orders.ordered_at, orders.created_at)'),
                 [
@@ -936,6 +937,6 @@ final class FinancialDashboard extends Page
 
     private function safeAdminUrl(string $path): string
     {
-        return url('/admin/'.mb_trim($path, '/'));
+        return url('/admin/' . trim($path, '/'));
     }
 }

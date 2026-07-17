@@ -8,18 +8,20 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-final class Product extends Model
+class Product extends Model
 {
     protected $fillable = [
         'category_id',
         'name',
         'slug',
         'description',
+        // 'stock',
         'image',
         'is_active',
     ];
 
     protected $casts = [
+        'stock' => 'integer',
         'is_active' => 'boolean',
     ];
 
@@ -41,5 +43,10 @@ final class Product extends Model
     public function orderItems(): HasMany
     {
         return $this->hasMany(OrderItem::class);
+    }
+
+    public function isOutOfStock(): bool
+    {
+        return $this->stock <= 0;
     }
 }

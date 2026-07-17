@@ -7,7 +7,7 @@ namespace App\Filament\Admin\Resources\Orders\Pages;
 use App\Filament\Admin\Resources\Orders\OrderResource;
 use Filament\Resources\Pages\ViewRecord;
 
-final class ViewOrder extends ViewRecord
+class ViewOrder extends ViewRecord
 {
     protected static string $resource = OrderResource::class;
 

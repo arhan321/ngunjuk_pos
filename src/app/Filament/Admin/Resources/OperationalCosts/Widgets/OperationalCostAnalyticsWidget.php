@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Filament\Admin\Resources\OperationalCosts\Widgets;
 
 use App\Filament\Admin\Pages\FinancialDashboard;
@@ -12,22 +10,17 @@ use Filament\Widgets\Widget;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-final class OperationalCostAnalyticsWidget extends Widget
+class OperationalCostAnalyticsWidget extends Widget
 {
-    public int|string|null $selectedMonth = null;
-
-    public int|string|null $selectedYear = null;
-
     protected string $view = 'filament.admin.resources.operational-costs.widgets.operational-cost-analytics-widget';
 
     protected static bool $isLazy = false;
 
-    protected int|string|array $columnSpan = 'full';
+    protected int | string | array $columnSpan = 'full';
 
-    public function rupiah(int|float|null $value): string
-    {
-        return 'Rp '.number_format((int) round((float) ($value ?? 0)), 0, ',', '.');
-    }
+    public int|string|null $selectedMonth = null;
+
+    public int|string|null $selectedYear = null;
 
     protected function getViewData(): array
     {
@@ -113,9 +106,9 @@ final class OperationalCostAnalyticsWidget extends Widget
         ];
 
         return [
-            'createUrl' => OperationalCostResource::getUrl('create').'?'.http_build_query($periodQuery),
+            'createUrl' => OperationalCostResource::getUrl('create') . '?' . http_build_query($periodQuery),
             'indexUrl' => OperationalCostResource::getUrl('index'),
-            'dashboardUrl' => FinancialDashboard::getUrl().'?'.http_build_query($periodQuery),
+            'dashboardUrl' => FinancialDashboard::getUrl() . '?' . http_build_query($periodQuery),
             'period' => [
                 'label' => $period['label'],
                 'start' => $start->translatedFormat('d M Y'),
@@ -149,6 +142,11 @@ final class OperationalCostAnalyticsWidget extends Widget
         ];
     }
 
+    public function rupiah(int | float | null $value): string
+    {
+        return 'Rp ' . number_format((int) round((float) ($value ?? 0)), 0, ',', '.');
+    }
+
     private function selectedPeriod(): array
     {
         $selectedMonth = (int) (
@@ -179,7 +177,7 @@ final class OperationalCostAnalyticsWidget extends Widget
             'end' => $end,
             'selected_month' => $selectedMonth,
             'selected_year' => $selectedYear,
-            'label' => $this->monthName($selectedMonth).' '.$selectedYear,
+            'label' => $this->monthName($selectedMonth) . ' ' . $selectedYear,
         ];
     }
 

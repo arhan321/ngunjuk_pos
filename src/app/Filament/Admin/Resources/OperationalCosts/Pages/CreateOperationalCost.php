@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Filament\Admin\Resources\OperationalCosts\Pages;
 
 use App\Filament\Admin\Resources\OperationalCosts\OperationalCostResource;
@@ -9,7 +7,7 @@ use App\Filament\Admin\Resources\OperationalCosts\Widgets\OperationalCostFormHer
 use Filament\Actions\Action;
 use Filament\Resources\Pages\CreateRecord;
 
-final class CreateOperationalCost extends CreateRecord
+class CreateOperationalCost extends CreateRecord
 {
     protected static string $resource = OperationalCostResource::class;
 

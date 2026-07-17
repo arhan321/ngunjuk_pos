@@ -8,7 +8,7 @@ use App\Filament\Admin\Resources\Categories\CategoryResource;
 use App\Filament\Admin\Resources\Categories\Widgets\CategoryAnalyticsWidget;
 use Filament\Resources\Pages\ListRecords;
 
-final class ListCategories extends ListRecords
+class ListCategories extends ListRecords
 {
     protected static string $resource = CategoryResource::class;
 

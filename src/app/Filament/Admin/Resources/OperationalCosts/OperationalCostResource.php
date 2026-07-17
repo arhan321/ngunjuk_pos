@@ -16,7 +16,7 @@ use Filament\Schemas\Schema;
 use Filament\Tables\Table;
 use UnitEnum;
 
-final class OperationalCostResource extends Resource
+class OperationalCostResource extends Resource
 {
     protected static ?string $model = OperationalCost::class;
 

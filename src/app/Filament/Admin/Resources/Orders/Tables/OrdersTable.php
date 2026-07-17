@@ -12,7 +12,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 
-final class OrdersTable
+class OrdersTable
 {
     public static function configure(Table $table): Table
     {
@@ -38,7 +38,7 @@ final class OrdersTable
                             font-weight:950;
                             white-space:nowrap;
                         ">
-                            • '.e($state ?? '-').'
+                            • ' . e($state ?? '-') . '
                         </span>
                     '),
 
@@ -61,7 +61,7 @@ final class OrdersTable
                             font-weight:850;
                             white-space:nowrap;
                         ">
-                            '.e(optional($state)->format('d M Y H:i') ?? '-').'
+                            ' . e(optional($state)->format('d M Y H:i') ?? '-') . '
                         </span>
                     '),
 
@@ -100,11 +100,11 @@ final class OrdersTable
                         $chips = $items
                             ->take($maxVisible)
                             ->map(function ($item): string {
-                                $name = mb_trim((string) ($item->product_name ?? '-'));
-                                $size = mb_trim((string) ($item->size_name ?? ''));
+                                $name = trim((string) ($item->product_name ?? '-'));
+                                $size = trim((string) ($item->size_name ?? ''));
 
                                 $label = $size !== '' && $size !== 'Regular'
-                                    ? $name.' • '.$size
+                                    ? $name . ' • ' . $size
                                     : $name;
 
                                 return '
@@ -123,7 +123,7 @@ final class OrdersTable
                                         font-weight:900;
                                         white-space:nowrap;
                                     ">
-                                        '.e($label).'
+                                        ' . e($label) . '
                                     </span>
                                 ';
                             })
@@ -147,12 +147,12 @@ final class OrdersTable
                                     font-weight:950;
                                     white-space:nowrap;
                                 ">
-                                    +'.$remaining.' item
+                                    +' . $remaining . ' item
                                 </span>
                             ';
                         }
 
-                        return '<div style="display:flex;align-items:center;flex-wrap:wrap;max-width:520px;">'.$chips.'</div>';
+                        return '<div style="display:flex;align-items:center;flex-wrap:wrap;max-width:520px;">' . $chips . '</div>';
                     }),
 
                 TextColumn::make('total_item')
@@ -175,7 +175,7 @@ final class OrdersTable
                             font-size:11px;
                             font-weight:950;
                         ">
-                            '.number_format((int) $state, 0, ',', '.').'
+                            ' . number_format((int) $state, 0, ',', '.') . '
                         </span>
                     '),
 
@@ -197,7 +197,7 @@ final class OrdersTable
                             font-weight:950;
                             white-space:nowrap;
                         ">
-                            Rp '.number_format((int) $state, 0, ',', '.').'
+                            Rp ' . number_format((int) $state, 0, ',', '.') . '
                         </span>
                     '),
 
@@ -239,15 +239,15 @@ final class OrdersTable
                                 min-height:28px;
                                 padding:0 10px;
                                 border-radius:999px;
-                                color:'.$color.';
-                                background:'.$bg.';
-                                border:1px solid '.$border.';
+                                color:' . $color . ';
+                                background:' . $bg . ';
+                                border:1px solid ' . $border . ';
                                 font-size:10px;
                                 font-weight:950;
                                 white-space:nowrap;
                             ">
-                                <span>'.$icon.'</span>
-                                '.e($status).'
+                                <span>' . $icon . '</span>
+                                ' . e($status) . '
                             </span>
                         ';
                     }),
@@ -270,7 +270,7 @@ final class OrdersTable
             ->defaultSort('ordered_at', 'desc');
     }
 
-    private static function applyActivePeriod(Builder $query): Builder
+    protected static function applyActivePeriod(Builder $query): Builder
     {
         $filter = self::activeFilterState();
         $range = self::dateRange($filter['period'], $filter['month'], $filter['year']);
@@ -278,7 +278,7 @@ final class OrdersTable
         return $query->whereBetween(DB::raw('COALESCE(ordered_at, created_at)'), $range);
     }
 
-    private static function activeFilterState(): array
+    protected static function activeFilterState(): array
     {
         $hasFilterRequest = request()->has('period') || request()->has('month') || request()->has('year');
 
@@ -314,7 +314,7 @@ final class OrdersTable
         ];
     }
 
-    private static function dateRange(string $period, int $month, int $year): array
+    protected static function dateRange(string $period, int $month, int $year): array
     {
         if ($period === 'today') {
             return [

@@ -10,10 +10,9 @@ use App\Models\ProductSize;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use RuntimeException;
 use Throwable;
 
-final class OrderController extends Controller
+class OrderController extends Controller
 {
     public function store(Request $request): JsonResponse
     {
@@ -52,6 +51,18 @@ final class OrderController extends Controller
 
                     /*
                     |--------------------------------------------------------------------------
+                    | Catatan Perubahan Stok POS
+                    |--------------------------------------------------------------------------
+                    | Stok tetap tersimpan di database/admin, tetapi POS tidak lagi membatasi
+                    | transaksi berdasarkan stok. Karena itu pengecekan stok dan pengurangan
+                    | stok saat checkout sengaja tidak dipakai.
+                    |
+                    | Cocok untuk sistem minuman/F&B ketika takaran bahan baku tidak selalu
+                    | bisa dipastikan menjadi jumlah cup yang mutlak.
+                    */
+
+                    /*
+                    |--------------------------------------------------------------------------
                     | Harga Jual dan HPP
                     |--------------------------------------------------------------------------
                     | price = harga jual produk berdasarkan size.
@@ -67,8 +78,8 @@ final class OrderController extends Controller
                     $totalHpp = $hpp * $quantity;
                     $grossProfit = $subtotal - $totalHpp;
 
-                    $note = isset($item['note']) && mb_trim((string) $item['note']) !== ''
-                        ? mb_trim((string) $item['note'])
+                    $note = isset($item['note']) && trim((string) $item['note']) !== ''
+                        ? trim((string) $item['note'])
                         : null;
 
                     $order->items()->create([
@@ -102,7 +113,7 @@ final class OrderController extends Controller
                 'message' => 'Transaksi berhasil disimpan.',
                 'data' => $order,
             ]);
-        } catch (RuntimeException $exception) {
+        } catch (\RuntimeException $exception) {
             return response()->json([
                 'success' => false,
                 'message' => $exception->getMessage(),
@@ -128,9 +139,9 @@ final class OrderController extends Controller
         $nextNumber = 1;
 
         if ($lastOrder) {
-            $nextNumber = ((int) mb_substr($lastOrder->order_code, -4)) + 1;
+            $nextNumber = ((int) substr($lastOrder->order_code, -4)) + 1;
         }
 
-        return 'ORD-'.$date.'-'.mb_str_pad((string) $nextNumber, 4, '0', STR_PAD_LEFT);
+        return 'ORD-' . $date . '-' . str_pad((string) $nextNumber, 4, '0', STR_PAD_LEFT);
     }
 }

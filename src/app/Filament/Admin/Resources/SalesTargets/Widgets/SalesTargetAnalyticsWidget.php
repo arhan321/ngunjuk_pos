@@ -13,18 +13,13 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-final class SalesTargetAnalyticsWidget extends Widget
+class SalesTargetAnalyticsWidget extends Widget
 {
     protected string $view = 'filament.admin.resources.sales-targets.widgets.sales-target-analytics-widget';
 
     protected static bool $isLazy = false;
 
-    protected int|string|array $columnSpan = 'full';
-
-    public function rupiah(int|float|null $value): string
-    {
-        return 'Rp '.number_format((int) round((float) ($value ?? 0)), 0, ',', '.');
-    }
+    protected int | string | array $columnSpan = 'full';
 
     protected function getViewData(): array
     {
@@ -91,6 +86,11 @@ final class SalesTargetAnalyticsWidget extends Widget
         ];
     }
 
+    public function rupiah(int | float | null $value): string
+    {
+        return 'Rp ' . number_format((int) round((float) ($value ?? 0)), 0, ',', '.');
+    }
+
     private function monthlyRevenue(Carbon $start, Carbon $end): int
     {
         if (! Schema::hasTable('orders')) {
@@ -135,7 +135,7 @@ final class SalesTargetAnalyticsWidget extends Widget
         });
     }
 
-    private function progressPercent(int|float $actual, int|float $target): float
+    private function progressPercent(int | float $actual, int | float $target): float
     {
         if ($target <= 0) {
             return 0.0;
@@ -144,7 +144,7 @@ final class SalesTargetAnalyticsWidget extends Widget
         return round(min(($actual / $target) * 100, 999), 1);
     }
 
-    private function achievementStatus(int|float $actual, int|float $target): string
+    private function achievementStatus(int | float $actual, int | float $target): string
     {
         if ($target <= 0) {
             return 'no_target';

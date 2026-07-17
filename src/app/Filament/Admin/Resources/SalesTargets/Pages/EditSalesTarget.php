@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Filament\Admin\Resources\SalesTargets\Pages;
 
 use App\Filament\Admin\Resources\SalesTargets\SalesTargetResource;
@@ -11,7 +9,7 @@ use Filament\Actions\Action;
 use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 
-final class EditSalesTarget extends EditRecord
+class EditSalesTarget extends EditRecord
 {
     protected static string $resource = SalesTargetResource::class;
 

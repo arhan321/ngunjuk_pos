@@ -13,9 +13,8 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-use RuntimeException;
 
-final class DashboardDummySeeder extends Seeder
+class DashboardDummySeeder extends Seeder
 {
     /**
      * Target omzet dummy 3 bulan.
@@ -52,12 +51,14 @@ final class DashboardDummySeeder extends Seeder
                 ->get();
 
             if ($products->isEmpty()) {
-                throw new RuntimeException('Tidak ada produk aktif dengan ukuran aktif. Seeder dummy dashboard dibatalkan.');
+                throw new \RuntimeException('Tidak ada produk aktif dengan ukuran aktif. Seeder dummy dashboard dibatalkan.');
             }
 
             foreach ($this->monthlyTargets as $month => $targetRevenue) {
                 $this->generateMonthlyOrders($month, $targetRevenue, $products);
             }
+
+            $this->setStockForDashboardVisualization();
         });
     }
 
@@ -153,6 +154,7 @@ final class DashboardDummySeeder extends Seeder
                         'category_id' => $category->id,
                         'name' => $productName,
                         'description' => 'Menu dummy untuk visualisasi dashboard POS Ngunjuk.',
+                        'stock' => 300,
                         'image' => null,
                         'is_active' => true,
                     ]
@@ -196,8 +198,8 @@ final class DashboardDummySeeder extends Seeder
 
     private function generateMonthlyOrders(string $month, int $targetRevenue, $products): void
     {
-        $monthStart = Carbon::parse($month.'-01')->startOfMonth();
-        $monthEnd = Carbon::parse($month.'-01')->endOfMonth();
+        $monthStart = Carbon::parse($month . '-01')->startOfMonth();
+        $monthEnd = Carbon::parse($month . '-01')->endOfMonth();
 
         $orderIndex = 1;
         $currentRevenue = 0;
@@ -424,7 +426,7 @@ final class DashboardDummySeeder extends Seeder
         |--------------------------------------------------------------------------
         | Jam operasional dummy
         |--------------------------------------------------------------------------
-        | Dibuat padat pada jam 10-21 agar pola jam penjualan terlihat jelas.
+        | Dibuat padat pada jam 10-21 agar Sales Heatmap terlihat jelas.
         */
         $weightedHours = [
             8, 9,
@@ -449,5 +451,43 @@ final class DashboardDummySeeder extends Seeder
             ->setHour($hour)
             ->setMinute(random_int(0, 59))
             ->setSecond(random_int(0, 59));
+    }
+
+    private function setStockForDashboardVisualization(): void
+    {
+        /*
+        |--------------------------------------------------------------------------
+        | Stok dibuat bervariasi
+        |--------------------------------------------------------------------------
+        | Supaya widget Stock Risk tetap terlihat:
+        | - produk kritis
+        | - produk rendah
+        | - produk waspada
+        | - mayoritas produk aman
+        */
+        Product::query()->update([
+            'stock' => 80,
+            'is_active' => true,
+        ]);
+
+        $stockMap = [
+            'Cappuccino Milk' => 0,
+            'Strawberry Smoothies' => 1,
+            'Kopi Item' => 2,
+            'Kopi Gula Aren' => 4,
+            'Kopi Susu' => 5,
+            'Taro Cheese' => 12,
+            'Mango Yakult' => 18,
+            'Thai Tea' => 25,
+        ];
+
+        foreach ($stockMap as $productName => $stock) {
+            Product::query()
+                ->where('name', $productName)
+                ->update([
+                    'stock' => $stock,
+                    'is_active' => true,
+                ]);
+        }
     }
 }

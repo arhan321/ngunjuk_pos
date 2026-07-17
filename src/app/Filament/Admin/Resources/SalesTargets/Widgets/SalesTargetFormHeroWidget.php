@@ -1,25 +1,18 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Filament\Admin\Resources\SalesTargets\Widgets;
 
 use App\Filament\Admin\Resources\SalesTargets\SalesTargetResource;
 use App\Models\SalesTarget;
 use Filament\Widgets\Widget;
 
-final class SalesTargetFormHeroWidget extends Widget
+class SalesTargetFormHeroWidget extends Widget
 {
     protected string $view = 'filament.admin.resources.sales-targets.widgets.sales-target-form-hero-widget';
 
     protected static bool $isLazy = false;
 
-    protected int|string|array $columnSpan = 'full';
-
-    public function rupiah(int|float|null $value): string
-    {
-        return 'Rp '.number_format((int) round((float) ($value ?? 0)), 0, ',', '.');
-    }
+    protected int | string | array $columnSpan = 'full';
 
     protected function getViewData(): array
     {
@@ -53,5 +46,10 @@ final class SalesTargetFormHeroWidget extends Widget
                 'year_target_revenue' => $yearTargetRevenue,
             ],
         ];
+    }
+
+    public function rupiah(int | float | null $value): string
+    {
+        return 'Rp ' . number_format((int) round((float) ($value ?? 0)), 0, ',', '.');
     }
 }

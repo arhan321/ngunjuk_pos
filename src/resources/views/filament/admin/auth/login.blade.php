@@ -341,7 +341,7 @@
         </div>
 
         <div class="ng-login-note">
-            Akses panel admin untuk mengelola produk dan laporan penjualan.
+            Akses panel admin untuk mengelola produk, stok dan laporan penjualan.
         </div>
     </div>
 

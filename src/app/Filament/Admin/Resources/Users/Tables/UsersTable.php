@@ -15,7 +15,7 @@ use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
 
-final class UsersTable
+class UsersTable
 {
     public static function configure(Table $table): Table
     {
@@ -26,7 +26,7 @@ final class UsersTable
                     ->defaultImageUrl(function ($record): string {
                         $hash = md5(mb_strtolower(mb_trim((string) $record->email)));
 
-                        return 'https://www.gravatar.com/avatar/'.$hash.'?d=mp&r=g&s=250';
+                        return 'https://www.gravatar.com/avatar/' . $hash . '?d=mp&r=g&s=250';
                     })
                     ->square()
                     ->size(46)
@@ -58,7 +58,7 @@ final class UsersTable
                                     background:linear-gradient(135deg,#ff9d18,#ee6500);
                                     box-shadow:0 12px 24px rgba(238,101,0,.20);
                                 ">
-                                    '.e($initial).'
+                                    ' . e($initial) . '
                                 </div>
 
                                 <div style="min-width:0;">
@@ -68,7 +68,7 @@ final class UsersTable
                                         font-weight:950;
                                         line-height:1.25;
                                     ">
-                                        '.e($name).'
+                                        ' . e($name) . '
                                     </div>
 
                                     <div style="
@@ -88,7 +88,7 @@ final class UsersTable
                                         overflow:hidden;
                                         text-overflow:ellipsis;
                                     ">
-                                        ✉ '.e($email).'
+                                        ✉ ' . e($email) . '
                                     </div>
                                 </div>
                             </div>
@@ -126,7 +126,7 @@ final class UsersTable
                             font-weight:950;
                             white-space:nowrap;
                         ">
-                            '.e(\Carbon\Carbon::parse($state)->translatedFormat('d M Y')).'
+                            ' . e(\Carbon\Carbon::parse($state)->translatedFormat('d M Y')) . '
                         </span>
                     '),
 
@@ -149,7 +149,7 @@ final class UsersTable
                             font-weight:950;
                             white-space:nowrap;
                         ">
-                            ⏱ '.e(\Carbon\Carbon::parse($state)->diffForHumans()).'
+                            ⏱ ' . e(\Carbon\Carbon::parse($state)->diffForHumans()) . '
                         </span>
                     '),
             ])

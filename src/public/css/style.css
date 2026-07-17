@@ -577,6 +577,10 @@ button:disabled,
   box-shadow: 0 22px 50px rgba(125, 72, 31, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.34);
 }
 
+.product-card.out-of-stock {
+  opacity: 0.72;
+}
+
 .product-head {
   display: flex;
   align-items: flex-start;
@@ -584,6 +588,7 @@ button:disabled,
   gap: 10px;
 }
 
+.stock-badge,
 .status-pill {
   display: inline-flex;
   align-items: center;
@@ -597,10 +602,12 @@ button:disabled,
   font-weight: 900;
 }
 
+.stock-badge.low,
 .status-pill.pending {
   background: rgba(183, 121, 31, 0.95);
 }
 
+.stock-badge.empty,
 .status-pill.failed {
   background: rgba(226, 85, 85, 0.95);
 }
@@ -2674,6 +2681,24 @@ body.settings-page .profile-form-panel {
   white-space: nowrap !important;
 }
 
+/* Badge stok dibuat kecil soft */
+.product-card .stock-badge {
+  width: fit-content !important;
+  min-height: 26px !important;
+  padding: 0 11px !important;
+  border-radius: 999px !important;
+  color: #ff7045 !important;
+  background: rgba(255, 220, 197, 0.82) !important;
+  font-size: 11px !important;
+  font-weight: 900 !important;
+  box-shadow: none !important;
+}
+
+.product-card .stock-badge.empty {
+  color: #ffffff !important;
+  background: rgba(226, 85, 85, 0.95) !important;
+}
+
 /* Size dibuat satu baris seperti referensi */
 .product-card .size-row {
   display: flex !important;
@@ -2917,6 +2942,18 @@ body.settings-page .profile-form-panel {
   font-size: 14.5px !important;
   font-weight: 900 !important;
   white-space: nowrap !important;
+}
+
+/* Badge stok selalu di bawah nama */
+.product-card .stock-badge {
+  align-self: start !important;
+  width: fit-content !important;
+  height: 23px !important;
+  min-height: 23px !important;
+  padding: 0 10px !important;
+  border-radius: 999px !important;
+  font-size: 10.5px !important;
+  line-height: 1 !important;
 }
 
 /* Area size dibuat tinggi tetap */

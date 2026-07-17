@@ -10,7 +10,7 @@ use Filament\Resources\Pages\ListRecords;
 use Illuminate\Support\Facades\DB;
 use Spatie\Activitylog\Models\Activity;
 
-final class ListActivityLogs extends ListRecords
+class ListActivityLogs extends ListRecords
 {
     protected static string $resource = ActivityLogResource::class;
 
@@ -21,6 +21,38 @@ final class ListActivityLogs extends ListRecords
     public function getTitle(): string
     {
         return '';
+    }
+
+    protected function getHeaderActions(): array
+    {
+        return [];
+    }
+
+    protected function getHeaderWidgets(): array
+    {
+        return [];
+    }
+
+    protected function getFooterWidgets(): array
+    {
+        return [];
+    }
+
+    protected function applyLoginLogoutFilter($query)
+    {
+        return $query->where(function ($query): void {
+            $query
+                ->whereIn('event', ['login', 'logout'])
+                ->orWhere('description', 'like', '%login%')
+                ->orWhere('description', 'like', '%logout%')
+                ->orWhere('description', 'like', '%logged in%')
+                ->orWhere('description', 'like', '%logged out%');
+        });
+    }
+
+    protected function loginLogoutQuery()
+    {
+        return $this->applyLoginLogoutFilter(Activity::query());
     }
 
     public function getActivitySummary(): array
@@ -72,37 +104,5 @@ final class ListActivityLogs extends ListRecords
             'top_user' => $topUser?->name ?? '-',
             'top_user_total' => (int) ($topCauser?->total_activity ?? 0),
         ];
-    }
-
-    protected function getHeaderActions(): array
-    {
-        return [];
-    }
-
-    protected function getHeaderWidgets(): array
-    {
-        return [];
-    }
-
-    protected function getFooterWidgets(): array
-    {
-        return [];
-    }
-
-    protected function applyLoginLogoutFilter($query)
-    {
-        return $query->where(function ($query): void {
-            $query
-                ->whereIn('event', ['login', 'logout'])
-                ->orWhere('description', 'like', '%login%')
-                ->orWhere('description', 'like', '%logout%')
-                ->orWhere('description', 'like', '%logged in%')
-                ->orWhere('description', 'like', '%logged out%');
-        });
-    }
-
-    protected function loginLogoutQuery()
-    {
-        return $this->applyLoginLogoutFilter(Activity::query());
     }
 }

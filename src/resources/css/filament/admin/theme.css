@@ -180,11 +180,182 @@
 |--------------------------------------------------------------------------
 */
 
+.dashboard-lux-wrapper {
+    margin-bottom: 26px !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border: 0 !important;
+}
+
+.fi-wi-widget:has(.dashboard-lux-wrapper),
+.fi-wi-widget:has(.dashboard-lux-wrapper) > div {
+    background: transparent !important;
+    box-shadow: none !important;
+    border: 0 !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+.dashboard-lux-hero {
+    position: relative !important;
+    overflow: hidden !important;
+    min-height: 250px !important;
+    border-radius: 2.4rem !important;
+    padding: 2.4rem !important;
+    color: #0f172a !important;
+    background:
+        radial-gradient(circle at 72% 42%, rgba(255,255,255,0.38), transparent 22%),
+        radial-gradient(circle at 88% 8%, rgba(20,184,166,0.26), transparent 32%),
+        linear-gradient(135deg, rgba(255,255,255,0.76), rgba(255,255,255,0.34)) !important;
+    border: 1px solid rgba(255,255,255,0.74) !important;
+    box-shadow:
+        0 32px 90px rgba(15, 23, 42, 0.12),
+        inset 0 1px 0 rgba(255,255,255,0.9) !important;
+    backdrop-filter: blur(30px) saturate(160%) !important;
+    -webkit-backdrop-filter: blur(30px) saturate(160%) !important;
+    isolation: isolate !important;
+}
+
+.dashboard-lux-hero::before {
+    content: "" !important;
+    position: absolute !important;
+    width: 420px !important;
+    height: 420px !important;
+    right: 80px !important;
+    top: -120px !important;
+    border-radius: 45% 55% 60% 40% !important;
+    background:
+        radial-gradient(circle at 32% 30%, rgba(255,255,255,0.92), rgba(255,255,255,0.16) 58%, transparent 72%) !important;
+    box-shadow:
+        inset 24px 18px 55px rgba(255,255,255,0.45),
+        0 40px 80px rgba(15, 118, 110, 0.12) !important;
+    opacity: 0.78 !important;
+    z-index: -1 !important;
+}
+
+.dashboard-lux-hero::after {
+    content: "" !important;
+    position: absolute !important;
+    inset: 0 !important;
+    pointer-events: none !important;
+    background:
+        linear-gradient(118deg, transparent 0 23%, rgba(255,255,255,0.52) 23.2% 23.8%, transparent 24.2% 100%),
+        radial-gradient(circle at 20% 80%, rgba(20,184,166,0.12), transparent 28%) !important;
+    z-index: -1 !important;
+}
+
+.dashboard-lux-badge {
+    background: rgba(255,255,255,0.66) !important;
+    color: #0f766e !important;
+    border: 1px solid rgba(255,255,255,0.86) !important;
+    box-shadow: 0 14px 34px rgba(15, 23, 42, 0.08) !important;
+    backdrop-filter: blur(18px) !important;
+}
+
+.dashboard-lux-dot {
+    background: #0f766e !important;
+    box-shadow: 0 0 0 5px rgba(15, 118, 110, 0.14) !important;
+}
+
+.dashboard-lux-title {
+    color: #111827 !important;
+    font-size: clamp(2rem, 3vw, 3.8rem) !important;
+    line-height: 0.98 !important;
+    font-weight: 950 !important;
+    letter-spacing: -0.075em !important;
+    max-width: 760px !important;
+}
+
+.dashboard-lux-desc {
+    color: rgba(51, 65, 85, 0.78) !important;
+    max-width: 680px !important;
+    font-size: 0.95rem !important;
+}
+
+.dashboard-lux-mini {
+    color: #0f172a !important;
+    background: rgba(255,255,255,0.62) !important;
+    border: 1px solid rgba(255,255,255,0.78) !important;
+    box-shadow:
+        0 22px 52px rgba(15, 23, 42, 0.10),
+        inset 0 1px 0 rgba(255,255,255,0.9) !important;
+    backdrop-filter: blur(22px) saturate(160%) !important;
+}
+
+.dashboard-lux-mini span {
+    color: rgba(71,85,105,0.78) !important;
+}
+
+.dashboard-lux-mini strong {
+    color: #0f766e !important;
+}
+
 /*
 |--------------------------------------------------------------------------
 | Dashboard Cards
 |--------------------------------------------------------------------------
 */
+
+.dashboard-lux-card,
+.metric-lux-card,
+.powerbi-panel {
+    border-radius: 1.75rem !important;
+    background:
+        linear-gradient(145deg, rgba(255,255,255,0.74), rgba(255,255,255,0.48)) !important;
+    border: 1px solid rgba(255, 255, 255, 0.72) !important;
+    box-shadow:
+        0 22px 58px rgba(15, 23, 42, 0.09),
+        inset 0 1px 0 rgba(255,255,255,0.88) !important;
+    backdrop-filter: blur(26px) saturate(150%) !important;
+    -webkit-backdrop-filter: blur(26px) saturate(150%) !important;
+}
+
+.dashboard-lux-card:hover,
+.metric-lux-card:hover,
+.powerbi-panel:hover {
+    transform: translateY(-4px) !important;
+    box-shadow:
+        0 34px 82px rgba(15, 23, 42, 0.13),
+        inset 0 1px 0 rgba(255,255,255,0.94) !important;
+}
+
+.dashboard-lux-card::after {
+    opacity: 0.22 !important;
+    filter: blur(1px) !important;
+}
+
+.dashboard-lux-label,
+.metric-lux-title,
+.powerbi-panel-title {
+    color: #0f172a !important;
+}
+
+.dashboard-lux-value {
+    color: #0f172a !important;
+}
+
+.metric-lux-header {
+    background:
+        radial-gradient(circle at right top, rgba(20,184,166,0.16), transparent 30%),
+        linear-gradient(135deg, rgba(255,255,255,0.72), rgba(255,255,255,0.36)) !important;
+    border-bottom: 1px solid rgba(255,255,255,0.54) !important;
+}
+
+.metric-period-link,
+.metric-lux-item {
+    background: rgba(255,255,255,0.62) !important;
+    border: 1px solid rgba(255,255,255,0.76) !important;
+    box-shadow: 0 12px 26px rgba(15, 23, 42, 0.06) !important;
+    backdrop-filter: blur(14px) !important;
+}
+
+.metric-period-link.active,
+.metric-lux-item.active {
+    color: #fff !important;
+    background: linear-gradient(135deg, #0f766e, #14b8a6) !important;
+    border-color: rgba(255,255,255,0.72) !important;
+    box-shadow: 0 18px 42px rgba(15, 118, 110, 0.24) !important;
+}
 
 /*
 |--------------------------------------------------------------------------
@@ -192,13 +363,41 @@
 |--------------------------------------------------------------------------
 */
 
+.fi-section:has(.category-pbi),
+.fi-section:has(.stock-risk-pbi),
+.fi-section:has(.heatmap-pbi),
+.fi-section:has(.recent-pbi),
+.fi-section:has(.product-quadrant-pbi) {
+    background:
+        linear-gradient(145deg, rgba(255,255,255,0.72), rgba(255,255,255,0.46)) !important;
+    border: 1px solid rgba(255,255,255,0.72) !important;
+    box-shadow:
+        0 22px 58px rgba(15, 23, 42, 0.09),
+        inset 0 1px 0 rgba(255,255,255,0.88) !important;
+    backdrop-filter: blur(26px) saturate(150%) !important;
+    -webkit-backdrop-filter: blur(26px) saturate(150%) !important;
+}
+
 /*
 |--------------------------------------------------------------------------
 | Inner Chart Panels
 |--------------------------------------------------------------------------
 */
 
-.heatmap-insight-box {
+.revenue-wide-chart-box,
+.category-row,
+.category-empty,
+.stock-risk-box,
+.stock-risk-distribution,
+.stock-risk-item,
+.stock-risk-empty,
+.heatmap-insight-box,
+.heatmap-pbi-canvas,
+.product-quadrant-box,
+.product-quadrant-canvas,
+.product-quadrant-empty,
+.recent-pbi-card,
+.recent-pbi-empty {
     background:
         linear-gradient(145deg, rgba(255,255,255,0.66), rgba(255,255,255,0.38)) !important;
     border: 1px solid rgba(255,255,255,0.68) !important;
@@ -209,11 +408,27 @@
     -webkit-backdrop-filter: blur(18px) saturate(150%) !important;
 }
 
+.revenue-wide-chart-box,
+.heatmap-pbi-canvas,
+.product-quadrant-canvas {
+    background:
+        linear-gradient(180deg, rgba(240,253,250,0.68), rgba(255,255,255,0.42)),
+        radial-gradient(circle at top right, rgba(20,184,166,0.14), transparent 34%) !important;
+}
+
 /*
 |--------------------------------------------------------------------------
 | Remove Inner White Box - Top Product Performance
 |--------------------------------------------------------------------------
 */
+
+.powerbi-top-chart {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
 
 /*
 |--------------------------------------------------------------------------
@@ -221,11 +436,51 @@
 |--------------------------------------------------------------------------
 */
 
+.category-donut {
+    box-shadow:
+        0 18px 42px rgba(15, 23, 42, 0.10),
+        inset 0 1px 0 rgba(255,255,255,0.52) !important;
+}
+
+.category-donut::after {
+    background: rgba(255,255,255,0.82) !important;
+    backdrop-filter: blur(14px) !important;
+    -webkit-backdrop-filter: blur(14px) !important;
+}
+
 /*
 |--------------------------------------------------------------------------
 | Widget Titles and Chips
 |--------------------------------------------------------------------------
 */
+
+.category-title,
+.stock-risk-title,
+.heatmap-pbi-title,
+.product-quadrant-title,
+.recent-pbi-title {
+    color: #0f172a !important;
+    font-weight: 950 !important;
+}
+
+.category-subtitle,
+.stock-risk-subtitle,
+.heatmap-pbi-subtitle,
+.product-quadrant-subtitle,
+.recent-pbi-subtitle {
+    color: rgba(71, 85, 105, 0.78) !important;
+}
+
+.category-chip,
+.stock-risk-chip,
+.heatmap-pbi-chip,
+.product-quadrant-chip,
+.recent-pbi-chip {
+    border: 1px solid rgba(255,255,255,0.78) !important;
+    background: rgba(255,255,255,0.58) !important;
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06) !important;
+    backdrop-filter: blur(14px) !important;
+}
 
 /*
 |--------------------------------------------------------------------------
@@ -702,10 +957,36 @@
 |--------------------------------------------------------------------------
 */
 
-.dark .fi-header-heading {
+.dark .fi-header-heading,
+.dark .dashboard-lux-title,
+.dark .dashboard-lux-label,
+.dark .dashboard-lux-value,
+.dark .metric-lux-title,
+.dark .powerbi-panel-title,
+.dark .category-title,
+.dark .stock-risk-title,
+.dark .heatmap-pbi-title,
+.dark .product-quadrant-title,
+.dark .recent-pbi-title {
     color: var(--dark-text-main) !important;
 }
 
+.dark .dashboard-lux-desc,
+.dark .metric-lux-desc,
+.dark .powerbi-panel-desc,
+.dark .category-subtitle,
+.dark .stock-risk-subtitle,
+.dark .heatmap-pbi-subtitle,
+.dark .product-quadrant-subtitle,
+.dark .recent-pbi-subtitle,
+.dark .revenue-chart-note {
+    color: var(--dark-text-soft) !important;
+}
+
+.dark .dashboard-lux-hero,
+.dark .dashboard-lux-card,
+.dark .metric-lux-card,
+.dark .powerbi-panel,
 .dark .fi-section,
 .dark .fi-ta-ctn,
 .dark .fi-card {
@@ -717,11 +998,73 @@
         inset 0 1px 0 rgba(255,255,255,0.10) !important;
 }
 
+.dark .dashboard-lux-card {
+    background:
+        radial-gradient(circle at top right, rgba(20,184,166,0.18), transparent 32%),
+        linear-gradient(145deg, rgba(15,23,42,0.82), rgba(6,78,59,0.42)) !important;
+}
+
+.dark .dashboard-lux-caption {
+    background: rgba(15, 23, 42, 0.72) !important;
+    color: #5eead4 !important;
+    border: 1px solid rgba(94, 234, 212, 0.22) !important;
+}
+
+.dark .dashboard-trend {
+    color: var(--dark-text-soft) !important;
+}
+
+.dark .dashboard-trend.down {
+    color: #fca5a5 !important;
+}
+
+.dark .dashboard-trend.up {
+    color: #86efac !important;
+}
+
+.dark .kpi-stock-legend,
+.dark .kpi-stock-legend span {
+    color: var(--dark-text-soft) !important;
+}
+
 /*
 |--------------------------------------------------------------------------
 | Dark Metric
 |--------------------------------------------------------------------------
 */
+
+.dark .metric-lux-header {
+    background:
+        radial-gradient(circle at right top, rgba(20,184,166,0.16), transparent 30%),
+        linear-gradient(135deg, rgba(15,23,42,0.78), rgba(6,78,59,0.34)) !important;
+    border-bottom: 1px solid var(--dark-border-soft) !important;
+}
+
+.dark .metric-section-label {
+    color: var(--dark-text-soft) !important;
+}
+
+.dark .metric-period-link,
+.dark .metric-lux-item {
+    color: var(--dark-text-soft) !important;
+    background: rgba(15,23,42,0.72) !important;
+    border: 1px solid var(--dark-border-soft) !important;
+}
+
+.dark .metric-period-link.active,
+.dark .metric-lux-item.active {
+    color: #ecfeff !important;
+    background: linear-gradient(135deg, #0f766e, #14b8a6) !important;
+    border-color: rgba(94,234,212,0.42) !important;
+}
+
+.dark .metric-lux-label {
+    color: var(--dark-text-soft) !important;
+}
+
+.dark .metric-lux-item.active .metric-lux-label {
+    color: #ecfeff !important;
+}
 
 /*
 |--------------------------------------------------------------------------
@@ -729,11 +1072,52 @@
 |--------------------------------------------------------------------------
 */
 
+.dark .powerbi-top-chart {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.dark .powerbi-top-label,
+.dark .powerbi-top-value {
+    color: #f8fafc !important;
+    font-weight: 950 !important;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.45) !important;
+}
+
+.dark .powerbi-axis-line span {
+    color: #dbeafe !important;
+    font-weight: 950 !important;
+}
+
+.dark .powerbi-axis-line {
+    border-top-color: rgba(148, 163, 184, 0.28) !important;
+}
+
+.dark .powerbi-top-bar-bg {
+    background:
+        linear-gradient(90deg, rgba(226, 232, 240, 0.16) 1px, transparent 1px),
+        transparent !important;
+    background-size: 25% 100% !important;
+}
+
+.dark .powerbi-top-bar {
+    background: linear-gradient(90deg, #38bdf8, #5eead4) !important;
+    box-shadow: 0 8px 20px rgba(45, 212, 191, 0.35) !important;
+}
+
 /*
 |--------------------------------------------------------------------------
 | Dark Sales Trend
 |--------------------------------------------------------------------------
 */
+
+.dark .revenue-wide-chart-box {
+    background:
+        linear-gradient(180deg, rgba(15,23,42,0.82), rgba(6,78,59,0.38)),
+        radial-gradient(circle at top right, rgba(20,184,166,0.14), transparent 34%) !important;
+    border-color: var(--dark-border-soft) !important;
+}
 
 .dark .revenue-wide-chart-svg line {
     stroke: rgba(203, 213, 225, 0.24) !important;
@@ -753,15 +1137,104 @@
 |--------------------------------------------------------------------------
 */
 
+.dark .category-row {
+    background: rgba(15, 23, 42, 0.78) !important;
+    border: 1px solid rgba(148, 163, 184, 0.34) !important;
+}
+
+.dark .category-name,
+.dark .category-share {
+    color: #f8fafc !important;
+    font-weight: 950 !important;
+}
+
+.dark .category-value {
+    color: #e2e8f0 !important;
+    font-weight: 850 !important;
+}
+
+.dark .category-center-label,
+.dark .category-center-note {
+    color: #475569 !important;
+    font-weight: 950 !important;
+}
+
+.dark .category-center-value {
+    color: #0f172a !important;
+    font-weight: 950 !important;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Dark Stock Risk
+|--------------------------------------------------------------------------
+*/
+
+.dark .stock-risk-box,
+.dark .stock-risk-distribution,
+.dark .stock-risk-item {
+    background: rgba(15,23,42,0.72) !important;
+    border-color: var(--dark-border-soft) !important;
+}
+
+.dark .stock-risk-box-label,
+.dark .stock-risk-legend-item,
+.dark .stock-risk-legend-item span,
+.dark .stock-risk-stock,
+.dark .stock-risk-subtitle {
+    color: #e2e8f0 !important;
+    font-weight: 850 !important;
+}
+
+.dark .stock-risk-box-value,
+.dark .stock-risk-name {
+    color: #f8fafc !important;
+    font-weight: 950 !important;
+}
+
+.dark .stock-risk-track,
+.dark .stock-risk-bar {
+    background: rgba(226, 232, 240, 0.26) !important;
+}
+
+.dark .stock-risk-status {
+    font-weight: 950 !important;
+    text-shadow: none !important;
+}
+
+.dark .stock-risk-status.critical {
+    background: #fecaca !important;
+    color: #7f1d1d !important;
+}
+
+.dark .stock-risk-status.low {
+    background: #fed7aa !important;
+    color: #7c2d12 !important;
+}
+
+.dark .stock-risk-status.warning {
+    background: #fef9c3 !important;
+    color: #713f12 !important;
+}
+
 /*
 |--------------------------------------------------------------------------
 | Dark Heatmap
 |--------------------------------------------------------------------------
 */
 
-.dark .heatmap-insight-box {
+.dark .heatmap-insight-box,
+.dark .heatmap-pbi-canvas {
     background: rgba(15,23,42,0.72) !important;
     border-color: var(--dark-border-soft) !important;
+}
+
+.dark .heatmap-pbi-hour,
+.dark .heatmap-pbi-day,
+.dark .heatmap-pbi-footer,
+.dark .heatmap-pbi-footer span {
+    color: #e2e8f0 !important;
+    font-weight: 900 !important;
 }
 
 .dark .heatmap-insight-label {
@@ -774,11 +1247,76 @@
     font-weight: 950 !important;
 }
 
+.dark .heatmap-pbi-cell[data-level="0"] {
+    background: rgba(248, 250, 252, 0.88) !important;
+    border-color: rgba(248, 250, 252, 0.34) !important;
+}
+
+.dark .heatmap-pbi-cell[data-level="1"] {
+    background: #ccfbf1 !important;
+}
+
+.dark .heatmap-pbi-cell[data-level="2"] {
+    background: #99f6e4 !important;
+}
+
+.dark .heatmap-pbi-cell[data-level="3"] {
+    background: #5eead4 !important;
+}
+
+.dark .heatmap-pbi-cell[data-level="4"] {
+    background: #14b8a6 !important;
+}
+
+.dark .heatmap-pbi-cell[data-level="5"] {
+    background: #0f766e !important;
+}
+
 /*
 |--------------------------------------------------------------------------
 | Dark Recent Sales
 |--------------------------------------------------------------------------
 */
+
+.dark .recent-pbi-card {
+    background: rgba(15,23,42,0.72) !important;
+    border-color: var(--dark-border-soft) !important;
+}
+
+.dark .recent-pbi-code,
+.dark .recent-pbi-total {
+    color: #f8fafc !important;
+    font-weight: 950 !important;
+}
+
+.dark .recent-pbi-meta,
+.dark .recent-pbi-time {
+    color: #e2e8f0 !important;
+    font-weight: 950 !important;
+}
+
+.dark .recent-pbi-time::after {
+    background: rgba(94, 234, 212, 0.28) !important;
+}
+
+.dark .recent-pbi-track {
+    background: rgba(226, 232, 240, 0.26) !important;
+}
+
+.dark .recent-pbi-fill {
+    background: linear-gradient(90deg, #14b8a6, #5eead4) !important;
+}
+
+.dark .recent-pbi-status {
+    background: #dcfce7 !important;
+    color: #14532d !important;
+    font-weight: 950 !important;
+    text-shadow: none !important;
+}
+
+.dark .recent-pbi-status::before {
+    background: #16a34a !important;
+}
 
 /*
 |--------------------------------------------------------------------------
@@ -786,6 +1324,30 @@
 |--------------------------------------------------------------------------
 */
 
+.dark .product-quadrant-box,
+.dark .product-quadrant-canvas {
+    background: rgba(15,23,42,0.72) !important;
+    border-color: var(--dark-border-soft) !important;
+}
+
+.dark .product-quadrant-box-label,
+.dark .product-quadrant-subtitle,
+.dark .product-quadrant-axis-x,
+.dark .product-quadrant-axis-y {
+    color: #e2e8f0 !important;
+    font-weight: 950 !important;
+}
+
+.dark .product-quadrant-box-value {
+    color: #f8fafc !important;
+}
+
+.dark .product-quadrant-mid-x,
+.dark .product-quadrant-mid-y {
+    background: rgba(203, 213, 225, 0.28) !important;
+}
+
+.dark .product-quadrant-label,
 .dark .product-bubble-label {
     color: #0f172a !important;
     background: rgba(236, 254, 255, 0.92) !important;
@@ -799,6 +1361,21 @@
 |--------------------------------------------------------------------------
 */
 
+.dark .category-chip,
+.dark .stock-risk-chip,
+.dark .heatmap-pbi-chip,
+.dark .product-quadrant-chip,
+.dark .recent-pbi-chip,
+.dark .dashboard-lux-badge {
+    background: rgba(15,23,42,0.72) !important;
+    color: #5eead4 !important;
+    border: 1px solid rgba(94,234,212,0.24) !important;
+}
+
+.dark .category-empty,
+.dark .stock-risk-empty,
+.dark .recent-pbi-empty,
+.dark .product-quadrant-empty,
 .dark .empty-state {
     color: #e2e8f0 !important;
     background: rgba(15, 23, 42, 0.78) !important;
@@ -845,19 +1422,41 @@
 */
 
 @media (max-width: 1500px) {
+    .dashboard-lux-hero {
+        min-height: 220px !important;
+    }
 }
 
 @media (max-width: 1024px) {
     .fi-main {
         padding-inline: 1rem !important;
     }
+
+    .dashboard-lux-hero {
+        border-radius: 1.7rem !important;
+        padding: 1.5rem !important;
+    }
+
+    .dashboard-lux-hero::before {
+        width: 300px !important;
+        height: 300px !important;
+        right: -80px !important;
+        top: -90px !important;
+    }
 }
 
 @media (max-width: 768px) {
     .fi-section,
     .fi-ta-ctn,
-    .fi-card {
+    .fi-card,
+    .dashboard-lux-card,
+    .metric-lux-card,
+    .powerbi-panel {
         border-radius: 1.25rem !important;
+    }
+
+    .dashboard-lux-title {
+        font-size: 2.1rem !important;
     }
 }
 
@@ -891,6 +1490,15 @@
         margin-top: 0 !important;
         padding-top: 0 !important;
     }
+
+    .dashboard-lux-wrapper {
+        margin-top: -1rem !important;
+        padding-top: 0 !important;
+    }
+
+    .dashboard-lux-hero {
+        margin-top: 0 !important;
+    }
 }
 
 /*
@@ -921,6 +1529,15 @@
     .fi-wi-widgets {
         margin-top: 0 !important;
         padding-top: 0 !important;
+    }
+
+    .dashboard-lux-wrapper {
+    margin-top: 0.30rem !important;
+    padding-top: 0 !important;
+    }
+
+    .dashboard-lux-hero {
+        margin-top: 0 !important;
     }
 }
 
@@ -959,6 +1576,9 @@
 }
 
 /* Khusus dashboard, header tetap boleh hilang penuh karena dashboard sudah punya hero sendiri */
+.fi-page:has(.dashboard-lux-wrapper) .fi-header {
+    display: none !important;
+}
 
 /*
 |--------------------------------------------------------------------------
@@ -1577,6 +2197,199 @@
 
 /* ===== Overview compact ===== */
 
+.pbi-overview-shell {
+    border-radius: 1.45rem;
+    padding: 1rem;
+    background:
+        linear-gradient(135deg, rgba(15, 23, 42, 0.96), rgba(30, 41, 59, 0.92)),
+        radial-gradient(circle at top right, rgba(251, 146, 60, 0.36), transparent 18rem);
+    color: #ffffff;
+    box-shadow: 0 22px 55px rgba(15, 23, 42, 0.18);
+}
+
+.pbi-overview-header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 1rem;
+    align-items: start;
+    margin-bottom: 0.9rem;
+}
+
+.pbi-eyebrow {
+    width: max-content;
+    padding: 0.28rem 0.62rem;
+    border-radius: 999px;
+    background: rgba(251, 146, 60, 0.18);
+    border: 1px solid rgba(251, 146, 60, 0.3);
+    color: #fed7aa;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.pbi-overview-header h2 {
+    margin-top: 0.42rem;
+    font-size: clamp(1.3rem, 1.8vw, 1.85rem);
+    line-height: 1.1;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+}
+
+.pbi-overview-header p {
+    margin-top: 0.35rem;
+    max-width: 44rem;
+    color: rgba(226, 232, 240, 0.82);
+    font-size: 0.82rem;
+}
+
+.pbi-filter-panel {
+    display: grid;
+    gap: 0.55rem;
+    min-width: 25rem;
+}
+
+.pbi-filter-block > span {
+    display: block;
+    margin-bottom: 0.28rem;
+    color: rgba(226, 232, 240, 0.72);
+    font-size: 0.68rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.pbi-segment {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.32rem;
+    padding: 0.32rem;
+    border-radius: 0.9rem;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.pbi-segment a {
+    padding: 0.38rem 0.6rem;
+    border-radius: 0.68rem;
+    color: rgba(226, 232, 240, 0.86);
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-decoration: none;
+    transition: 0.2s ease;
+}
+
+.pbi-segment a:hover,
+.pbi-segment a.is-active {
+    color: #111827;
+    background: linear-gradient(135deg, #fb923c, #facc15);
+    box-shadow: 0 10px 22px rgba(251, 146, 60, 0.25);
+}
+
+.pbi-kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.7rem;
+}
+
+.pbi-kpi-card {
+    min-height: 7.1rem;
+    border-radius: 1.1rem;
+    padding: 0.82rem;
+    background: rgba(255, 255, 255, 0.09);
+    border: 1px solid rgba(255, 255, 255, 0.11);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.pbi-kpi-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.65rem;
+    align-items: start;
+}
+
+.pbi-kpi-top span {
+    color: rgba(226, 232, 240, 0.72);
+    font-size: 0.73rem;
+    font-weight: 800;
+}
+
+.pbi-kpi-top strong {
+    color: #ffffff;
+    font-size: 1.08rem;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    text-align: right;
+}
+
+.pbi-mini-bars {
+    display: flex;
+    align-items: end;
+    gap: 0.18rem;
+    height: 2.2rem;
+    margin-top: 0.7rem;
+}
+
+.pbi-mini-bars i {
+    display: block;
+    flex: 1;
+    min-height: 0.2rem;
+    border-radius: 999px 999px 0.25rem 0.25rem;
+    background: linear-gradient(180deg, #fdba74, #f97316);
+    opacity: 0.85;
+}
+
+.pbi-kpi-bottom {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-top: 0.58rem;
+    font-size: 0.72rem;
+    font-weight: 800;
+}
+
+.pbi-kpi-bottom.up {
+    color: #86efac;
+}
+
+.pbi-kpi-bottom.down {
+    color: #fecaca;
+}
+
+.pbi-kpi-bottom.flat {
+    color: #cbd5e1;
+}
+
+.pbi-stock-stack {
+    display: flex;
+    height: 0.78rem;
+    margin-top: 1.25rem;
+    overflow: hidden;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.13);
+}
+
+.pbi-stock-stack i.safe {
+    background: #22c55e;
+}
+
+.pbi-stock-stack i.low {
+    background: #f59e0b;
+}
+
+.pbi-stock-stack i.out {
+    background: #ef4444;
+}
+
+.pbi-stock-meta {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.78rem;
+    color: rgba(226, 232, 240, 0.78);
+    font-size: 0.72rem;
+    font-weight: 800;
+}
+
 /* ===== Compact all dashboard chart cards ===== */
 
 .fi-wi-widget h2,
@@ -1607,6 +2420,7 @@
 /* ===== Heatmap supaya tidak terlalu tinggi ===== */
 
 .sales-heatmap,
+.heatmap-grid,
 [class*="heatmap"] {
     max-height: 305px;
 }
@@ -1620,15 +2434,134 @@
 /* ===== Responsive ===== */
 
 @media (max-width: 1280px) {
+    .pbi-overview-header {
+        grid-template-columns: 1fr;
+    }
+
+    .pbi-filter-panel {
+        min-width: 0;
+    }
+
+    .pbi-kpi-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
 }
 
 @media (max-width: 768px) {
+    .pbi-overview-shell {
+        padding: 0.8rem;
+    }
+
+    .pbi-kpi-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .pbi-kpi-card {
+        min-height: 6.6rem;
+    }
 }
 
 /* ==========================================================
    FIX POWER BI DASHBOARD VISIBILITY
    Tambahkan di PALING BAWAH theme.css
    ========================================================== */
+
+body .fi-main .pbi-overview-shell {
+    position: relative !important;
+    z-index: 5 !important;
+    border-radius: 24px !important;
+    padding: 18px !important;
+    color: #ffffff !important;
+    background:
+        radial-gradient(circle at top right, rgba(251, 146, 60, 0.42), transparent 280px),
+        linear-gradient(135deg, #0f172a 0%, #1e293b 52%, #111827 100%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    box-shadow:
+        0 24px 60px rgba(15, 23, 42, 0.22),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+    backdrop-filter: none !important;
+    opacity: 1 !important;
+}
+
+body .fi-main .pbi-overview-shell * {
+    opacity: 1 !important;
+}
+
+body .fi-main .pbi-eyebrow {
+    color: #fed7aa !important;
+    background: rgba(251, 146, 60, 0.18) !important;
+    border: 1px solid rgba(251, 146, 60, 0.35) !important;
+}
+
+body .fi-main .pbi-overview-header h2 {
+    color: #ffffff !important;
+}
+
+body .fi-main .pbi-overview-header p {
+    color: rgba(226, 232, 240, 0.86) !important;
+}
+
+body .fi-main .pbi-filter-block > span {
+    color: rgba(226, 232, 240, 0.86) !important;
+}
+
+body .fi-main .pbi-segment {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.14) !important;
+}
+
+body .fi-main .pbi-segment a {
+    color: rgba(226, 232, 240, 0.9) !important;
+}
+
+body .fi-main .pbi-segment a.is-active,
+body .fi-main .pbi-segment a:hover {
+    color: #111827 !important;
+    background: linear-gradient(135deg, #fb923c, #facc15) !important;
+    box-shadow: 0 12px 24px rgba(251, 146, 60, 0.28) !important;
+}
+
+body .fi-main .pbi-kpi-card {
+    color: #ffffff !important;
+    background: rgba(255, 255, 255, 0.105) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.12),
+        0 12px 28px rgba(0, 0, 0, 0.08) !important;
+}
+
+body .fi-main .pbi-kpi-top span {
+    color: rgba(226, 232, 240, 0.88) !important;
+}
+
+body .fi-main .pbi-kpi-top strong {
+    color: #ffffff !important;
+    text-shadow: 0 1px 12px rgba(0, 0, 0, 0.18) !important;
+}
+
+body .fi-main .pbi-kpi-bottom.up {
+    color: #86efac !important;
+}
+
+body .fi-main .pbi-kpi-bottom.down {
+    color: #fecaca !important;
+}
+
+body .fi-main .pbi-kpi-bottom.flat {
+    color: #cbd5e1 !important;
+}
+
+body .fi-main .pbi-mini-bars i {
+    background: linear-gradient(180deg, #fdba74, #f97316) !important;
+}
+
+body .fi-main .pbi-stock-meta {
+    color: rgba(226, 232, 240, 0.88) !important;
+}
+
+body .fi-main .pbi-stock-stack {
+    background: rgba(255, 255, 255, 0.16) !important;
+}
 
 /* Supaya card chart di bawah juga lebih terbaca */
 body .fi-main .fi-section,
@@ -1700,18 +2633,102 @@ body .fi-main .fi-section-header-description {
 
 /* Card body lebih rapat */
 .compact-card,
-.metric-card {
+.metric-card,
+.powerbi-card {
     padding: 10px !important;
     border-radius: 16px !important;
 }
 
 /* Header overview atas */
+.pbi-overview-shell {
+    padding: 14px !important;
+    border-radius: 24px !important;
+}
+
+.pbi-overview-header {
+    gap: 14px !important;
+    margin-bottom: 12px !important;
+}
+
+.pbi-overview-header h2 {
+    font-size: 24px !important;
+    margin-top: 4px !important;
+}
+
+.pbi-overview-header p {
+    font-size: 12px !important;
+    margin-top: 4px !important;
+}
+
+.pbi-filter-panel {
+    gap: 8px !important;
+}
+
+.pbi-filter-block > span {
+    font-size: 11px !important;
+    margin-bottom: 4px !important;
+}
+
+.pbi-segment {
+    padding: 4px !important;
+    gap: 4px !important;
+    border-radius: 12px !important;
+}
+
+.pbi-segment a {
+    padding: 8px 12px !important;
+    font-size: 11px !important;
+    border-radius: 10px !important;
+}
 
 /* KPI atas dibuat lebih kecil */
+.pbi-kpi-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+}
+
+.pbi-kpi-card {
+    min-height: 96px !important;
+    padding: 10px !important;
+    border-radius: 16px !important;
+}
+
+.pbi-kpi-top strong {
+    font-size: 16px !important;
+}
+
+.pbi-kpi-top span {
+    font-size: 11px !important;
+}
+
+.pbi-mini-bars {
+    height: 24px !important;
+    margin-top: 8px !important;
+}
+
+.pbi-kpi-bottom {
+    margin-top: 8px !important;
+    font-size: 11px !important;
+}
+
+.pbi-stock-meta {
+    font-size: 11px !important;
+    margin-top: 8px !important;
+}
 
 /* Widget chart dibuat lebih pendek */
+.monthly-trend-chart svg,
+.category-contribution-chart svg,
+.product-performance-matrix svg,
+.sales-heatmap-widget svg {
+    max-height: 220px !important;
+}
 
 /* Container chart */
+.chart-shell,
+.chart-card-shell {
+    padding: 10px !important;
+}
 
 /* Summary box dalam widget diperkecil */
 .summary-grid {
@@ -1742,8 +2759,81 @@ body .fi-main .fi-section-header-description {
 }
 
 /* Top Product biar tidak kepanjangan */
+.product-ranking-list {
+    display: grid !important;
+    gap: 8px !important;
+}
+
+.product-ranking-item {
+    padding: 10px !important;
+    border-radius: 14px !important;
+}
+
+.product-ranking-item .title {
+    font-size: 13px !important;
+    font-weight: 800 !important;
+}
+
+.product-ranking-item .meta {
+    font-size: 11px !important;
+}
+
+.product-ranking-item .amount {
+    font-size: 13px !important;
+    font-weight: 900 !important;
+}
+
+.product-bar {
+    height: 8px !important;
+    border-radius: 999px !important;
+    margin-top: 6px !important;
+}
+
+/* Low stock biar lebih compact */
+.low-stock-list {
+    display: grid !important;
+    gap: 8px !important;
+}
+
+.low-stock-item {
+    padding: 10px !important;
+    border-radius: 14px !important;
+}
+
+.low-stock-item .title {
+    font-size: 12px !important;
+    font-weight: 800 !important;
+}
+
+.low-stock-item .meta {
+    font-size: 11px !important;
+}
+
+.low-stock-progress {
+    height: 7px !important;
+    margin-top: 6px !important;
+    border-radius: 999px !important;
+}
 
 /* Heatmap dibuat pendek */
+.heatmap-card {
+    padding: 12px !important;
+}
+
+.heatmap-summary {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+    margin-bottom: 10px !important;
+}
+
+.heatmap-summary .summary-card {
+    min-height: 64px !important;
+}
+
+.heatmap-grid {
+    max-height: 235px !important;
+    overflow: auto !important;
+}
 
 .heatmap-row {
     gap: 6px !important;
@@ -1765,11 +2855,26 @@ body .fi-main .fi-section-header-description {
 
 /* Responsive */
 @media (max-width: 1280px) {
+    .pbi-kpi-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    .heatmap-summary {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
 }
 
 @media (max-width: 768px) {
+    .pbi-kpi-grid {
+        grid-template-columns: 1fr !important;
+    }
 
-    .summary-grid {
+    .summary-grid,
+    .heatmap-summary {
+        grid-template-columns: 1fr !important;
+    }
+
+    .pbi-overview-header {
         grid-template-columns: 1fr !important;
     }
 }

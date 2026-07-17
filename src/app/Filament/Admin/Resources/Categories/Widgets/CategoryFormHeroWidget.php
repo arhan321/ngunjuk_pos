@@ -9,7 +9,7 @@ use App\Models\Category;
 use App\Models\Product;
 use Filament\Widgets\Widget;
 
-final class CategoryFormHeroWidget extends Widget
+class CategoryFormHeroWidget extends Widget
 {
     protected string $view = 'filament.admin.resources.categories.widgets.category-form-hero-widget';
 

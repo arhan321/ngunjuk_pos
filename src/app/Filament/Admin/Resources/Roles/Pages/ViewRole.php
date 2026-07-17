@@ -7,7 +7,7 @@ namespace App\Filament\Admin\Resources\Roles\Pages;
 use App\Filament\Admin\Resources\Roles\RoleResource;
 use Filament\Resources\Pages\ViewRecord;
 
-final class ViewRole extends ViewRecord
+class ViewRole extends ViewRecord
 {
     protected static string $resource = RoleResource::class;
 

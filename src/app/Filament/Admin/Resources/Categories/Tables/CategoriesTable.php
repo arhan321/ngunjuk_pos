@@ -11,7 +11,7 @@ use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-final class CategoriesTable
+class CategoriesTable
 {
     public static function configure(Table $table): Table
     {
@@ -48,7 +48,7 @@ final class CategoriesTable
                                     background:linear-gradient(135deg,#ff9d18,#ee6500);
                                     box-shadow:0 12px 24px rgba(238,101,0,.22);
                                 ">
-                                    '.e($initial).'
+                                    ' . e($initial) . '
                                 </div>
 
                                 <div style="min-width:0;">
@@ -58,7 +58,7 @@ final class CategoriesTable
                                         font-weight:950;
                                         line-height:1.25;
                                     ">
-                                        '.e($name).'
+                                        ' . e($name) . '
                                     </div>
 
                                     <div style="
@@ -99,7 +99,7 @@ final class CategoriesTable
                             font-size:11px;
                             font-weight:900;
                         ">
-                            '.e($state ?? '-').'
+                            ' . e($state ?? '-') . '
                         </span>
                     ')
                     ->toggleable(),
@@ -160,13 +160,13 @@ final class CategoriesTable
                                 min-width:68px;
                                 padding:0 14px;
                                 border-radius:999px;
-                                background:'.$bg.';
-                                border:1px solid '.$border.';
-                                color:'.$color.';
+                                background:' . $bg . ';
+                                border:1px solid ' . $border . ';
+                                color:' . $color . ';
                                 font-size:11px;
                                 font-weight:950;
                             ">
-                                '.number_format($count, 0, ',', '.').'
+                                ' . number_format($count, 0, ',', '.') . '
                             </div>
                         ';
                     }),

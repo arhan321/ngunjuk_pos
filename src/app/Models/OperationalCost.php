@@ -6,7 +6,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-final class OperationalCost extends Model
+class OperationalCost extends Model
 {
     protected $fillable = [
         'name',

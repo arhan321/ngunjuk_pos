@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-final class OperationalCostsTable
+class OperationalCostsTable
 {
     public static function configure(Table $table): Table
     {
@@ -97,7 +97,7 @@ final class OperationalCostsTable
                         ->label('Edit Bulan Ini')
                         ->icon('heroicon-o-calendar-days')
                         ->color('warning')
-                        ->modalHeading(fn ($record): string => 'Edit Bulan Ini - '.$record->name)
+                        ->modalHeading(fn ($record): string => 'Edit Bulan Ini - ' . $record->name)
                         ->modalDescription('Perubahan ini hanya berlaku pada bulan filter yang sedang aktif. Bulan lain tetap memakai nominal master.')
                         ->form([
                             TextInput::make('amount')
@@ -337,7 +337,7 @@ final class OperationalCostsTable
 
     private static function rupiah(int|float|null $value): string
     {
-        return 'Rp '.number_format((int) round((float) ($value ?? 0)), 0, ',', '.');
+        return 'Rp ' . number_format((int) round((float) ($value ?? 0)), 0, ',', '.');
     }
 
     private static function costType(object $record): string
@@ -365,7 +365,7 @@ final class OperationalCostsTable
         $category = self::categoryLabel((string) data_get($record, 'category', 'other'));
         $type = self::costTypeLabel(self::costType($record));
 
-        return $category.' • '.$type;
+        return $category . ' • ' . $type;
     }
 
     private static function allocatedAmountForSelectedPeriod(object $record): int

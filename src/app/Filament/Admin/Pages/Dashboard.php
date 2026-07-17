@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Filament\Admin\Pages;
 
 use BackedEnum;
@@ -10,16 +8,9 @@ use Carbon\CarbonPeriod;
 use Filament\Pages\Page;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
-use Throwable;
 
-final class Dashboard extends Page
+class Dashboard extends Page
 {
-    public string $period = 'last_7_days';
-
-    public string $customStartDate = '';
-
-    public string $customEndDate = '';
-
     protected static ?string $navigationLabel = 'Dashboard';
 
     protected static ?string $title = '';
@@ -35,17 +26,13 @@ final class Dashboard extends Page
      */
     protected string $view = 'filament.admin.pages.dashboard';
 
+    public string $period = 'last_7_days';
+
+    public string $customStartDate = '';
+
+    public string $customEndDate = '';
+
     protected ?array $dashboardDataCache = null;
-
-    public static function canAccess(): bool
-    {
-        return auth()->check() && auth()->user()->hasRole('super_admin');
-    }
-
-    public static function shouldRegisterNavigation(): bool
-    {
-        return auth()->check() && auth()->user()->hasRole('super_admin');
-    }
 
     public function mount(): void
     {
@@ -90,12 +77,39 @@ final class Dashboard extends Page
         $this->refreshDashboardAfterFilterChange();
     }
 
+    private function refreshDashboardAfterFilterChange(): void
+    {
+        $this->dashboardDataCache = null;
+
+        $dashboard = $this->getDashboardData();
+
+        $this->dispatch(
+            'ng-dashboard-refresh',
+            charts: $dashboard['charts'],
+        );
+    }
+
+    public static function canAccess(): bool
+    {
+        return auth()->check() && auth()->user()->hasRole('super_admin');
+    }
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return auth()->check() && auth()->user()->hasRole('super_admin');
+    }
+
     public function getColumns(): int|array
     {
         return 1;
     }
 
     public function getWidgets(): array
+    {
+        return [];
+    }
+
+    protected function getHeaderActions(): array
     {
         return [];
     }
@@ -119,6 +133,7 @@ final class Dashboard extends Page
 
         $unitsSold = (int) $this->ordersBetween($start, $end)->sum('total_item');
         $previousUnits = (int) $this->ordersBetween($previousStart, $previousEnd)->sum('total_item');
+
 
         $totalProduct = (int) DB::table('products')
             ->where('is_active', true)
@@ -187,24 +202,7 @@ final class Dashboard extends Page
 
     public function rupiah(int|float|null $value): string
     {
-        return 'Rp '.number_format((int) ($value ?? 0), 0, ',', '.');
-    }
-
-    protected function getHeaderActions(): array
-    {
-        return [];
-    }
-
-    private function refreshDashboardAfterFilterChange(): void
-    {
-        $this->dashboardDataCache = null;
-
-        $dashboard = $this->getDashboardData();
-
-        $this->dispatch(
-            'ng-dashboard-refresh',
-            charts: $dashboard['charts'],
-        );
+        return 'Rp ' . number_format((int) ($value ?? 0), 0, ',', '.');
     }
 
     private function getSelectedRange(): array
@@ -286,13 +284,13 @@ final class Dashboard extends Page
 
     private function parseDate(?string $date): ?Carbon
     {
-        if (! is_string($date) || mb_trim($date) === '') {
+        if (! is_string($date) || trim($date) === '') {
             return null;
         }
 
         try {
             return Carbon::parse($date);
-        } catch (Throwable) {
+        } catch (\Throwable) {
             return null;
         }
     }
@@ -421,14 +419,14 @@ final class Dashboard extends Page
         }
 
         if ($start->isSameMonth($end) && $start->isSameYear($end)) {
-            return $start->format('d').' - '.$end->format('d M Y');
+            return $start->format('d') . ' - ' . $end->format('d M Y');
         }
 
         if ($start->isSameYear($end)) {
-            return $start->format('d M').' - '.$end->format('d M Y');
+            return $start->format('d M') . ' - ' . $end->format('d M Y');
         }
 
-        return $start->format('d M Y').' - '.$end->format('d M Y');
+        return $start->format('d M Y') . ' - ' . $end->format('d M Y');
     }
 
     private function ordersBetween(Carbon $start, Carbon $end): Builder
@@ -475,7 +473,7 @@ final class Dashboard extends Page
         $orders = [];
 
         for ($hour = 10; $hour <= 22; $hour++) {
-            $labels[] = mb_str_pad((string) $hour, 2, '0', STR_PAD_LEFT).':00';
+            $labels[] = str_pad((string) $hour, 2, '0', STR_PAD_LEFT) . ':00';
             $revenue[] = (int) ($rows[$hour]->revenue ?? 0);
             $orders[] = (int) ($rows[$hour]->orders ?? 0);
         }
@@ -542,7 +540,7 @@ final class Dashboard extends Page
             ->orderBy('order_year')
             ->orderBy('order_month')
             ->get()
-            ->keyBy(fn ($row): string => $row->order_year.'-'.mb_str_pad((string) $row->order_month, 2, '0', STR_PAD_LEFT));
+            ->keyBy(fn ($row): string => $row->order_year . '-' . str_pad((string) $row->order_month, 2, '0', STR_PAD_LEFT));
 
         $labels = [];
         $revenue = [];
@@ -675,7 +673,7 @@ final class Dashboard extends Page
         $orders = [];
 
         for ($hour = 10; $hour <= 22; $hour++) {
-            $labels[] = mb_str_pad((string) $hour, 2, '0', STR_PAD_LEFT).':00';
+            $labels[] = str_pad((string) $hour, 2, '0', STR_PAD_LEFT) . ':00';
             $orders[] = (int) ($rows[$hour]->orders ?? 0);
         }
 

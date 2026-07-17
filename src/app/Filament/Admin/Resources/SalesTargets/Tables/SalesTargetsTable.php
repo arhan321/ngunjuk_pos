@@ -14,12 +14,12 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-final class SalesTargetsTable
+class SalesTargetsTable
 {
     public static function configure(Table $table): Table
     {
         return $table
-            ->heading(fn (): string => 'Total Data '.self::totalDataForFilter())
+            ->heading(fn (): string => 'Total Data ' . self::totalDataForFilter())
             ->modifyQueryUsing(fn (EloquentBuilder $query): EloquentBuilder => self::applyYearAndStatusFilter($query))
             ->columns([
                 TextColumn::make('month')
@@ -42,7 +42,7 @@ final class SalesTargetsTable
                     ->sortable()
                     ->alignEnd()
                     ->formatStateUsing(fn ($state): string => self::rupiah((int) $state))
-                    ->description(fn ($record): string => 'Aktual '.self::rupiah(self::monthlyRevenueForTarget($record)))
+                    ->description(fn ($record): string => 'Aktual ' . self::rupiah(self::monthlyRevenueForTarget($record)))
                     ->wrap(false)
                     ->extraHeaderAttributes([
                         'class' => 'ng-mobile-table-col ng-admin-sales-target-col ng-sales-target-revenue-col',
@@ -55,7 +55,7 @@ final class SalesTargetsTable
 
                 TextColumn::make('progress_revenue')
                     ->label('Progress')
-                    ->getStateUsing(fn ($record): string => number_format(self::progressForTarget($record), 1, ',', '.').'%')
+                    ->getStateUsing(fn ($record): string => number_format(self::progressForTarget($record), 1, ',', '.') . '%')
                     ->alignEnd()
                     ->description(fn ($record): string => self::achievementStatusLabel(self::achievementStatusKey($record)))
                     ->sortable(false)
@@ -305,9 +305,9 @@ final class SalesTargetsTable
     private static function tableHeaderDescription(): string
     {
         return 'Ringkasan target revenue, aktual transaksi, progress, dan selisih per bulan. Filter aktif: '
-            .self::selectedYear()
-            .' • '
-            .self::achievementStatusLabel(self::selectedStatus());
+            . self::selectedYear()
+            . ' • '
+            . self::achievementStatusLabel(self::selectedStatus());
     }
 
     private static function statusOptions(): array
@@ -321,14 +321,14 @@ final class SalesTargetsTable
 
     private static function rupiah(int|float|null $value): string
     {
-        return 'Rp '.number_format((int) round((float) ($value ?? 0)), 0, ',', '.');
+        return 'Rp ' . number_format((int) round((float) ($value ?? 0)), 0, ',', '.');
     }
 
     private static function rupiahWithSign(int $value): string
     {
         $prefix = $value > 0 ? '+' : ($value < 0 ? '-' : '');
 
-        return $prefix.'Rp '.number_format(abs($value), 0, ',', '.');
+        return $prefix . 'Rp ' . number_format(abs($value), 0, ',', '.');
     }
 
     private static function excludeCanceledOrders(Builder $query): void

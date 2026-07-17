@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Filament\Admin\Resources\SalesTargets\Pages;
 
 use App\Filament\Admin\Resources\SalesTargets\SalesTargetResource;
@@ -10,7 +8,7 @@ use Carbon\Carbon;
 use Filament\Actions\Action;
 use Filament\Resources\Pages\CreateRecord;
 
-final class CreateSalesTarget extends CreateRecord
+class CreateSalesTarget extends CreateRecord
 {
     protected static string $resource = SalesTargetResource::class;
 

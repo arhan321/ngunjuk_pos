@@ -15,6 +15,18 @@ const grandTotal = document.querySelector('#grandTotal');
 const placeOrder = document.querySelector('#placeOrder');
 const toast = document.querySelector('#toast');
 
+
+// Informasi stok tetap disimpan di database/admin,
+// tetapi tampilan POS tidak menampilkan stok dan tidak membatasi order berdasarkan stok.
+const hideProductStockStyle = document.createElement('style');
+hideProductStockStyle.textContent = `
+  .product-card .stock-badge,
+  .product-card .stock-badge.empty {
+    display: none !important;
+  }
+`;
+document.head.appendChild(hideProductStockStyle);
+
 const checkoutConfirmBackdrop = document.querySelector('#checkoutConfirmBackdrop');
 const checkoutConfirmModal = document.querySelector('#checkoutConfirmModal');
 const confirmTotalItem = document.querySelector('#confirmTotalItem');
@@ -271,6 +283,7 @@ const normalizeProduct = product => {
     category: product.category?.name || 'Menu',
     name: product.name || '-',
     description: product.description || '-',
+    stock: Number(product.stock || 0),
     image: getProductImage(product),
     sizes: sizes.map(size => ({
       id: Number(size.id),
@@ -423,6 +436,8 @@ const renderProducts = () => {
   }
 
   filteredProducts.forEach(product => {
+    // POS tidak lagi mengunci transaksi berdasarkan stok.
+    const isOutOfStock = false;
     const defaultSize = getDefaultSize(product);
     const displayPrice = defaultSize ? defaultSize.price : 0;
 
@@ -466,6 +481,10 @@ const renderProducts = () => {
         <div class="product-head">
           <div>
             <h3>${escapeHTML(product.name)}</h3>
+
+            <span class="stock-badge ${isOutOfStock ? 'empty' : ''}">
+              ${isOutOfStock ? 'Stok habis' : `Stok ${product.stock}`}
+            </span>
           </div>
 
           <strong class="price">${formatRupiah(displayPrice)}</strong>
@@ -609,6 +628,7 @@ productGrid?.addEventListener('click', event => {
       size: selectedSize.name,
       price: selectedSize.price,
       quantity,
+      stock: product.stock,
       note: ''
     });
 

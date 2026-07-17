@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Filament\Admin\Resources\OperationalCosts\Widgets;
 
 use App\Filament\Admin\Resources\OperationalCosts\OperationalCostResource;
@@ -9,18 +7,13 @@ use App\Models\OperationalCost;
 use Carbon\Carbon;
 use Filament\Widgets\Widget;
 
-final class OperationalCostFormHeroWidget extends Widget
+class OperationalCostFormHeroWidget extends Widget
 {
     protected string $view = 'filament.admin.resources.operational-costs.widgets.operational-cost-form-hero-widget';
 
     protected static bool $isLazy = false;
 
-    protected int|string|array $columnSpan = 'full';
-
-    public function rupiah(int|float|null $value): string
-    {
-        return 'Rp '.number_format((int) round((float) ($value ?? 0)), 0, ',', '.');
-    }
+    protected int | string | array $columnSpan = 'full';
 
     protected function getViewData(): array
     {
@@ -53,6 +46,11 @@ final class OperationalCostFormHeroWidget extends Widget
                 'monthly_cost' => $monthlyCost,
             ],
         ];
+    }
+
+    public function rupiah(int | float | null $value): string
+    {
+        return 'Rp ' . number_format((int) round((float) ($value ?? 0)), 0, ',', '.');
     }
 
     private function allocatedCostForPeriod(OperationalCost $cost, Carbon $start, Carbon $end): int

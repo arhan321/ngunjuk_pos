@@ -7,8 +7,13 @@ namespace App\Http\Controllers;
 use Illuminate\View\View;
 use Spatie\Permission\Models\Role;
 
-final class FrontendController extends Controller
+class FrontendController extends Controller
 {
+    public function login(): View
+    {
+        return view('login');
+    }
+
     public function settings(): View
     {
         $user = auth()->user();

@@ -9,7 +9,7 @@ use App\Filament\Admin\Resources\Products\Widgets\ProductFormHeroWidget;
 use Filament\Actions\Action;
 use Filament\Resources\Pages\CreateRecord;
 
-final class CreateProduct extends CreateRecord
+class CreateProduct extends CreateRecord
 {
     protected static string $resource = ProductResource::class;
 

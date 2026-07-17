@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use UnitEnum;
 
-final class MonthlyRevenueReport extends Page
+class MonthlyRevenueReport extends Page
 {
     protected string $view = 'filament.admin.pages.monthly-revenue-report';
 
@@ -24,16 +24,6 @@ final class MonthlyRevenueReport extends Page
 
     protected static ?int $navigationSort = 2;
 
-    public static function canAccess(): bool
-    {
-        return auth()->check() && auth()->user()->hasRole('super_admin');
-    }
-
-    public static function shouldRegisterNavigation(): bool
-    {
-        return auth()->check() && auth()->user()->hasRole('super_admin');
-    }
-
     public function getTitle(): string
     {
         return '';
@@ -44,164 +34,14 @@ final class MonthlyRevenueReport extends Page
         return '';
     }
 
-    public function exportSelectedMonth(): StreamedResponse
+    public static function canAccess(): bool
     {
-        abort_unless(
-            auth()->check() && auth()->user()->hasRole('super_admin'),
-            403
-        );
+        return auth()->check() && auth()->user()->hasRole('super_admin');
+    }
 
-        $selectedMonth = $this->getSelectedMonth();
-
-        [$startDate, $endDate] = $this->getMonthRange($selectedMonth);
-
-        $orders = Order::query()
-            ->where('status', 'Selesai')
-            ->whereBetween(DB::raw('COALESCE(ordered_at, created_at)'), [
-                $startDate,
-                $endDate,
-            ])
-            ->orderBy(DB::raw('COALESCE(ordered_at, created_at)'))
-            ->get();
-
-        $monthLabel = Carbon::createFromFormat('Y-m', $selectedMonth)->translatedFormat('F Y');
-
-        $totalOrders = (int) $orders->count();
-        $totalItems = (int) $orders->sum('total_item');
-        $totalRevenue = (int) $orders->sum('total_price');
-
-        $avgOrder = $totalOrders > 0
-            ? (int) round($totalRevenue / $totalOrders)
-            : 0;
-
-        $fileName = 'monthly-revenue-ngunjuk-'.$selectedMonth.'.xls';
-
-        return response()->streamDownload(function () use (
-            $orders,
-            $monthLabel,
-            $totalOrders,
-            $totalItems,
-            $totalRevenue,
-            $avgOrder
-        ): void {
-            echo "\xEF\xBB\xBF";
-
-            echo '
-                <html>
-                    <head>
-                        <meta charset="UTF-8">
-                        <style>
-                            body {
-                                font-family: Arial, sans-serif;
-                            }
-
-                            table {
-                                border-collapse: collapse;
-                                width: 100%;
-                            }
-
-                            th {
-                                background: #f97316;
-                                color: #ffffff;
-                                font-weight: bold;
-                                border: 1px solid #d9d9d9;
-                                padding: 8px;
-                            }
-
-                            td {
-                                border: 1px solid #d9d9d9;
-                                padding: 8px;
-                            }
-
-                            .title {
-                                font-size: 18px;
-                                font-weight: bold;
-                            }
-
-                            .subtitle {
-                                color: #666666;
-                            }
-
-                            .summary-label {
-                                background: #fff3df;
-                                font-weight: bold;
-                            }
-
-                            .total-row {
-                                background: #fff3df;
-                                font-weight: bold;
-                            }
-                        </style>
-                    </head>
-
-                    <body>
-                        <table>
-                            <tr>
-                                <td colspan="6" class="title">LAPORAN MONTHLY REVENUE</td>
-                            </tr>
-                            <tr>
-                                <td colspan="6" class="subtitle">Sistem Informasi Point of Sale UMKM Ngunjuk</td>
-                            </tr>
-                            <tr>
-                                <td colspan="6">Periode: '.e($monthLabel).'</td>
-                            </tr>
-                            <tr><td colspan="6"></td></tr>
-
-                            <tr>
-                                <td class="summary-label">Total Orders</td>
-                                <td>'.number_format($totalOrders, 0, ',', '.').'</td>
-                                <td class="summary-label">Units Sold</td>
-                                <td>'.number_format($totalItems, 0, ',', '.').'</td>
-                                <td class="summary-label">Avg Order</td>
-                                <td>Rp '.number_format($avgOrder, 0, ',', '.').'</td>
-                            </tr>
-
-                            <tr>
-                                <td class="summary-label">Total Revenue</td>
-                                <td colspan="5">Rp '.number_format($totalRevenue, 0, ',', '.').'</td>
-                            </tr>
-
-                            <tr><td colspan="6"></td></tr>
-
-                            <tr>
-                                <th>No</th>
-                                <th>ID Order</th>
-                                <th>Tanggal</th>
-                                <th>Total Item</th>
-                                <th>Total Revenue</th>
-                                <th>Status</th>
-                            </tr>
-            ';
-
-            foreach ($orders as $index => $order) {
-                $date = $order->ordered_at ?? $order->created_at;
-
-                echo '
-                    <tr>
-                        <td>'.($index + 1).'</td>
-                        <td>'.e($order->order_code ?? ('ORD-'.$order->id)).'</td>
-                        <td>'.e(Carbon::parse($date)->translatedFormat('d F Y H:i')).'</td>
-                        <td>'.number_format((int) $order->total_item, 0, ',', '.').'</td>
-                        <td>Rp '.number_format((int) $order->total_price, 0, ',', '.').'</td>
-                        <td>'.e($order->status).'</td>
-                    </tr>
-                ';
-            }
-
-            echo '
-                            <tr class="total-row">
-                                <td colspan="3">TOTAL</td>
-                                <td>'.number_format($totalItems, 0, ',', '.').'</td>
-                                <td>Rp '.number_format($totalRevenue, 0, ',', '.').'</td>
-                                <td></td>
-                            </tr>
-                        </table>
-                    </body>
-                </html>
-            ';
-        }, $fileName, [
-            'Content-Type' => 'application/vnd.ms-excel; charset=UTF-8',
-        ]);
+    public static function shouldRegisterNavigation(): bool
+    {
+        return auth()->check() && auth()->user()->hasRole('super_admin');
     }
 
     protected function getHeaderActions(): array
@@ -322,5 +162,165 @@ final class MonthlyRevenueReport extends Page
             $date->copy()->startOfMonth(),
             $date->copy()->endOfMonth(),
         ];
+    }
+
+    public function exportSelectedMonth(): StreamedResponse
+    {
+        abort_unless(
+            auth()->check() && auth()->user()->hasRole('super_admin'),
+            403
+        );
+
+        $selectedMonth = $this->getSelectedMonth();
+
+        [$startDate, $endDate] = $this->getMonthRange($selectedMonth);
+
+        $orders = Order::query()
+            ->where('status', 'Selesai')
+            ->whereBetween(DB::raw('COALESCE(ordered_at, created_at)'), [
+                $startDate,
+                $endDate,
+            ])
+            ->orderBy(DB::raw('COALESCE(ordered_at, created_at)'))
+            ->get();
+
+        $monthLabel = Carbon::createFromFormat('Y-m', $selectedMonth)->translatedFormat('F Y');
+
+        $totalOrders = (int) $orders->count();
+        $totalItems = (int) $orders->sum('total_item');
+        $totalRevenue = (int) $orders->sum('total_price');
+
+        $avgOrder = $totalOrders > 0
+            ? (int) round($totalRevenue / $totalOrders)
+            : 0;
+
+        $fileName = 'monthly-revenue-ngunjuk-' . $selectedMonth . '.xls';
+
+        return response()->streamDownload(function () use (
+            $orders,
+            $monthLabel,
+            $totalOrders,
+            $totalItems,
+            $totalRevenue,
+            $avgOrder
+        ): void {
+            echo "\xEF\xBB\xBF";
+
+            echo '
+                <html>
+                    <head>
+                        <meta charset="UTF-8">
+                        <style>
+                            body {
+                                font-family: Arial, sans-serif;
+                            }
+
+                            table {
+                                border-collapse: collapse;
+                                width: 100%;
+                            }
+
+                            th {
+                                background: #f97316;
+                                color: #ffffff;
+                                font-weight: bold;
+                                border: 1px solid #d9d9d9;
+                                padding: 8px;
+                            }
+
+                            td {
+                                border: 1px solid #d9d9d9;
+                                padding: 8px;
+                            }
+
+                            .title {
+                                font-size: 18px;
+                                font-weight: bold;
+                            }
+
+                            .subtitle {
+                                color: #666666;
+                            }
+
+                            .summary-label {
+                                background: #fff3df;
+                                font-weight: bold;
+                            }
+
+                            .total-row {
+                                background: #fff3df;
+                                font-weight: bold;
+                            }
+                        </style>
+                    </head>
+
+                    <body>
+                        <table>
+                            <tr>
+                                <td colspan="6" class="title">LAPORAN MONTHLY REVENUE</td>
+                            </tr>
+                            <tr>
+                                <td colspan="6" class="subtitle">Sistem Informasi Point of Sale UMKM Ngunjuk</td>
+                            </tr>
+                            <tr>
+                                <td colspan="6">Periode: ' . e($monthLabel) . '</td>
+                            </tr>
+                            <tr><td colspan="6"></td></tr>
+
+                            <tr>
+                                <td class="summary-label">Total Orders</td>
+                                <td>' . number_format($totalOrders, 0, ',', '.') . '</td>
+                                <td class="summary-label">Units Sold</td>
+                                <td>' . number_format($totalItems, 0, ',', '.') . '</td>
+                                <td class="summary-label">Avg Order</td>
+                                <td>Rp ' . number_format($avgOrder, 0, ',', '.') . '</td>
+                            </tr>
+
+                            <tr>
+                                <td class="summary-label">Total Revenue</td>
+                                <td colspan="5">Rp ' . number_format($totalRevenue, 0, ',', '.') . '</td>
+                            </tr>
+
+                            <tr><td colspan="6"></td></tr>
+
+                            <tr>
+                                <th>No</th>
+                                <th>ID Order</th>
+                                <th>Tanggal</th>
+                                <th>Total Item</th>
+                                <th>Total Revenue</th>
+                                <th>Status</th>
+                            </tr>
+            ';
+
+            foreach ($orders as $index => $order) {
+                $date = $order->ordered_at ?? $order->created_at;
+
+                echo '
+                    <tr>
+                        <td>' . ($index + 1) . '</td>
+                        <td>' . e($order->order_code ?? ('ORD-' . $order->id)) . '</td>
+                        <td>' . e(Carbon::parse($date)->translatedFormat('d F Y H:i')) . '</td>
+                        <td>' . number_format((int) $order->total_item, 0, ',', '.') . '</td>
+                        <td>Rp ' . number_format((int) $order->total_price, 0, ',', '.') . '</td>
+                        <td>' . e($order->status) . '</td>
+                    </tr>
+                ';
+            }
+
+            echo '
+                            <tr class="total-row">
+                                <td colspan="3">TOTAL</td>
+                                <td>' . number_format($totalItems, 0, ',', '.') . '</td>
+                                <td>Rp ' . number_format($totalRevenue, 0, ',', '.') . '</td>
+                                <td></td>
+                            </tr>
+                        </table>
+                    </body>
+                </html>
+            ';
+        }, $fileName, [
+            'Content-Type' => 'application/vnd.ms-excel; charset=UTF-8',
+        ]);
     }
 }

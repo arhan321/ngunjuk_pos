@@ -11,7 +11,7 @@ use BezhanSalleh\FilamentShield\Support\Utils;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 
-final class CreateRole extends CreateRecord
+class CreateRole extends CreateRecord
 {
     use ManagesCustomRoleForm;
 
@@ -37,6 +37,13 @@ final class CreateRole extends CreateRecord
         return '';
     }
 
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            RoleFormHeroWidget::class,
+        ];
+    }
+
     public function saveRole(): void
     {
         $this->validate($this->roleValidationRules());
@@ -56,13 +63,6 @@ final class CreateRole extends CreateRecord
             ->send();
 
         $this->redirect($this->getRedirectUrl());
-    }
-
-    protected function getHeaderWidgets(): array
-    {
-        return [
-            RoleFormHeroWidget::class,
-        ];
     }
 
     protected function getRedirectUrl(): string

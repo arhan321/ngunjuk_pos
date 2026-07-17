@@ -9,7 +9,7 @@ use App\Models\Category;
 use App\Models\Product;
 use Filament\Widgets\Widget;
 
-final class ProductFormHeroWidget extends Widget
+class ProductFormHeroWidget extends Widget
 {
     protected string $view = 'filament.admin.resources.products.widgets.product-form-hero-widget';
 
@@ -34,8 +34,8 @@ final class ProductFormHeroWidget extends Widget
             'isEdit' => $isEdit,
             'title' => $isEdit ? 'Edit Produk' : 'Tambah Produk Baru',
             'description' => $isEdit
-                ? 'Perbarui informasi produk, kategori, gambar, size, dan harga produk.'
-                : 'Tambahkan produk minuman baru lengkap dengan kategori, gambar, size, dan harga.',
+                ? 'Perbarui informasi produk, kategori, stok, gambar, size, dan harga produk.'
+                : 'Tambahkan produk minuman baru lengkap dengan kategori, stok, gambar, size, dan harga.',
             'backUrl' => ProductResource::getUrl('index'),
             'stats' => [
                 'total_products' => (int) $totalProducts,

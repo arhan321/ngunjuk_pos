@@ -7,7 +7,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-final class ProductSize extends Model
+class ProductSize extends Model
 {
     protected $fillable = [
         'product_id',

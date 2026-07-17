@@ -10,7 +10,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-final class HistoryController extends Controller
+class HistoryController extends Controller
 {
     public function index(): View
     {
@@ -36,12 +36,12 @@ final class HistoryController extends Controller
             ->when($search, function ($query) use ($search): void {
                 $query->where(function ($subQuery) use ($search): void {
                     $subQuery
-                        ->where('order_code', 'like', '%'.$search.'%')
+                        ->where('order_code', 'like', '%' . $search . '%')
                         ->orWhereHas('items', function ($itemQuery) use ($search): void {
                             $itemQuery
-                                ->where('product_name', 'like', '%'.$search.'%')
-                                ->orWhere('size_name', 'like', '%'.$search.'%')
-                                ->orWhere('note', 'like', '%'.$search.'%');
+                                ->where('product_name', 'like', '%' . $search . '%')
+                                ->orWhere('size_name', 'like', '%' . $search . '%')
+                                ->orWhere('note', 'like', '%' . $search . '%');
                         });
                 });
             })

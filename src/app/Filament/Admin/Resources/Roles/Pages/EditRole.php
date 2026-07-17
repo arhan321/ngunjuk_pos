@@ -13,7 +13,7 @@ use Filament\Actions\ViewAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 
-final class EditRole extends EditRecord
+class EditRole extends EditRecord
 {
     use ManagesCustomRoleForm;
 
@@ -46,25 +46,6 @@ final class EditRole extends EditRecord
         return '';
     }
 
-    public function saveRole(): void
-    {
-        $this->validate($this->roleValidationRules((int) $this->record->getKey()));
-
-        $this->record->update([
-            'name' => $this->name,
-            'guard_name' => $this->normalizedGuardName(),
-        ]);
-
-        $this->record->syncPermissions($this->validSelectedPermissionNames());
-
-        Notification::make()
-            ->title('Role berhasil diperbarui')
-            ->success()
-            ->send();
-
-        $this->redirect($this->getRedirectUrl());
-    }
-
     protected function getHeaderWidgets(): array
     {
         return [
@@ -85,6 +66,25 @@ final class EditRole extends EditRecord
                 ->icon('heroicon-o-trash')
                 ->color('danger'),
         ];
+    }
+
+    public function saveRole(): void
+    {
+        $this->validate($this->roleValidationRules((int) $this->record->getKey()));
+
+        $this->record->update([
+            'name' => $this->name,
+            'guard_name' => $this->normalizedGuardName(),
+        ]);
+
+        $this->record->syncPermissions($this->validSelectedPermissionNames());
+
+        Notification::make()
+            ->title('Role berhasil diperbarui')
+            ->success()
+            ->send();
+
+        $this->redirect($this->getRedirectUrl());
     }
 
     protected function getRedirectUrl(): string

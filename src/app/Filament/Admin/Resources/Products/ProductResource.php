@@ -10,18 +10,16 @@ use App\Filament\Admin\Resources\Products\Pages\ListProducts;
 use App\Filament\Admin\Resources\Products\Schemas\ProductForm;
 use App\Filament\Admin\Resources\Products\Tables\ProductsTable;
 use App\Models\Product;
-use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use UnitEnum;
 
-final class ProductResource extends Resource
+class ProductResource extends Resource
 {
     protected static ?string $model = Product::class;
 
-    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-cube';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-cube';
 
     protected static ?string $navigationLabel = 'Produk';
 
@@ -29,7 +27,7 @@ final class ProductResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Produk';
 
-    protected static string|UnitEnum|null $navigationGroup = 'Master Data';
+    protected static string|\UnitEnum|null $navigationGroup = 'Master Data';
 
     protected static ?int $navigationSort = 2;
 

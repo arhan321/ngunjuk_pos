@@ -6,7 +6,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-final class SalesTarget extends Model
+class SalesTarget extends Model
 {
     protected $fillable = [
         'month',

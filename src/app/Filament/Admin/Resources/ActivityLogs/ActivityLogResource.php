@@ -16,7 +16,7 @@ use Illuminate\Support\Str;
 use Spatie\Activitylog\Models\Activity;
 use UnitEnum;
 
-final class ActivityLogResource extends Resource
+class ActivityLogResource extends Resource
 {
     protected static ?string $model = Activity::class;
 
@@ -39,9 +39,21 @@ final class ActivityLogResource extends Resource
         return $schema;
     }
 
+    protected static function applyLoginLogoutFilter(Builder $query): Builder
+    {
+        return $query->where(function (Builder $query): void {
+            $query
+                ->whereIn('event', ['login', 'logout'])
+                ->orWhere('description', 'like', '%login%')
+                ->orWhere('description', 'like', '%logout%')
+                ->orWhere('description', 'like', '%logged in%')
+                ->orWhere('description', 'like', '%logged out%');
+        });
+    }
+
     public static function getEloquentQuery(): Builder
     {
-        return self::applyLoginLogoutFilter(parent::getEloquentQuery())
+        return static::applyLoginLogoutFilter(parent::getEloquentQuery())
             ->with(['causer', 'subject']);
     }
 
@@ -49,7 +61,7 @@ final class ActivityLogResource extends Resource
     {
         return $table
             ->heading('')
-            ->modifyQueryUsing(fn (Builder $query): Builder => self::applyLoginLogoutFilter($query))
+            ->modifyQueryUsing(fn (Builder $query): Builder => static::applyLoginLogoutFilter($query))
             ->columns([
                 TextColumn::make('log_name')
                     ->label('Type')
@@ -80,7 +92,7 @@ final class ActivityLogResource extends Resource
                                     border-radius:999px;
                                     background:#10b981;
                                 "></span>
-                                '.e($label).'
+                                ' . e($label) . '
                             </span>
                         ';
                     }),
@@ -91,7 +103,7 @@ final class ActivityLogResource extends Resource
                     ->sortable()
                     ->html()
                     ->formatStateUsing(function (?string $state, Activity $record): string {
-                        $event = mb_strtolower((string) ($state ?: $record->description ?: 'activity'));
+                        $event = strtolower((string) ($state ?: $record->description ?: 'activity'));
                         $label = Str::headline($event);
 
                         $color = match (true) {
@@ -119,9 +131,9 @@ final class ActivityLogResource extends Resource
                                     width:7px;
                                     height:7px;
                                     border-radius:999px;
-                                    background:'.$color.';
+                                    background:' . $color . ';
                                 "></span>
-                                '.e($label).'
+                                ' . e($label) . '
                             </span>
                         ';
                     }),
@@ -149,7 +161,7 @@ final class ActivityLogResource extends Resource
                                 font-weight:950;
                                 white-space:nowrap;
                             ">
-                                👤 '.e($name).'
+                                👤 ' . e($name) . '
                             </span>
                         ';
                     }),
@@ -172,7 +184,7 @@ final class ActivityLogResource extends Resource
                             font-weight:950;
                             white-space:nowrap;
                         ">
-                            🗓 '.e(\Carbon\Carbon::parse($state)->format('d/m/Y H:i:s')).'
+                            🗓 ' . e(\Carbon\Carbon::parse($state)->format('d/m/Y H:i:s')) . '
                         </span>
                     '),
 
@@ -220,19 +232,7 @@ final class ActivityLogResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListActivityLogs::route('/'),
+            'index' => \App\Filament\Admin\Resources\ActivityLogs\Pages\ListActivityLogs::route('/'),
         ];
-    }
-
-    protected static function applyLoginLogoutFilter(Builder $query): Builder
-    {
-        return $query->where(function (Builder $query): void {
-            $query
-                ->whereIn('event', ['login', 'logout'])
-                ->orWhere('description', 'like', '%login%')
-                ->orWhere('description', 'like', '%logout%')
-                ->orWhere('description', 'like', '%logged in%')
-                ->orWhere('description', 'like', '%logged out%');
-        });
     }
 }

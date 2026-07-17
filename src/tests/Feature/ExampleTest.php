@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-test('the root page redirects guests to login', function () {
+test('the application returns a successful response', function () {
     $response = $this->get('/');
 
-    $response->assertRedirectToRoute('login');
+    $response->assertStatus(200);
 });

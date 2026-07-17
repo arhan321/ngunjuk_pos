@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Filament\Admin\Resources\Products\Schemas;
 
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -14,7 +15,7 @@ use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Str;
 
-final class ProductForm
+class ProductForm
 {
     public static function configure(Schema $schema): Schema
     {
@@ -52,6 +53,12 @@ final class ProductForm
                             ->maxLength(255)
                             ->unique(ignoreRecord: true)
                             ->helperText('Slug dibuat otomatis dari nama produk.'),
+
+                        // Stock sengaja disembunyikan dari form admin.
+                        // Nilai tetap dikirim ke database supaya struktur lama aman dan tidak mengganggu logic lain.
+                        Hidden::make('stock')
+                            ->default(0)
+                            ->dehydrated(true),
 
                         Textarea::make('description')
                             ->label('Deskripsi Produk')

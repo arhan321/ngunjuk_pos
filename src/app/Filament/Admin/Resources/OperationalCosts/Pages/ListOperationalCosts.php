@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Filament\Admin\Resources\OperationalCosts\Pages;
 
 use App\Filament\Admin\Resources\OperationalCosts\OperationalCostResource;
@@ -9,7 +7,7 @@ use App\Filament\Admin\Resources\OperationalCosts\Widgets\OperationalCostAnalyti
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 
-final class ListOperationalCosts extends ListRecords
+class ListOperationalCosts extends ListRecords
 {
     protected static string $resource = OperationalCostResource::class;
 
@@ -51,7 +49,7 @@ final class ListOperationalCosts extends ListRecords
                 ->label('Tambah Biaya Operasional')
                 ->icon('heroicon-o-plus')
                 ->color('warning')
-                ->url(fn (): string => OperationalCostResource::getUrl('create').'?'.http_build_query($this->currentPeriodQuery())),
+                ->url(fn (): string => OperationalCostResource::getUrl('create') . '?' . http_build_query($this->currentPeriodQuery())),
         ];
     }
 

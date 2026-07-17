@@ -10,7 +10,7 @@ use Filament\Actions\Action;
 use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 
-final class EditProduct extends EditRecord
+class EditProduct extends EditRecord
 {
     protected static string $resource = ProductResource::class;
 

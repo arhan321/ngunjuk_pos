@@ -9,7 +9,7 @@ use App\Filament\Admin\Resources\Categories\Widgets\CategoryFormHeroWidget;
 use Filament\Actions\Action;
 use Filament\Resources\Pages\CreateRecord;
 
-final class CreateCategory extends CreateRecord
+class CreateCategory extends CreateRecord
 {
     protected static string $resource = CategoryResource::class;
 
