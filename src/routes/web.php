@@ -22,6 +22,8 @@ Route::middleware('auth')->group(function (): void {
     Route::get('/home', [ProductController::class, 'index'])->name('frontend.home');
     Route::get('/history', [HistoryController::class, 'index'])->name('frontend.history');
     Route::get('/settings', [FrontendController::class, 'settings'])->name('frontend.settings');
+    Route::put('/settings/password', [FrontendController::class, 'updatePassword'])
+        ->name('frontend.password.update');
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 

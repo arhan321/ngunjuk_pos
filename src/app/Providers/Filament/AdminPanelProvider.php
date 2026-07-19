@@ -109,21 +109,37 @@ final class AdminPanelProvider extends PanelProvider
                         UserResource::class,
                     ]),
 
+                // FilamentShieldPlugin::make()
+                //     ->gridColumns([
+                //         'default' => 2,
+                //     ])
+                //     ->sectionColumnSpan(1)
+                //     ->checkboxListColumns([
+                //         'default' => 2,
+                //     ])
+                //     ->resourceCheckboxListColumns([
+                //         'default' => 2,
+                //     ])
+                //     ->navigationLabel('Roles & Permissions')
+                //     ->navigationGroup('Administration')
+                //     ->navigationSort(2)
+                //     ->navigationIcon(Heroicon::ShieldCheck),
                 FilamentShieldPlugin::make()
-                    ->gridColumns([
-                        'default' => 2,
-                    ])
-                    ->sectionColumnSpan(1)
-                    ->checkboxListColumns([
-                        'default' => 2,
-                    ])
-                    ->resourceCheckboxListColumns([
-                        'default' => 2,
-                    ])
-                    ->navigationLabel('Roles & Permissions')
-                    ->navigationGroup('Administration')
-                    ->navigationSort(2)
-                    ->navigationIcon(Heroicon::ShieldCheck),
+    ->gridColumns([
+        'default' => 2,
+    ])
+    ->sectionColumnSpan(1)
+    ->checkboxListColumns([
+        'default' => 2,
+    ])
+    ->resourceCheckboxListColumns([
+        'default' => 2,
+    ])
+    ->navigationLabel('Roles & Permissions')
+    ->navigationGroup('Administration')
+    ->navigationSort(2)
+    ->navigationIcon(Heroicon::ShieldCheck)
+    ->registerNavigation(false),
 /*
                 |--------------------------------------------------------------------------
                 | Developer Login

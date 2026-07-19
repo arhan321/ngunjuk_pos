@@ -109,73 +109,64 @@
                 <div class="profile-panel profile-form-panel">
                     <div class="settings-form-head">
                         <span class="eyebrow">Pengaturan Akun</span>
-                        <h2>Ubah Data User</h2>
+                        <h2>Ubah Password</h2>
                         <p>
-                            Role diambil dari data role Filament/Spatie yang tersedia.
-                            Perubahan ini masih hardcode di browser dan belum update database.
+                            Masukkan password baru untuk akun Anda. Password minimal 8 karakter
+                            serta memiliki huruf besar, huruf kecil, dan angka.
                         </p>
                     </div>
 
-                    <form class="settings-form" id="settingsForm">
+                    <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(session('success')): ?>
+                        <div class="pos-login-alert success">
+                            <span>✓</span>
+                            <p><?php echo e(session('success')); ?></p>
+                        </div>
+                    <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+
+                    <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($errors->any()): ?>
+                        <div class="pos-login-alert error">
+                            <span>!</span>
+                            <p><?php echo e($errors->first()); ?></p>
+                        </div>
+                    <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+
+                    <form
+                        class="settings-form"
+                        action="<?php echo e(route('frontend.password.update')); ?>"
+                        method="POST"
+                    >
+                        <?php echo csrf_field(); ?>
+                        <?php echo method_field('PUT'); ?>
+
                         <div class="form-row">
-                            <label for="inputName">Nama Lengkap</label>
+                            <label for="password">Password Baru</label>
 
                             <input
-                                id="inputName"
-                                type="text"
-                                value="<?php echo e($user->name); ?>"
-                                placeholder="Masukkan nama lengkap"
+                                id="password"
+                                name="password"
+                                type="password"
+                                placeholder="Masukkan password baru"
+                                autocomplete="new-password"
+                                required
                             >
                         </div>
 
                         <div class="form-row">
-                            <label for="inputEmail">Email</label>
+                            <label for="password_confirmation">Konfirmasi Password Baru</label>
 
                             <input
-                                id="inputEmail"
-                                type="email"
-                                value="<?php echo e($user->email); ?>"
-                                placeholder="Masukkan email"
+                                id="password_confirmation"
+                                name="password_confirmation"
+                                type="password"
+                                placeholder="Ulangi password baru"
+                                autocomplete="new-password"
+                                required
                             >
-                        </div>
-
-                        <div class="form-row">
-                            <label for="inputRole">Role</label>
-
-                            <select id="inputRole">
-                                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__empty_1 = true; $__currentLoopData = $roles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $role): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
-                                    <option
-                                        value="<?php echo e($role->name); ?>"
-                                        <?php if($role->name === $userRole): echo 'selected'; endif; ?>
-                                    >
-                                        <?php echo e(ucfirst($role->name)); ?>
-
-                                    </option>
-                                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::endLoop(); ?><?php endif; ?><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::closeLoop(); ?><?php endif; ?>
-                                    <option value="<?php echo e($userRole); ?>" selected>
-                                        <?php echo e(ucfirst($userRole)); ?>
-
-                                    </option>
-                                <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
-                            </select>
-                        </div>
-
-                        <div class="form-row">
-                            <label for="inputStatus">Status</label>
-
-                            <select id="inputStatus">
-                                <option value="Aktif" selected>Aktif</option>
-                                <option value="Tidak Aktif">Tidak Aktif</option>
-                            </select>
                         </div>
 
                         <div class="form-actions">
                             <button class="order-btn" type="submit">
-                                Simpan Perubahan
-                            </button>
-
-                            <button class="reset-profile-btn" type="button" id="resetProfile">
-                                Reset Data
+                                Simpan Password Baru
                             </button>
                         </div>
                     </form>
@@ -183,124 +174,5 @@
             </section>
         </section>
     </main>
-
-    <div class="toast" id="toast">
-        Data profile berhasil diperbarui.
-    </div>
-
-    <script>
-        const defaultUser = {
-            name: <?php echo json_encode($user->name, 15, 512) ?>,
-            email: <?php echo json_encode($user->email, 15, 512) ?>,
-            role: <?php echo json_encode($userRole, 15, 512) ?>,
-            status: 'Aktif'
-        };
-
-        const storageKey = 'ngunjuk_profile_settings_user_' + <?php echo json_encode($user->id, 15, 512) ?>;
-
-        const profileAvatar = document.querySelector('#profileAvatar');
-        const profileName = document.querySelector('#profileName');
-        const profileRole = document.querySelector('#profileRole');
-
-        const displayName = document.querySelector('#displayName');
-        const displayEmail = document.querySelector('#displayEmail');
-        const displayRole = document.querySelector('#displayRole');
-        const displayStatus = document.querySelector('#displayStatus');
-
-        const inputName = document.querySelector('#inputName');
-        const inputEmail = document.querySelector('#inputEmail');
-        const inputRole = document.querySelector('#inputRole');
-        const inputStatus = document.querySelector('#inputStatus');
-
-        const settingsForm = document.querySelector('#settingsForm');
-        const resetProfile = document.querySelector('#resetProfile');
-        const toast = document.querySelector('#toast');
-
-        function getInitialName(name) {
-            if (!name) {
-                return 'U';
-            }
-
-            return name.trim().charAt(0).toUpperCase();
-        }
-
-        function formatRole(role) {
-            if (!role || role === '-') {
-                return '-';
-            }
-
-            return role.charAt(0).toUpperCase() + role.slice(1);
-        }
-
-        function showToast(message) {
-            if (!toast) {
-                return;
-            }
-
-            toast.textContent = message;
-            toast.classList.add('show');
-
-            setTimeout(function () {
-                toast.classList.remove('show');
-            }, 2200);
-        }
-
-        function applyProfile(user) {
-            profileAvatar.textContent = getInitialName(user.name);
-            profileName.textContent = user.name;
-            profileRole.textContent = formatRole(user.role) + ' UMKM Ngunjuk';
-
-            displayName.textContent = user.name;
-            displayEmail.textContent = user.email;
-            displayRole.textContent = formatRole(user.role);
-            displayStatus.textContent = user.status;
-
-            inputName.value = user.name;
-            inputEmail.value = user.email;
-            inputRole.value = user.role;
-            inputStatus.value = user.status;
-        }
-
-        function getSavedProfile() {
-            const savedProfile = localStorage.getItem(storageKey);
-
-            if (!savedProfile) {
-                return defaultUser;
-            }
-
-            try {
-                return {
-                    ...defaultUser,
-                    ...JSON.parse(savedProfile)
-                };
-            } catch (error) {
-                return defaultUser;
-            }
-        }
-
-        settingsForm.addEventListener('submit', function (event) {
-            event.preventDefault();
-
-            const updatedUser = {
-                name: inputName.value.trim() || defaultUser.name,
-                email: inputEmail.value.trim() || defaultUser.email,
-                role: inputRole.value || defaultUser.role,
-                status: inputStatus.value || defaultUser.status
-            };
-
-            localStorage.setItem(storageKey, JSON.stringify(updatedUser));
-            applyProfile(updatedUser);
-            showToast('Data profile berhasil diperbarui sementara.');
-        });
-
-        resetProfile.addEventListener('click', function () {
-            localStorage.removeItem(storageKey);
-            applyProfile(defaultUser);
-            showToast('Data profile berhasil direset.');
-        });
-
-        applyProfile(getSavedProfile());
-    </script>
 </body>
-</html>
-<?php /**PATH /var/www/html/resources/views/settings.blade.php ENDPATH**/ ?>
+</html><?php /**PATH /var/www/html/resources/views/settings.blade.php ENDPATH**/ ?>
